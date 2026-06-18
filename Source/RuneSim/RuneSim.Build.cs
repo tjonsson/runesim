@@ -19,7 +19,8 @@ public class RuneSim : ModuleRules
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {
-            "CesiumRuntime"
+            "CesiumRuntime",
+            "HeadMountedDisplay"
         });
 
 		// Uncomment if you are using Slate UI

@@ -63,6 +63,7 @@ The Level Blueprint orchestrates runtime logic:
 | `I` | Front camera view |
 | `K` | Backup camera view |
 | `-` | No display view |
+| `V` | Toggle VR headset (HTC Vive) |
 | `Tab` | Toggle report |
 | `R` | Toggle recording |
 | `T` | Toggle trace |
