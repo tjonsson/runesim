@@ -36,6 +36,7 @@ public:
     void inputEventToggleAll();
 
     ASimHUD();
+    USimHUDWidget* getWidget() const { return widget_; }
     virtual void BeginPlay() override;
     virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
     virtual void Tick(float DeltaSeconds) override;

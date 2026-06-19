@@ -60,9 +60,14 @@ protected:
     UFUNCTION(BlueprintImplementableEvent, Category = "C++ Interface")
     bool setReportText(const FString& text);
 
+public:
+    void showCameraName(const FString& name);
+
 private:
     void updateHelpText();
     void hideCenterMessage();
+    void clearCameraName();
 
     OnToggleRecording on_toggle_recording_;
+    FTimerHandle CameraNameTimer;
 };

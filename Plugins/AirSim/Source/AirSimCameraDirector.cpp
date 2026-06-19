@@ -200,7 +200,7 @@ void AAirSimCameraDirector::setupInputBindings()
     UAirBlueprintLib::BindActionToKey("inputEventBackupView", EKeys::K, this, &AAirSimCameraDirector::inputEventBackupView);
     UAirBlueprintLib::BindActionToKey("inputEventNoDisplayView", EKeys::Hyphen, this, &AAirSimCameraDirector::inputEventNoDisplayView);
     UAirBlueprintLib::BindActionToKey("inputEventFrontView", EKeys::I, this, &AAirSimCameraDirector::inputEventFrontView);
-    UAirBlueprintLib::BindActionToKey("inputEventCycleView", EKeys::C, this, &AAirSimCameraDirector::inputEventCycleView);
+    // C key is handled by VRSpectator to use the unified camera cycle list
 }
 
 void AAirSimCameraDirector::EndPlay(const EEndPlayReason::Type EndPlayReason)

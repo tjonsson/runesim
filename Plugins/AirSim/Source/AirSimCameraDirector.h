@@ -66,6 +66,8 @@ public:
     APIPCamera *getBackupCamera() const;
     APIPCamera* getFrontCamera() const;
     void setFollowDistance(const int follow_distance) { this->follow_distance_ = follow_distance; }
+    int getCycleCameraIndex() const { return cycle_camera_index_; }
+    int getCycleCameraCount() const { return cycle_cameras_.Num(); }
     void setCameraRotationLagEnabled(const bool lag_enabled) { this->camera_rotation_lag_enabled_ = lag_enabled; }
 
 private:

@@ -144,6 +144,7 @@ bool TryReadAirSimOriginGeopoint(FAirSimOriginGeopoint& OutOrigin, FString& OutS
 
 void URuneSimCesiumGeoreferenceSubsystem::OnWorldBeginPlay(UWorld& InWorld)
 {
+    Super::OnWorldBeginPlay(InWorld);
     FAirSimOriginGeopoint Origin;
     FString SettingsSource;
     if (!TryReadAirSimOriginGeopoint(Origin, SettingsSource))

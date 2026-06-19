@@ -12,10 +12,16 @@ for /d %%d in ("%UE_ROOT%\Engine\Plugins\Marketplace\Cesium*") do (
     if exist "%%d\CesiumForUnreal.uplugin" set "ENGINE_CESIUM_DESCRIPTOR=%%d\CesiumForUnreal.uplugin"
 )
 set "CLEAN_ARG="
+set "CLIENT_CONFIG=Shipping"
 
-if /i "%~1"=="clean" set "CLEAN_ARG=-clean"
-if /i "%~1"=="-clean" set "CLEAN_ARG=-clean"
-if /i "%~1"=="--clean" set "CLEAN_ARG=-clean"
+for %%A in (%*) do (
+    if /i "%%A"=="clean"    set "CLEAN_ARG=-clean"
+    if /i "%%A"=="-clean"   set "CLEAN_ARG=-clean"
+    if /i "%%A"=="--clean"  set "CLEAN_ARG=-clean"
+    if /i "%%A"=="debug"    set "CLIENT_CONFIG=Development"
+    if /i "%%A"=="-debug"   set "CLIENT_CONFIG=Development"
+    if /i "%%A"=="--debug"  set "CLIENT_CONFIG=Development"
+)
 
 if not exist "%PROJECT_FILE%" (
     echo ERROR: Could not find project file:
@@ -58,6 +64,7 @@ echo Archive directory:
 echo   %ARCHIVE_DIR%
 echo Final packaged build will be written to:
 echo   %OUTPUT_DIR%
+echo Build config: %CLIENT_CONFIG%
 if defined CLEAN_ARG echo Clean build: enabled
 echo.
 
@@ -66,7 +73,7 @@ call "%RUN_UAT%" BuildCookRun ^
     -noP4 ^
     -target=RuneSim ^
     -platform=Win64 ^
-    -clientconfig=Shipping ^
+    -clientconfig=%CLIENT_CONFIG% ^
     %CLEAN_ARG% ^
     -build ^
     -cook ^

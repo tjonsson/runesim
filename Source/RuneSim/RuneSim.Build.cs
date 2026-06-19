@@ -7,6 +7,7 @@ public class RuneSim : ModuleRules
 	public RuneSim(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+		bEnableExceptions = true;
 	
 		PublicDependencyModuleNames.AddRange(new string[] { 
 			"Core", 
@@ -20,7 +21,11 @@ public class RuneSim : ModuleRules
 
 		PrivateDependencyModuleNames.AddRange(new string[] {
             "CesiumRuntime",
-            "HeadMountedDisplay"
+            "HeadMountedDisplay",
+            "AirSim",
+            "UMG",
+            "Slate",
+            "SlateCore"
         });
 
 		// Uncomment if you are using Slate UI
