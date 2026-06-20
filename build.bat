@@ -95,3 +95,11 @@ echo.
 echo Production build complete.
 echo Written to:
 echo   %OUTPUT_DIR%
+echo.
+echo Available scenes:
+echo   run.bat                    MainLevel ^(Cesium, default^)
+for %%F in ("%PROJECT_DIR%Content\*.umap") do (
+    if /i not "%%~nF"=="MainLevel" if /i not "%%~nF"=="scnery" (
+        echo   run.bat %%~nF
+    )
+)

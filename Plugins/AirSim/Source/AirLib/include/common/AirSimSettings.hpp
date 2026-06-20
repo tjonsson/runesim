@@ -191,8 +191,8 @@ namespace airlib
 		    bool ignore_marked = false;
 
             // Settings only available for scene camera
-            bool lumen_gi_enabled = false;
-            bool lumen_reflections_enabled = false;
+            bool lumen_gi_enabled = true;
+            bool lumen_reflections_enabled = true;
             float lumen_final_quality = 1;
             float lumen_scene_detail = 1.0f;
             float lumen_scene_lightning_quality = 1;

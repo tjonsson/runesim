@@ -11,6 +11,7 @@
 #include "AirSimCameraDirector.h"
 #include "SimHUD/SimHUD.h"
 #include "SimHUD/SimHUDWidget.h"
+#include "CameraQualitySubsystem.h"
 
 typedef void (AAirSimCameraDirector::*CameraModeFunc)();
 static const CameraModeFunc CameraModes[] = {
@@ -102,14 +103,27 @@ void AVRSpectator::EnableVR()
     OriginLocation = CamLoc;
     OriginRotation = CamRot;
 
-    // Reduce rendering cost for VR — stereo at 90Hz on a 3060 needs lighter settings
-    GEngine->Exec(GetWorld(), TEXT("r.AntiAliasingMethod 1"));           // FXAA instead of TSR
-    GEngine->Exec(GetWorld(), TEXT("r.ScreenPercentage 100"));           // no upscaling
-    GEngine->Exec(GetWorld(), TEXT("r.Lumen.HardwareRayTracing 0"));     // software Lumen
-    GEngine->Exec(GetWorld(), TEXT("r.Lumen.Reflections.HardwareRayTracing 0"));
-    GEngine->Exec(GetWorld(), TEXT("r.Shadow.Virtual.MaxPhysicalPages 2048"));
-    GEngine->Exec(GetWorld(), TEXT("vr.PixelDensity 0.8"));              // lower VR resolution
-    GEngine->Exec(GetWorld(), TEXT("r.Bloom.Quality 1"));                // simpler bloom
+    UCameraQualitySubsystem* QS = GetWorld()->GetSubsystem<UCameraQualitySubsystem>();
+    if (QS && QS->GetQualityMode() == ECameraQualityMode::Cinematic)
+    {
+        GEngine->Exec(GetWorld(), TEXT("r.AntiAliasingMethod 4"));
+        GEngine->Exec(GetWorld(), TEXT("r.ScreenPercentage 85"));
+        GEngine->Exec(GetWorld(), TEXT("r.Lumen.HardwareRayTracing 1"));
+        GEngine->Exec(GetWorld(), TEXT("r.Lumen.Reflections.HardwareRayTracing 1"));
+        GEngine->Exec(GetWorld(), TEXT("r.Shadow.Virtual.MaxPhysicalPages 4096"));
+        GEngine->Exec(GetWorld(), TEXT("vr.PixelDensity 1.0"));
+        GEngine->Exec(GetWorld(), TEXT("r.Bloom.Quality 5"));
+    }
+    else
+    {
+        GEngine->Exec(GetWorld(), TEXT("r.AntiAliasingMethod 1"));
+        GEngine->Exec(GetWorld(), TEXT("r.ScreenPercentage 100"));
+        GEngine->Exec(GetWorld(), TEXT("r.Lumen.HardwareRayTracing 0"));
+        GEngine->Exec(GetWorld(), TEXT("r.Lumen.Reflections.HardwareRayTracing 0"));
+        GEngine->Exec(GetWorld(), TEXT("r.Shadow.Virtual.MaxPhysicalPages 2048"));
+        GEngine->Exec(GetWorld(), TEXT("vr.PixelDensity 0.8"));
+        GEngine->Exec(GetWorld(), TEXT("r.Bloom.Quality 1"));
+    }
 
     PC->ConsoleCommand(TEXT("vr.bEnableStereo True"));
 
@@ -172,8 +186,23 @@ void AVRSpectator::OnNextCamera()
     AAirSimCameraDirector* Dir = FindCameraDirector(GetWorld());
     if (!Dir) return;
 
-    CameraModeIndex = (CameraModeIndex + 1) % NumCameraModes;
-    (Dir->*CameraModes[CameraModeIndex])();
+    if (CameraModeIndex == VehicleRGBIndex)
+    {
+        int32 PrevIdx = Dir->getCycleCameraIndex();
+        (Dir->*CameraModes[VehicleRGBIndex])();
+        int32 NewIdx = Dir->getCycleCameraIndex();
+
+        if (NewIdx <= PrevIdx)
+        {
+            CameraModeIndex = (CameraModeIndex + 1) % NumCameraModes;
+            (Dir->*CameraModes[CameraModeIndex])();
+        }
+    }
+    else
+    {
+        CameraModeIndex = (CameraModeIndex + 1) % NumCameraModes;
+        (Dir->*CameraModes[CameraModeIndex])();
+    }
 
     if (bVRActive)
     {
