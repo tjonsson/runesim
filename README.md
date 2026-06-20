@@ -8,7 +8,21 @@
 
 **Unreal Engine 5.7** is required. Download and install it from the [Epic Games Launcher](https://www.unrealengine.com/en-US/download).
 
-To produce a packaged Shipping build, run `build.bat` from the project root. Pass `clean` as the first argument to force a full rebuild.
+To produce a packaged Shipping build, run `build.bat` from the project root. Pass `clean` as the first argument to force a full rebuild. On success, build.bat lists available scenes.
+
+### Build & Run
+
+```
+build.bat                Build all scenes (Shipping)
+build.bat clean          Full rebuild
+build.bat debug          Development build with debug symbols
+
+run.bat                  Launch MainLevel (Cesium, default)
+run.bat SecondaryLevel   Launch SecondaryLevel
+run.bat <SceneName>      Launch any cooked scene by name
+```
+
+New scenes are automatically discovered from `Content/*.umap` and cooked via `-allmaps`. To add a scene, duplicate MainLevel, customise the environment, and save the new `.umap` in Content/. Add it to `+MapsToCook` in `Config/DefaultGame.ini` if `-allmaps` is not used.
 
 ---
 
@@ -30,7 +44,7 @@ To produce a packaged Shipping build, run `build.bat` from the project root. Pas
 |--------|------------|
 | `Drone/DroneModel/` | Contains DJI S900 model, propellers, and `BP_MyPawn` - a modified version of AirSim's BP_FlyingPawn, including a cinematic third-person camera and drone mesh override |
 | `Drone/LandingPad/` | Blueprint that spawns a temporary collision pad under each drone at startup. This ensures drones do not fall through Cesium tiles, which load without collision initially |
-| `Drone/BP_SpectatorCamera` | Free-roam spectator camera that can be toggled using the `P` key. Allows the operator to detach from drones and explore the scene |
+| `Drone/BP_SpectatorCamera` | Free-roam spectator camera. Allows the operator to detach from drones and explore the scene |
 | `Drone/TelemetryWidget` | HUD UI widget that displays live telemetry (position, velocity, etc.) for the currently selected drone. Telemetry updates are driven through MQTT → WebSocket → Unreal |
 | `Drone/BP_MqttTelemetry` | WebSocket listener blueprint that receives telemetry packets from the Control Room and triggers UI updates. Uses an event dispatcher bound in the Level Blueprint to update the widget state |
 | `Sensor/BP_SensorDataReceiver` | Listens for sensor-level MQTT messages (e.g., temperature, gas detection) via WebSocket. Updates 3D floating labels (WB_SensorLabel) and spawns visual anomaly markers (e.g., smoke, fire) when thresholds are exceeded |
@@ -42,9 +56,7 @@ To produce a packaged Shipping build, run `build.bat` from the project root. Pas
 The Level Blueprint orchestrates runtime logic:
 * Automatically spawns Landing Pads at drone spawn positions.
 * Binds event dispatchers to update the Telemetry Widget per active drone.
-* Handles camera switching between:
-  * Drone follow camera (`Enter` key — cycles between drones)
-  * Free Spectator Camera (`P`)
+* Handles camera switching between drone follow cameras (`Enter` key — cycles between drones) and various camera views (`C` key).
 * Toggles visibility of telemetry UI depending on which drone is currently selected.
 
 ### Runtime Hotkeys
@@ -53,7 +65,7 @@ The Level Blueprint orchestrates runtime logic:
 |-----|--------|
 | `F1` | Toggle help |
 | `Enter` | Switch drone |
-| `P` | Spectator camera |
+| `P` | Toggle Cinematic / Sensor camera quality |
 | `O` | Original chase view |
 | `C` | Cycle vehicle cameras |
 | `F` | FPV view |
@@ -73,12 +85,23 @@ The Level Blueprint orchestrates runtime logic:
 
 ---
 
+## C++ Subsystems
+
+| Class | Role |
+|-------|------|
+| `CameraQualitySubsystem` | Tickable world subsystem that manages Cinematic / Sensor camera quality toggle (`P` key). Applies Lumen GI, exposure, and bloom settings to all AirSim cameras. VR-aware — adjusts VR rendering quality when headset is active |
+| `RuneSimModeBootSubsystem` | Reads `-scene=<Name>` from the command line and travels to `/Game/<Name>` at startup. Enables `run.bat <SceneName>` scene selection in packaged builds |
+| `RuneSimCesiumGeoreferenceSubsystem` | Reads `OriginGeopoint` from AirSim `settings.json` and repositions the Cesium georeference origin at startup |
+| `VRSpectator` | Manages HTC Vive VR headset toggle (`V` key), camera cycling, and VR-specific rendering settings |
+
+---
+
 ## C++ Network Layer (WebSocket Receivers)
 
 | Class | Role |
 |-------|------|
-| `BaseWebSocketReceiver` | Base implementation that manages WebSocket connection, reconnection, and disposal, with retry logic | 
-| `MqttTelemetryReceiver` | Connects to Control Room WebSocket  and forwards drone telemetry to BP_MqttTelemetry |
+| `BaseWebSocketReceiver` | Base implementation that manages WebSocket connection, reconnection, and disposal, with retry logic |
+| `MqttTelemetryReceiver` | Connects to Control Room WebSocket and forwards drone telemetry to BP_MqttTelemetry |
 | `SensorDataReceiver` | Receives raw sensor packets and forwards them to BP_SensorDataReceiver → triggers 3D scene annotations and widget updates |
 
 ---
