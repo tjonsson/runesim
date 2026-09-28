@@ -214,6 +214,7 @@ void AAirSimCameraDirector::EndPlay(const EEndPlayReason::Type EndPlayReason)
     follow_actor_ = nullptr;
     cycle_cameras_.Empty();
     cycle_camera_index_ = -1;
+    Super::EndPlay(EndPlayReason);
 }
 
 APIPCamera* AAirSimCameraDirector::getFpvCamera() const

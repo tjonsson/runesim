@@ -9,7 +9,7 @@
 #include "common/Common.hpp"
 
 
-class RenderRequest : public FRenderCommand
+class RenderRequest
 {
 public:
     struct RenderParams {

@@ -3,7 +3,7 @@ setlocal
 
 set "PROJECT_DIR=%~dp0"
 set "PROJECT_FILE=%PROJECT_DIR%RuneSim.uproject"
-set "UE_ROOT=C:\Program Files\Epic Games\UE_5.7"
+if not defined UE_ROOT set "UE_ROOT=C:\Program Files\Epic Games\UE_5.8"
 set "RUN_UAT=%UE_ROOT%\Engine\Build\BatchFiles\RunUAT.bat"
 set "ARCHIVE_DIR=%PROJECT_DIR%Build\Production"
 set "OUTPUT_DIR=%ARCHIVE_DIR%\Windows"
@@ -33,7 +33,7 @@ if not exist "%RUN_UAT%" (
     echo ERROR: Could not find Unreal Automation Tool:
     echo   %RUN_UAT%
     echo.
-    echo Update UE_ROOT in this script if Unreal Engine is installed elsewhere.
+    echo Set UE_ROOT to your Unreal Engine installation directory and try again.
     exit /b 1
 )
 
@@ -49,7 +49,7 @@ if "%ENGINE_CESIUM_DESCRIPTOR%"=="" (
     echo   2. Go to Unreal Engine ^> Library.
     echo   3. Under Vault, find or search for "Cesium for Unreal".
     echo   4. Click Install to Engine.
-    echo   5. Choose Unreal Engine 5.7.
+    echo   5. Choose Unreal Engine 5.8.
     echo   6. Run this build script again.
     echo.
     echo If the plugin is already installed elsewhere, update ENGINE_CESIUM_DESCRIPTOR
@@ -99,7 +99,7 @@ echo.
 echo Available scenes:
 echo   run.bat                    MainLevel ^(Cesium, default^)
 for %%F in ("%PROJECT_DIR%Content\*.umap") do (
-    if /i not "%%~nF"=="MainLevel" if /i not "%%~nF"=="scnery" (
+    if /i not "%%~nF"=="MainLevel" (
         echo   run.bat %%~nF
     )
 )

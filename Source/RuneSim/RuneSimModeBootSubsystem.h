@@ -11,7 +11,7 @@
  * travels to /Game/<Name> via OpenLevel.
  *
  *   run.bat                    -> MainLevel (Cesium)
- *   run.bat SecondaryLevel     -> travels to /Game/SecondaryLevel
+ *   run.bat MyScene     -> travels to /Game/MyScene
  */
 UCLASS()
 class RUNESIM_API URuneSimModeBootSubsystem : public UWorldSubsystem

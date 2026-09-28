@@ -6,7 +6,11 @@
 
 ## Engine Version
 
-**Unreal Engine 5.7** is required. Download and install it from the [Epic Games Launcher](https://www.unrealengine.com/en-US/download).
+**Unreal Engine 5.8** is required. Download and install it from the [Epic Games Launcher](https://www.unrealengine.com/en-US/download).
+
+The build script defaults to `C:\Program Files\Epic Games\UE_5.8`. Set the `UE_ROOT` environment variable if your engine is installed elsewhere. Project and output paths are resolved relative to the scripts, so the repository folder can be moved or renamed.
+
+Visual Studio solution files are generated locally and ignored by Git. To create them, right-click `RuneSim.uproject` and select **Generate Visual Studio project files**.
 
 To produce a packaged Shipping build, run `build.bat` from the project root. Pass `clean` as the first argument to force a full rebuild. On success, build.bat lists available scenes.
 
@@ -18,7 +22,6 @@ build.bat clean          Full rebuild
 build.bat debug          Development build with debug symbols
 
 run.bat                  Launch MainLevel (Cesium, default)
-run.bat SecondaryLevel   Launch SecondaryLevel
 run.bat <SceneName>      Launch any cooked scene by name
 ```
 
