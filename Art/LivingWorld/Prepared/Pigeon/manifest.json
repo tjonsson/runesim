@@ -1,0 +1,35 @@
+{
+  "bones": 77,
+  "vertices": 357,
+  "max_deformation_error_m": 0.024492594520669986,
+  "quality_scope": "Distant flock LOD; B-Bone curvature approximated by rigid bone transforms",
+  "base_triangles": 710,
+  "export_triangles": 1420,
+  "clips": [
+    {
+      "name": "Pigeon_Flapping",
+      "frames": 14,
+      "fbx": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\Pigeon\\Pigeon_Flapping.fbx"
+    },
+    {
+      "name": "Pigeon_Gliding",
+      "frames": 105,
+      "fbx": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\Pigeon\\Pigeon_Gliding.fbx"
+    },
+    {
+      "name": "Pigeon_Standing_Idle",
+      "frames": 150,
+      "fbx": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\Pigeon\\Pigeon_Standing_Idle.fbx"
+    },
+    {
+      "name": "Pigeon_Takeoff",
+      "frames": 60,
+      "fbx": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\Pigeon\\Pigeon_Takeoff.fbx"
+    },
+    {
+      "name": "Pigeon_Landing",
+      "frames": 60,
+      "fbx": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\Pigeon\\Pigeon_Landing.fbx"
+    }
+  ]
+}

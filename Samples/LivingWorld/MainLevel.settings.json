@@ -1,0 +1,14 @@
+{
+  "SettingsVersion": 2.0,
+  "SimMode": "Multirotor",
+  "ViewMode": "FlyWithMe",
+  "Vehicles": {
+    "MainDrone": {
+      "VehicleType": "SimpleFlight",
+      "AutoCreate": true,
+      "X": 0,
+      "Y": 0,
+      "Z": 0
+    }
+  }
+}

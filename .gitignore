@@ -1,15 +1,50 @@
-.vs/*
-.idea/*
-.git/*
+# Local IDE and assistant state
+.vs/
+.idea/
 /*.sln
 /*.slnx
 /.claude/
-Build/*
-DerivedDataCache/*
-Intermediate/*
-Plugins/*/Intermediate/*
-Plugins/*/Binaries/*
-Saved/*
+*.VC.db
+*.VC.opendb
+*.suo
+*.user
+
+# Unreal build products, caches, packaged builds and local test evidence
+/Build/
+/Binaries/
+**/DerivedDataCache/
+**/Intermediate/
+**/Saved/
+/Plugins/**/Binaries/
 *.pdb
 cesium-request-cache.sqlite*
-/Binaries
+
+# Install external plugins from Fab or the vendor; see docs/dependencies.md.
+# Cosys-AirSim is the existing vendored source integration, not a store package.
+/Plugins/*
+!/Plugins/AirSim/
+# Copies of Epic's downloader/infrastructure come from the installed engine.
+/Samples/PixelStreaming2/
+
+# Python/Node environments and generated tooling output
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+.test_venv/
+node_modules/
+
+# Local credentials and overrides (commit examples instead)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+/Config/*Local.ini
+
+# Blender recovery files; editable .blend sources remain versioned via LFS
+*.blend[0-9]*
+*.blend@
+.DS_Store
+Thumbs.db

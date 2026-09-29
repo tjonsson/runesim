@@ -1,0 +1,4788 @@
+{
+  "downloaded_utc": "2026-09-28T23:53:33.171370+00:00",
+  "endpoint": "https://overpass-api.de/api/interpreter",
+  "query": "[out:json][timeout:25];(nwr[highway](37.767,-122.470,37.772,-122.462);nwr[building](37.767,-122.470,37.772,-122.462);nwr[natural=water](37.767,-122.470,37.772,-122.462);nwr[natural=wetland](37.767,-122.470,37.772,-122.462);nwr[water](37.767,-122.470,37.772,-122.462);nwr[waterway](37.767,-122.470,37.772,-122.462);nwr[landuse=reservoir](37.767,-122.470,37.772,-122.462);nwr[landuse=basin](37.767,-122.470,37.772,-122.462);nwr[barrier](37.767,-122.470,37.772,-122.462););out geom;",
+  "bbox_south_west_north_east": "37.767,-122.470,37.772,-122.462",
+  "sha256": "e1d7abb4199a86882b14c0bf7fbae0ef4086e29e102f9062826dd6a26ba969d4",
+  "osm_timestamp": "2026-09-28T23:52:21Z",
+  "license": "ODbL-1.0",
+  "attribution": "© OpenStreetMap contributors; https://www.openstreetmap.org/copyright",
+  "element_count": 687,
+  "candidate_counts": {
+    "walk": 175,
+    "drive": 11
+  },
+  "validated": false,
+  "rejected": [
+    {
+      "osm_way": 8915300,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 8915300,
+      "mode": "drive",
+      "reason": "restricted or unknown drive access: destination"
+    },
+    {
+      "osm_way": 8916648,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 8921602,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 23867060,
+      "mode": "walk",
+      "reason": "intersects supplied water exclusion 2792384"
+    },
+    {
+      "osm_way": 23867060,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 25176996,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 25177047,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 25196927,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 159924620"
+    },
+    {
+      "osm_way": 25196927,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 25822466,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 25822470,
+      "mode": "walk",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 25822470,
+      "mode": "drive",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 28695389,
+      "mode": "walk",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 28695389,
+      "mode": "drive",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 30694511,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 30694513,
+      "mode": "walk",
+      "reason": "intersects supplied water exclusion 260003532"
+    },
+    {
+      "osm_way": 30694513,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 30895529,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 30895538,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 30895598,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 30895662,
+      "mode": "walk",
+      "reason": "intersects supplied water exclusion 260003532"
+    },
+    {
+      "osm_way": 30895662,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 30896361,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 30896806,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 28695389"
+    },
+    {
+      "osm_way": 30896806,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 30896932,
+      "mode": "walk",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 30896932,
+      "mode": "drive",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 30897687,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 30897687,
+      "mode": "drive",
+      "reason": "intersects supplied building exclusion 28695389"
+    },
+    {
+      "osm_way": 30897731,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 30897770,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 6471279386"
+    },
+    {
+      "osm_way": 30897770,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 30897923,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 30897923,
+      "mode": "drive",
+      "reason": "restricted or unknown drive access: destination"
+    },
+    {
+      "osm_way": 30898510,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 28695389"
+    },
+    {
+      "osm_way": 30898510,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 30898604,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 30898615,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 498095292"
+    },
+    {
+      "osm_way": 30898615,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 30898665,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 30898673,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 30898747,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 28695389"
+    },
+    {
+      "osm_way": 30898747,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 30898840,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 30899154,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 30899154,
+      "mode": "drive",
+      "reason": "intersects supplied building exclusion 287928763"
+    },
+    {
+      "osm_way": 30899163,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 30899163,
+      "mode": "drive",
+      "reason": "intersects supplied building exclusion 287929676"
+    },
+    {
+      "osm_way": 30899287,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 28695389"
+    },
+    {
+      "osm_way": 30899287,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 30899541,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 30899541,
+      "mode": "drive",
+      "reason": "intersects supplied barrier exclusion 9675172966"
+    },
+    {
+      "osm_way": 30899544,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 30899544,
+      "mode": "drive",
+      "reason": "intersects supplied barrier exclusion 498095292"
+    },
+    {
+      "osm_way": 30899610,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 30899618,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 30899619,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 30899620,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 30899633,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 30899637,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 28695389"
+    },
+    {
+      "osm_way": 30899637,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 30899648,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 30900765,
+      "mode": "walk",
+      "reason": "intersects supplied water exclusion 260003532"
+    },
+    {
+      "osm_way": 30900765,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 30904828,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 4416081591"
+    },
+    {
+      "osm_way": 30904828,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 30904830,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 30904836,
+      "mode": "walk",
+      "reason": "intersects supplied water exclusion 265332416"
+    },
+    {
+      "osm_way": 30904836,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 30905213,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 1036243322"
+    },
+    {
+      "osm_way": 30905213,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 30905240,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 1064976636"
+    },
+    {
+      "osm_way": 30905240,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 31090376,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 31090387,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 31090387,
+      "mode": "drive",
+      "reason": "intersects supplied barrier exclusion 345507520"
+    },
+    {
+      "osm_way": 31090389,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 31780307,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 32928798,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 34218757,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 34218830,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 34220947"
+    },
+    {
+      "osm_way": 34218830,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 34218963,
+      "mode": "walk",
+      "reason": "intersects supplied water exclusion 1062197644"
+    },
+    {
+      "osm_way": 34218963,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 34220867,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 34220963"
+    },
+    {
+      "osm_way": 34220867,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 34220869,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 34220875,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 494967002"
+    },
+    {
+      "osm_way": 34220875,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 34220920,
+      "mode": "walk",
+      "reason": "intersects supplied water exclusion 409163924"
+    },
+    {
+      "osm_way": 34220920,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 34220947,
+      "mode": "walk",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 34220947,
+      "mode": "drive",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 34220963,
+      "mode": "walk",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 34220963,
+      "mode": "drive",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 42385029,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 1652482"
+    },
+    {
+      "osm_way": 42385029,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 42385141,
+      "mode": "walk",
+      "reason": "intersects supplied water exclusion 260003532"
+    },
+    {
+      "osm_way": 42385141,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 42385142,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 28695389"
+    },
+    {
+      "osm_way": 42385142,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 42385181,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 28695389"
+    },
+    {
+      "osm_way": 42385181,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 42385182,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 42385183,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 42385344,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 1334385260"
+    },
+    {
+      "osm_way": 42385344,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 42385442,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 43736094,
+      "mode": "walk",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 43736094,
+      "mode": "drive",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 66644377,
+      "mode": "walk",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 66644377,
+      "mode": "drive",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 68323048,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 30896932"
+    },
+    {
+      "osm_way": 68323048,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 68323050,
+      "mode": "walk",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 68323050,
+      "mode": "drive",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 68323051,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 697666696"
+    },
+    {
+      "osm_way": 68323051,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 68323052,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 697666697"
+    },
+    {
+      "osm_way": 68323052,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 68323971,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 68323971,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 68323972,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 1334385254"
+    },
+    {
+      "osm_way": 68323972,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 68323973,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 1652482"
+    },
+    {
+      "osm_way": 68323973,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 68323975,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 68323975,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 68323976,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 68323976,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 68323977,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 68323977,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 68323978,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 13128805246"
+    },
+    {
+      "osm_way": 68323978,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 68323979,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 68323979,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 68323980,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 8263295688"
+    },
+    {
+      "osm_way": 68323980,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 68323981,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 68323982,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 68323982,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 68323983,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 68323984,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 28695389"
+    },
+    {
+      "osm_way": 68323984,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 68323985,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 68323986,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 68323987,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 68323988,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 68323989,
+      "mode": "walk",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 68323989,
+      "mode": "drive",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 97641386,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 97641386,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 120479788,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 9793812049"
+    },
+    {
+      "osm_way": 120479788,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 120479789,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 1652482"
+    },
+    {
+      "osm_way": 120479789,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 120479790,
+      "mode": "walk",
+      "reason": "intersects supplied water exclusion 97641386"
+    },
+    {
+      "osm_way": 120479790,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 120479795,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 839987588"
+    },
+    {
+      "osm_way": 120479795,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 120479797,
+      "mode": "walk",
+      "reason": "intersects supplied water exclusion 97641386"
+    },
+    {
+      "osm_way": 120479797,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 120479801,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 120479807,
+      "mode": "walk",
+      "reason": "intersects supplied water exclusion 97641386"
+    },
+    {
+      "osm_way": 120479807,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 120479808,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 120480145,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 120480146,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 120480146,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 120480148,
+      "mode": "walk",
+      "reason": "restricted or unknown walk access: customers"
+    },
+    {
+      "osm_way": 120480148,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 120480152,
+      "mode": "walk",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 120480152,
+      "mode": "drive",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 120480153,
+      "mode": "walk",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 120480153,
+      "mode": "drive",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 120480160,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 25822470"
+    },
+    {
+      "osm_way": 120480160,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 133856247,
+      "mode": "walk",
+      "reason": "directional restriction requires authored routing"
+    },
+    {
+      "osm_way": 133856247,
+      "mode": "drive",
+      "reason": "directional restriction requires authored routing"
+    },
+    {
+      "osm_way": 136888948,
+      "mode": "walk",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 136888948,
+      "mode": "drive",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 136898969,
+      "mode": "walk",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 136898969,
+      "mode": "drive",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 136898972,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 136899493,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 136899493,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 137364462,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 137364462,
+      "mode": "drive",
+      "reason": "restricted or unknown drive access: destination"
+    },
+    {
+      "osm_way": 158602263,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 158602263,
+      "mode": "drive",
+      "reason": "restricted or unknown drive access: no"
+    },
+    {
+      "osm_way": 159924620,
+      "mode": "walk",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 159924620,
+      "mode": "drive",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 162799068,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 207667751,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 159924620"
+    },
+    {
+      "osm_way": 207667751,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 207667761,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 159924620"
+    },
+    {
+      "osm_way": 207667761,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 207667764,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 8089925991"
+    },
+    {
+      "osm_way": 207667764,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 207672068,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 207672071,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 207672073,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 207672073,
+      "mode": "drive",
+      "reason": "intersects supplied barrier exclusion 498095292"
+    },
+    {
+      "osm_way": 207672074,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 207672076,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 207672077,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 207672078,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 25822470"
+    },
+    {
+      "osm_way": 207672078,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 207672082,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 207672083,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 1036243322"
+    },
+    {
+      "osm_way": 207672083,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 207672086,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 207672086,
+      "mode": "drive",
+      "reason": "intersects supplied building exclusion 287929676"
+    },
+    {
+      "osm_way": 207672089,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 207672090,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 207672090,
+      "mode": "drive",
+      "reason": "intersects supplied building exclusion 287929676"
+    },
+    {
+      "osm_way": 207672091,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 207672091,
+      "mode": "drive",
+      "reason": "intersects supplied building exclusion 287929679"
+    },
+    {
+      "osm_way": 207672094,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 207673118,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 207673123,
+      "mode": "walk",
+      "reason": "intersects supplied water exclusion 1062197644"
+    },
+    {
+      "osm_way": 207673123,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 207678455,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 207678469,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 1339153442"
+    },
+    {
+      "osm_way": 207678469,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 255166625,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 255166625,
+      "mode": "drive",
+      "reason": "restricted or unknown drive access: destination"
+    },
+    {
+      "osm_way": 255166634,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 255166635,
+      "mode": "walk",
+      "reason": "directional restriction requires authored routing"
+    },
+    {
+      "osm_way": 255166635,
+      "mode": "drive",
+      "reason": "directional restriction requires authored routing"
+    },
+    {
+      "osm_way": 260003531,
+      "mode": "walk",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 260003531,
+      "mode": "drive",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 260003532,
+      "mode": "walk",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 260003532,
+      "mode": "drive",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 260003533,
+      "mode": "walk",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 260003533,
+      "mode": "drive",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 265332416,
+      "mode": "walk",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 265332416,
+      "mode": "drive",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 287928763,
+      "mode": "walk",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 287928763,
+      "mode": "drive",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 287929676,
+      "mode": "walk",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 287929676,
+      "mode": "drive",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 287929679,
+      "mode": "walk",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 287929679,
+      "mode": "drive",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 287929681,
+      "mode": "walk",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 287929681,
+      "mode": "drive",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 287929684,
+      "mode": "walk",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 287929684,
+      "mode": "drive",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 287929686,
+      "mode": "walk",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 287929686,
+      "mode": "drive",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 287929687,
+      "mode": "walk",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 287929687,
+      "mode": "drive",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 287929689,
+      "mode": "walk",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 287929689,
+      "mode": "drive",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 299951383,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 302406167,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 697666697"
+    },
+    {
+      "osm_way": 302406167,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 302406168,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 697666698"
+    },
+    {
+      "osm_way": 302406168,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 302406169,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 689552706"
+    },
+    {
+      "osm_way": 302406169,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 302406170,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 11547420189"
+    },
+    {
+      "osm_way": 302406170,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 302406171,
+      "mode": "walk",
+      "reason": "non-ground level requires review"
+    },
+    {
+      "osm_way": 302406171,
+      "mode": "drive",
+      "reason": "non-ground level requires review"
+    },
+    {
+      "osm_way": 302406172,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 302406173,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 4025608045"
+    },
+    {
+      "osm_way": 302406173,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 302406174,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 8089925941"
+    },
+    {
+      "osm_way": 302406174,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 302406175,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 494967002"
+    },
+    {
+      "osm_way": 302406175,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 322940363,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 322960187,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 322960625,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 960646872"
+    },
+    {
+      "osm_way": 322960625,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 367486219,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 8263295683"
+    },
+    {
+      "osm_way": 367486219,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 367486222,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 367486223,
+      "mode": "walk",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 367486223,
+      "mode": "drive",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 367486224,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 367486224,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 367486225,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 28695389"
+    },
+    {
+      "osm_way": 367486225,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 367486226,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 28695389"
+    },
+    {
+      "osm_way": 367486226,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 367486227,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 367545864,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 3714504782"
+    },
+    {
+      "osm_way": 367545864,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 367545865,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 367545866,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 367546552,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 367546553,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 367546554,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 30896932"
+    },
+    {
+      "osm_way": 367546554,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 367546555,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 30896932"
+    },
+    {
+      "osm_way": 367546555,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 367546556,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 367546557,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 6471279385"
+    },
+    {
+      "osm_way": 367546557,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 371703543,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 383237290,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 389501755,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 397169009,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 399884413,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 732000352"
+    },
+    {
+      "osm_way": 399884413,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 402083302,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 402083303,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 402083304,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 408589707,
+      "mode": "walk",
+      "reason": "directional restriction requires authored routing"
+    },
+    {
+      "osm_way": 408589707,
+      "mode": "drive",
+      "reason": "directional restriction requires authored routing"
+    },
+    {
+      "osm_way": 409163921,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 34220963"
+    },
+    {
+      "osm_way": 409163921,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 409163922,
+      "mode": "walk",
+      "reason": "restricted or unknown walk access: customers"
+    },
+    {
+      "osm_way": 409163922,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 409163923,
+      "mode": "walk",
+      "reason": "restricted or unknown walk access: customers"
+    },
+    {
+      "osm_way": 409163923,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 409163924,
+      "mode": "walk",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 409163924,
+      "mode": "drive",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 431599778,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 28695389"
+    },
+    {
+      "osm_way": 431599778,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444110011,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444110012,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 4416081592"
+    },
+    {
+      "osm_way": 444110012,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444110013,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444110017,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 4416081591"
+    },
+    {
+      "osm_way": 444110017,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444110027,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444110031,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 4416081592"
+    },
+    {
+      "osm_way": 444110031,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444226181,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444226182,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 28695389"
+    },
+    {
+      "osm_way": 444226182,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444226183,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444226187,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444226192,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444226193,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444226197,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444226200,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 10838206543"
+    },
+    {
+      "osm_way": 444226200,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444226204,
+      "mode": "walk",
+      "reason": "restricted or unknown walk access: private"
+    },
+    {
+      "osm_way": 444226204,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444226206,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 8089925993"
+    },
+    {
+      "osm_way": 444226206,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444226207,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 10838206544"
+    },
+    {
+      "osm_way": 444226207,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444226210,
+      "mode": "walk",
+      "reason": "restricted or unknown walk access: private"
+    },
+    {
+      "osm_way": 444226210,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444226232,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 25822470"
+    },
+    {
+      "osm_way": 444226232,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444226234,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444226247,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 444226247,
+      "mode": "drive",
+      "reason": "intersects supplied barrier exclusion 6854479507"
+    },
+    {
+      "osm_way": 444226248,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 4025608045"
+    },
+    {
+      "osm_way": 444226248,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444226252,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 444226252,
+      "mode": "drive",
+      "reason": "intersects supplied building exclusion 28695389"
+    },
+    {
+      "osm_way": 444226259,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444226262,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 28695389"
+    },
+    {
+      "osm_way": 444226262,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444230155,
+      "mode": "walk",
+      "reason": "intersects supplied water exclusion 97641386"
+    },
+    {
+      "osm_way": 444230155,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444234266,
+      "mode": "walk",
+      "reason": "restricted or unknown walk access: destination"
+    },
+    {
+      "osm_way": 444234266,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444234267,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444234268,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 444234268,
+      "mode": "drive",
+      "reason": "restricted or unknown drive access: destination"
+    },
+    {
+      "osm_way": 444234269,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 444234269,
+      "mode": "drive",
+      "reason": "restricted or unknown drive access: destination"
+    },
+    {
+      "osm_way": 444234270,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444234275,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444234276,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444234277,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444234279,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444234282,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 28695389"
+    },
+    {
+      "osm_way": 444234282,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444234283,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 28695389"
+    },
+    {
+      "osm_way": 444234283,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444234284,
+      "mode": "walk",
+      "reason": "restricted or unknown walk access: no"
+    },
+    {
+      "osm_way": 444234284,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444234285,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 28695389"
+    },
+    {
+      "osm_way": 444234285,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444234286,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 4417241400"
+    },
+    {
+      "osm_way": 444234286,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444234287,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444234288,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444234289,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 4417238584"
+    },
+    {
+      "osm_way": 444234289,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444234290,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 4417241400"
+    },
+    {
+      "osm_way": 444234290,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444234291,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 4417238584"
+    },
+    {
+      "osm_way": 444234291,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444234292,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444234293,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 1652482"
+    },
+    {
+      "osm_way": 444234293,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 444234294,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 447108284,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 470223227,
+      "mode": "walk",
+      "reason": "directional restriction requires authored routing"
+    },
+    {
+      "osm_way": 470223227,
+      "mode": "drive",
+      "reason": "directional restriction requires authored routing"
+    },
+    {
+      "osm_way": 476290506,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 477820716,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 477820717,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 494967002,
+      "mode": "walk",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 494967002,
+      "mode": "drive",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 498087730,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 498087731,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 28695389"
+    },
+    {
+      "osm_way": 498087731,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 498087732,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 66644377"
+    },
+    {
+      "osm_way": 498087732,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 498095283,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 498095292"
+    },
+    {
+      "osm_way": 498095283,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 498095284,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 498095284,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 498095285,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 498095292"
+    },
+    {
+      "osm_way": 498095285,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 498095286,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 498095287,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 498095292"
+    },
+    {
+      "osm_way": 498095287,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 498095288,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 498095292"
+    },
+    {
+      "osm_way": 498095288,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 498095289,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 498095290,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 498095292"
+    },
+    {
+      "osm_way": 498095290,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 498095291,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 498095292"
+    },
+    {
+      "osm_way": 498095291,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 498095292,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 498095292,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 498095293,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 498095293,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 498095294,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 498095292"
+    },
+    {
+      "osm_way": 498095294,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 498095295,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 498095292"
+    },
+    {
+      "osm_way": 498095295,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 498095296,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 498095292"
+    },
+    {
+      "osm_way": 498095296,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 498095297,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 498095292"
+    },
+    {
+      "osm_way": 498095297,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 498095298,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 498095298,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 498095299,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 498095299,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 499548585,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 499548585,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 515869468,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 515869468,
+      "mode": "drive",
+      "reason": "restricted or unknown drive access: destination"
+    },
+    {
+      "osm_way": 515869476,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 520730369,
+      "mode": "walk",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 520730369,
+      "mode": "drive",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 520730370,
+      "mode": "walk",
+      "reason": "non-ground level requires review"
+    },
+    {
+      "osm_way": 520730370,
+      "mode": "drive",
+      "reason": "non-ground level requires review"
+    },
+    {
+      "osm_way": 520730371,
+      "mode": "walk",
+      "reason": "non-ground level requires review"
+    },
+    {
+      "osm_way": 520730371,
+      "mode": "drive",
+      "reason": "non-ground level requires review"
+    },
+    {
+      "osm_way": 564289106,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 689550348,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 705001028"
+    },
+    {
+      "osm_way": 689550348,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 689550349,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 1652482"
+    },
+    {
+      "osm_way": 689550349,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 689550350,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 705001030"
+    },
+    {
+      "osm_way": 689550350,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 689550351,
+      "mode": "walk",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 689550351,
+      "mode": "drive",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 689550352,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 705001026"
+    },
+    {
+      "osm_way": 689550352,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 689550353,
+      "mode": "walk",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 689550353,
+      "mode": "drive",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 689552706,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 689552706,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 689552709,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 1652482"
+    },
+    {
+      "osm_way": 689552709,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 691158131,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 28695389"
+    },
+    {
+      "osm_way": 691158131,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 691158132,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 28695389"
+    },
+    {
+      "osm_way": 691158132,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 691158133,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 30896932"
+    },
+    {
+      "osm_way": 691158133,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 691158134,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 30896932"
+    },
+    {
+      "osm_way": 691158134,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 691158135,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 30896932"
+    },
+    {
+      "osm_way": 691158135,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 691158136,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 691158136,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 691158137,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 691158137,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 697666693,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 697666693,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 697666694,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 697666694,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 697666695,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 697666695,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 697666696,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 697666696,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 697666697,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 697666697,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 697666698,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 697666698,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 705001026,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 705001026,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 705001028,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 705001028,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 705001029,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 705001033"
+    },
+    {
+      "osm_way": 705001029,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 705001030,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 705001030,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 705001031,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 705001033,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 705001033,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 705001034,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 705001030"
+    },
+    {
+      "osm_way": 705001034,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 705001035,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 705001035,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 705001036,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 705001026"
+    },
+    {
+      "osm_way": 705001036,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 732000351,
+      "mode": "walk",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 732000351,
+      "mode": "drive",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 732000352,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 732000352,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 732000353,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 6854479508"
+    },
+    {
+      "osm_way": 732000353,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 732000354,
+      "mode": "walk",
+      "reason": "restricted or unknown walk access: private"
+    },
+    {
+      "osm_way": 732000354,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 732000355,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 732000356,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 732000356,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 732000357,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 732000357,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 732000359,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 732000360,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 66644377"
+    },
+    {
+      "osm_way": 732000360,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 732000361,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 28695389"
+    },
+    {
+      "osm_way": 732000361,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 732000362,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 732000351"
+    },
+    {
+      "osm_way": 732000362,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 732000363,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 732000364,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 66644377"
+    },
+    {
+      "osm_way": 732000364,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 751747812,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 732000352"
+    },
+    {
+      "osm_way": 751747812,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 751747813,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 28695389"
+    },
+    {
+      "osm_way": 751747813,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 839987588,
+      "mode": "walk",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 839987588,
+      "mode": "drive",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 839987589,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 839987589,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 840000703,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 849629056,
+      "mode": "walk",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 849629056,
+      "mode": "drive",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 867911031,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 8089925937"
+    },
+    {
+      "osm_way": 867911031,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 867911038,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 1339153430"
+    },
+    {
+      "osm_way": 867911038,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 867911042,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 8089925943"
+    },
+    {
+      "osm_way": 867911042,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 867911043,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 8089925942"
+    },
+    {
+      "osm_way": 867911043,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 867911044,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 8089925941"
+    },
+    {
+      "osm_way": 867911044,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 867911045,
+      "mode": "walk",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 867911045,
+      "mode": "drive",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 867911046,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 867911047,
+      "mode": "walk",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 867911047,
+      "mode": "drive",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 867911049,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 4417156854"
+    },
+    {
+      "osm_way": 867911049,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 867911050,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 8089925988"
+    },
+    {
+      "osm_way": 867911050,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 867911051,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 8089925990"
+    },
+    {
+      "osm_way": 867911051,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 867911052,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 8089925992"
+    },
+    {
+      "osm_way": 867911052,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 867911053,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 4417156854"
+    },
+    {
+      "osm_way": 867911053,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 867911054,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 8089925988"
+    },
+    {
+      "osm_way": 867911054,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 888799018,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 8263295683"
+    },
+    {
+      "osm_way": 888799018,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 888799019,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 8263295684"
+    },
+    {
+      "osm_way": 888799019,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 888799020,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 888799021,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 888799021,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 888799022,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 888799022,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 888799023,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 8263295688"
+    },
+    {
+      "osm_way": 888799023,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 888799024,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 8263295689"
+    },
+    {
+      "osm_way": 888799024,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 888799025,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 1652482"
+    },
+    {
+      "osm_way": 888799025,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 888799027,
+      "mode": "walk",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 888799027,
+      "mode": "drive",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 894943847,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 903937663,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 8089925994"
+    },
+    {
+      "osm_way": 903937663,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 903937664,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 8089925994"
+    },
+    {
+      "osm_way": 903937664,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 903937665,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 8395159588"
+    },
+    {
+      "osm_way": 903937665,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 903937670,
+      "mode": "walk",
+      "reason": "restricted or unknown walk access: no"
+    },
+    {
+      "osm_way": 903937670,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 906618467,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 931569315,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 931569316,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 941355659,
+      "mode": "walk",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 941355659,
+      "mode": "drive",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 959594550,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 494967002"
+    },
+    {
+      "osm_way": 959594550,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 959594551,
+      "mode": "walk",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 959594551,
+      "mode": "drive",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 959594552,
+      "mode": "walk",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 959594552,
+      "mode": "drive",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 959594566,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 959594567,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 960646867,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 960646868,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 960646869,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 960646870,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 28695389"
+    },
+    {
+      "osm_way": 960646870,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 960646871,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 28695389"
+    },
+    {
+      "osm_way": 960646871,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 960646872,
+      "mode": "walk",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 960646872,
+      "mode": "drive",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 1000370526,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1036241003,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1036243318,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1036243319,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1036243320,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1036243322,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1036243322,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1042449604,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1042449604,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1042449605,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1042449605,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1052775822,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 25822470"
+    },
+    {
+      "osm_way": 1052775822,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1052775823,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 25822470"
+    },
+    {
+      "osm_way": 1052775823,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1052775824,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 839987588"
+    },
+    {
+      "osm_way": 1052775824,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1052775825,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1052775826,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1052775827,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1052775828,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1052775829,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1052775830,
+      "mode": "walk",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 1052775830,
+      "mode": "drive",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 1052775831,
+      "mode": "walk",
+      "reason": "non-ground level requires review"
+    },
+    {
+      "osm_way": 1052775831,
+      "mode": "drive",
+      "reason": "non-ground level requires review"
+    },
+    {
+      "osm_way": 1052775832,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1055884904,
+      "mode": "walk",
+      "reason": "directional restriction requires authored routing"
+    },
+    {
+      "osm_way": 1055884904,
+      "mode": "drive",
+      "reason": "directional restriction requires authored routing"
+    },
+    {
+      "osm_way": 1061894975,
+      "mode": "walk",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 1061894975,
+      "mode": "drive",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 1061916355,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1061916356,
+      "mode": "walk",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 1061916356,
+      "mode": "drive",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 1062135702,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1062197639,
+      "mode": "walk",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 1062197639,
+      "mode": "drive",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 1062197640,
+      "mode": "walk",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 1062197640,
+      "mode": "drive",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 1062197641,
+      "mode": "walk",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 1062197641,
+      "mode": "drive",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 1062197642,
+      "mode": "walk",
+      "reason": "intersects supplied water exclusion 1062197644"
+    },
+    {
+      "osm_way": 1062197642,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1062197643,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1062197644,
+      "mode": "walk",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 1062197644,
+      "mode": "drive",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 1062200542,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1062200543,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1062200544,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1062200545,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1062200546,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1062200547,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1062200549,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1062200550,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1062200551,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1062200552,
+      "mode": "walk",
+      "reason": "intersects supplied water exclusion 2792384"
+    },
+    {
+      "osm_way": 1062200552,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1062200553,
+      "mode": "walk",
+      "reason": "intersects supplied water exclusion 2792384"
+    },
+    {
+      "osm_way": 1062200553,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1062202822,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1062202823,
+      "mode": "walk",
+      "reason": "intersects supplied water exclusion 1062197644"
+    },
+    {
+      "osm_way": 1062202823,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1062505749,
+      "mode": "walk",
+      "reason": "intersects supplied water exclusion 2792384"
+    },
+    {
+      "osm_way": 1062505749,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1062505750,
+      "mode": "walk",
+      "reason": "intersects supplied water exclusion 2792384"
+    },
+    {
+      "osm_way": 1062505750,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1062505752,
+      "mode": "walk",
+      "reason": "intersects supplied water exclusion 2792384"
+    },
+    {
+      "osm_way": 1062505752,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1062778260,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1062778260,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1062778261,
+      "mode": "walk",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 1062778261,
+      "mode": "drive",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 1062778262,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1062778263,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1062778264,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1062778265,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1062778265,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1062778266,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1062778267,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1062778267,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1062778268,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1062778268,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1062778269,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1062778270,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1062778270,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1062778271,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1062778272,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1062778273,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1062780766,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1062782422,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1063087366,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1063087367,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1063370493,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1063370494,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1064478141,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1064478150,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1064976636,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1064976636,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1064976637,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1064976638,
+      "mode": "walk",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 1064976638,
+      "mode": "drive",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 1064976639,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 25822470"
+    },
+    {
+      "osm_way": 1064976639,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1065399393,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 498095292"
+    },
+    {
+      "osm_way": 1065399393,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1065399394,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1065399394,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1065399395,
+      "mode": "walk",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 1065399395,
+      "mode": "drive",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 1066271212,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1066271213,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1066271214,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1066271216,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1066271217,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1066271218,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1066271218,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1066271219,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1066271221,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1066271222,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1066271222,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1066271223,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1066973375,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1066973376,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1066973377,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1066973378,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1066973379,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 9797078066"
+    },
+    {
+      "osm_way": 1066973379,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1066973380,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 9797078066"
+    },
+    {
+      "osm_way": 1066973380,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1066973381,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 9797078066"
+    },
+    {
+      "osm_way": 1066973381,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1066973382,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 9793812049"
+    },
+    {
+      "osm_way": 1066973382,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1071119941,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1071119942,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1071119942,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1072073344,
+      "mode": "walk",
+      "reason": "non-ground level requires review"
+    },
+    {
+      "osm_way": 1072073344,
+      "mode": "drive",
+      "reason": "non-ground level requires review"
+    },
+    {
+      "osm_way": 1093957686,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1093957687,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 28695389"
+    },
+    {
+      "osm_way": 1093957687,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1093957689,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1105663387,
+      "mode": "walk",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 1105663387,
+      "mode": "drive",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 1117062450,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1150074910,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1153255624,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1153255624,
+      "mode": "drive",
+      "reason": "intersects supplied building exclusion 287928763"
+    },
+    {
+      "osm_way": 1164721287,
+      "mode": "walk",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 1164721287,
+      "mode": "drive",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 1165247618,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1165247618,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1165247619,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1165247619,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1165247620,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1165247620,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1165247621,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 1165247619"
+    },
+    {
+      "osm_way": 1165247621,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1165247622,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 498095292"
+    },
+    {
+      "osm_way": 1165247622,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1165247623,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1165247623,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1165247624,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 498095292"
+    },
+    {
+      "osm_way": 1165247624,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1165247625,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1165247625,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1165247626,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1165247626,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1165247627,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1165247627,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1165247628,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1165247629,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 498095292"
+    },
+    {
+      "osm_way": 1165247629,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1165247630,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1165247630,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1165247631,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1165263993,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1165263993,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1165263994,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1165263994,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1165288331,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1165288331,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1165288332,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1165288332,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1165288333,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1165288333,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1165288334,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1165288334,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1208196247,
+      "mode": "walk",
+      "reason": "directional restriction requires authored routing"
+    },
+    {
+      "osm_way": 1208196247,
+      "mode": "drive",
+      "reason": "directional restriction requires authored routing"
+    },
+    {
+      "osm_way": 1210652264,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1215665322,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1215665322,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1215665324,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1215665324,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1215665328,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1215665328,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1242612696,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 11547420189"
+    },
+    {
+      "osm_way": 1242612696,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1242612697,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 11547420190"
+    },
+    {
+      "osm_way": 1242612697,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1332946820,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 28695389"
+    },
+    {
+      "osm_way": 1332946820,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1332946821,
+      "mode": "walk",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 1332946821,
+      "mode": "drive",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 1332946829,
+      "mode": "walk",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 1332946829,
+      "mode": "drive",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 1332946830,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 1652482"
+    },
+    {
+      "osm_way": 1332946830,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1332946831,
+      "mode": "walk",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 1332946831,
+      "mode": "drive",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 1332946832,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 1652482"
+    },
+    {
+      "osm_way": 1332946832,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1332946833,
+      "mode": "walk",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 1332946833,
+      "mode": "drive",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 1332946834,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 1652482"
+    },
+    {
+      "osm_way": 1332946834,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1332946835,
+      "mode": "walk",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 1332946835,
+      "mode": "drive",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 1332946836,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 1652482"
+    },
+    {
+      "osm_way": 1332946836,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1334385253,
+      "mode": "walk",
+      "reason": "non-ground level requires review"
+    },
+    {
+      "osm_way": 1334385253,
+      "mode": "drive",
+      "reason": "non-ground level requires review"
+    },
+    {
+      "osm_way": 1334385254,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1334385254,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1334385255,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1334385255,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1334385256,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1334385256,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1334385257,
+      "mode": "walk",
+      "reason": "non-ground level requires review"
+    },
+    {
+      "osm_way": 1334385257,
+      "mode": "drive",
+      "reason": "non-ground level requires review"
+    },
+    {
+      "osm_way": 1334385258,
+      "mode": "walk",
+      "reason": "non-ground level requires review"
+    },
+    {
+      "osm_way": 1334385258,
+      "mode": "drive",
+      "reason": "non-ground level requires review"
+    },
+    {
+      "osm_way": 1334385259,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 1334385275"
+    },
+    {
+      "osm_way": 1334385259,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1334385260,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1334385260,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1334385262,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 12345128710"
+    },
+    {
+      "osm_way": 1334385262,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1334385263,
+      "mode": "walk",
+      "reason": "non-ground level requires review"
+    },
+    {
+      "osm_way": 1334385263,
+      "mode": "drive",
+      "reason": "non-ground level requires review"
+    },
+    {
+      "osm_way": 1334385264,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1334385264,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1334385265,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 1334385275"
+    },
+    {
+      "osm_way": 1334385265,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1334385266,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1334385266,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1334385267,
+      "mode": "walk",
+      "reason": "restricted or unknown walk access: private"
+    },
+    {
+      "osm_way": 1334385267,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1334385268,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1334385268,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1334385270,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1334385270,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1334385272,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1334385272,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1334385273,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1334385273,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1334385274,
+      "mode": "walk",
+      "reason": "non-ground level requires review"
+    },
+    {
+      "osm_way": 1334385274,
+      "mode": "drive",
+      "reason": "non-ground level requires review"
+    },
+    {
+      "osm_way": 1334385275,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1334385275,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1334385276,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1334385276,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1339153428,
+      "mode": "walk",
+      "reason": "restricted or unknown walk access: private"
+    },
+    {
+      "osm_way": 1339153428,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1339153430,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1339153430,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1339153431,
+      "mode": "walk",
+      "reason": "restricted or unknown walk access: private"
+    },
+    {
+      "osm_way": 1339153431,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1339153432,
+      "mode": "walk",
+      "reason": "restricted or unknown walk access: private"
+    },
+    {
+      "osm_way": 1339153432,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1339153440,
+      "mode": "walk",
+      "reason": "restricted or unknown walk access: emergency"
+    },
+    {
+      "osm_way": 1339153440,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1339153441,
+      "mode": "walk",
+      "reason": "restricted or unknown walk access: private"
+    },
+    {
+      "osm_way": 1339153441,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1339153442,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1339153442,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1364670405,
+      "mode": "walk",
+      "reason": "intersects supplied water exclusion 1062197644"
+    },
+    {
+      "osm_way": 1364670405,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1420082167,
+      "mode": "walk",
+      "reason": "not a separately mapped walking way"
+    },
+    {
+      "osm_way": 1420082167,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1420082168,
+      "mode": "walk",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 1420082168,
+      "mode": "drive",
+      "reason": "building or water geometry requires review"
+    },
+    {
+      "osm_way": 1423112504,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 499548585"
+    },
+    {
+      "osm_way": 1423112504,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1428093215,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 13128805247"
+    },
+    {
+      "osm_way": 1428093215,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1428093216,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 13128805246"
+    },
+    {
+      "osm_way": 1428093216,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1428093217,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 28695389"
+    },
+    {
+      "osm_way": 1428093217,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1428093218,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 28695389"
+    },
+    {
+      "osm_way": 1428093218,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1428093219,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1428093220,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 13128805251"
+    },
+    {
+      "osm_way": 1428093220,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1428119996,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 8263295684"
+    },
+    {
+      "osm_way": 1428119996,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1428119997,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 136888948"
+    },
+    {
+      "osm_way": 1428119997,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1430390182,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 10838206546"
+    },
+    {
+      "osm_way": 1430390182,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1430390183,
+      "mode": "walk",
+      "reason": "intersects supplied barrier exclusion 10838206544"
+    },
+    {
+      "osm_way": 1430390183,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1518976208,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1518976209,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1518976210,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1527541297,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 25822470"
+    },
+    {
+      "osm_way": 1527541297,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1551890169,
+      "mode": "walk",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 1551890169,
+      "mode": "drive",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 1551890170,
+      "mode": "walk",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 1551890170,
+      "mode": "drive",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 1551890171,
+      "mode": "walk",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 1551890171,
+      "mode": "drive",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 1556686674,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 28695389"
+    },
+    {
+      "osm_way": 1556686674,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1556686675,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 28695389"
+    },
+    {
+      "osm_way": 1556686675,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1556686676,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1556686677,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1556686678,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1556686679,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1556686680,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 28695389"
+    },
+    {
+      "osm_way": 1556686680,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1556686681,
+      "mode": "walk",
+      "reason": "intersects supplied building exclusion 28695389"
+    },
+    {
+      "osm_way": 1556686681,
+      "mode": "drive",
+      "reason": "unsupported driving way"
+    },
+    {
+      "osm_way": 1559227475,
+      "mode": "walk",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 1559227475,
+      "mode": "drive",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 1559227476,
+      "mode": "walk",
+      "reason": "structure, ford or area requires authored routing"
+    },
+    {
+      "osm_way": 1559227476,
+      "mode": "drive",
+      "reason": "structure, ford or area requires authored routing"
+    }
+  ]
+}

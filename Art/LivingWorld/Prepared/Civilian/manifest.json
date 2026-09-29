@@ -1,0 +1,47 @@
+{
+  "asset": "Civilian",
+  "source_height_units": 0.9801026045185068,
+  "height_m": 1.7,
+  "unit_scale_m": 1.734512276737756,
+  "feet_z_m": -3.203042236719175e-07,
+  "bones": 65,
+  "clips": [
+    {
+      "name": "Civilian_Walk",
+      "fbx": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\Civilian\\Civilian_Walk.fbx",
+      "frames": [
+        1,
+        57
+      ],
+      "removed_planar_travel_m": [
+        0.0,
+        7.774066489004019e-08
+      ]
+    },
+    {
+      "name": "Civilian_Run",
+      "fbx": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\Civilian\\Civilian_Run.fbx",
+      "frames": [
+        1,
+        31
+      ],
+      "removed_planar_travel_m": [
+        0.0,
+        -1.0338498811350799e-07
+      ]
+    },
+    {
+      "name": "Civilian_Idle",
+      "fbx": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\Civilian\\Civilian_Idle.fbx",
+      "frames": [
+        1,
+        369
+      ],
+      "removed_planar_travel_m": [
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "note": "Generated approximation; target height is an artistic normalization, not measured anatomy."
+}

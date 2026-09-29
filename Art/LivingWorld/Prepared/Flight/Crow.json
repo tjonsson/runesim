@@ -1,0 +1,20 @@
+{
+  "id": "Crow",
+  "span_m": 0.95,
+  "frequency_hz": 4.0,
+  "bones": [
+    "root",
+    "wing_L",
+    "tip_L",
+    "wing_R",
+    "tip_R"
+  ],
+  "clips": [
+    "Flapping",
+    "Gliding"
+  ],
+  "source": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Generated\\Crow\\Crow_Tripo.glb",
+  "fbx": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\Flight\\Crow.fbx",
+  "license": "AI generated with user-authorized Tripo credits; retain service provenance",
+  "scope": "Flight rig, no landing/perching; dimensions are representative artistic scaling"
+}

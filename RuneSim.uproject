@@ -16,6 +16,22 @@
 	],
 	"Plugins": [
 		{
+			"Name": "PixelCapture",
+			"Enabled": true
+		},
+		{
+			"Name": "PixelStreaming2",
+			"Enabled": true
+		},
+		{
+			"Name": "Tripo3DUEBridge",
+			"Enabled": true,
+			"Optional": true,
+			"TargetAllowList": [
+				"Editor"
+			]
+		},
+		{
 			"Name": "AirSim",
 			"Enabled": true
 		},

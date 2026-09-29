@@ -1,0 +1,54 @@
+{
+  "id": "AH1W",
+  "dimensions_m": [
+    17.152664184570312,
+    3.2385425567626953,
+    3.82901668548584
+  ],
+  "bones": [
+    "root",
+    "main_rotor",
+    "tail_rotor"
+  ],
+  "triangles": 68834,
+  "parts": 41,
+  "source_forward": "-X",
+  "rotors": {
+    "main_rotor": {
+      "pivot_m": [
+        -1.551800012588501,
+        0.0,
+        1.6957999467849731
+      ],
+      "parts": [
+        "mesh21_dat_desirefx_me_",
+        "mesh23_dat_desirefx_me_",
+        "mesh39_dat_desirefx_me_",
+        "mesh40_dat_desirefx_me_",
+        "mesh41_dat_desirefx_me_"
+      ]
+    },
+    "tail_rotor": {
+      "pivot_m": [
+        7.1442999839782715,
+        0.5108000040054321,
+        0.8440999984741211
+      ],
+      "parts": [
+        "mesh26_dat_desirefx_me_",
+        "mesh27_dat_desirefx_me_",
+        "mesh28_dat_desirefx_me_",
+        "mesh29_dat_desirefx_me_",
+        "mesh30_dat_desirefx_me_",
+        "mesh31_dat_desirefx_me_",
+        "mesh32_dat_desirefx_me_",
+        "mesh33_dat_desirefx_me_",
+        "mesh34_dat_desirefx_me_",
+        "mesh36_dat_desirefx_me_",
+        "mesh37_dat_desirefx_me_"
+      ]
+    }
+  },
+  "license": "User-supplied; private project use; redistribution rights unverified",
+  "fbx": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\Flight\\AH1W.fbx"
+}

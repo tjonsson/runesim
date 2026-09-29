@@ -1,0 +1,21 @@
+{
+  "asset": "Crow",
+  "reference": "Crow_reference.png",
+  "source": "Generated with OpenAI imagegen for this project",
+  "model": "Tripo Studio H3.1",
+  "task_id": "29b878a8-ebe4-45b9-8d10-a86f760e8f4f",
+  "generation_credits": 55,
+  "total_authorized_spent": 315,
+  "download": "Crow_Tripo.glb",
+  "geometry_faces": 37865,
+  "texture_resolution": "4K",
+  "scale": "Representative 0.95 m wingspan, artistic anatomical approximation",
+  "rig": "5 deform bones plus FBX armature node, weighted wings, 4 Hz visual flap and glide",
+  "lod_vertices": [
+    22281,
+    12464,
+    6900,
+    3827
+  ],
+  "scope": "Ambient flight; no perching clips, not a biologically calibrated model"
+}

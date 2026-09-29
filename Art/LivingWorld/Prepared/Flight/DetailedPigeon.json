@@ -1,0 +1,20 @@
+{
+  "id": "DetailedPigeon",
+  "span_m": 0.68,
+  "frequency_hz": 5.0,
+  "bones": [
+    "root",
+    "wing_L",
+    "tip_L",
+    "wing_R",
+    "tip_R"
+  ],
+  "clips": [
+    "Flapping",
+    "Gliding"
+  ],
+  "source": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Generated\\Pigeon\\Pigeon_Tripo.glb",
+  "fbx": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\Flight\\DetailedPigeon.fbx",
+  "license": "AI generated with user-authorized Tripo credits; retain service provenance",
+  "scope": "Flight rig, no landing/perching; dimensions are representative artistic scaling"
+}

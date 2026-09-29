@@ -1,10 +1,14 @@
 # RUNE Sim — Realistic UAV Navigation Environment
 
-**RUNE Sim** is a real-time Digital Twin visualization environment for both simulated (SITL) and real (HITL) drone operations, built on Unreal Engine 5.7. It connects to the **Control Room** implemented in this [repository](https://github.com/manudelu/ws_uspace_control_room.git), receives live MQTT telemetry via WebSocket, and renders fleet activity over Cesium 3D geospatial terrain using AirSim physics. And also uses Gaussian Splatting to enhance the rendering capabilities of the operational area in which the drone is moving.
+**RUNE Sim** is a real-time Digital Twin visualization environment for both simulated (SITL) and real (HITL) drone operations, built on Unreal Engine 5.8. It connects to the **Control Room** implemented in this [repository](https://github.com/manudelu/ws_uspace_control_room.git), receives live MQTT telemetry via WebSocket, and renders fleet activity over Cesium 3D geospatial terrain using AirSim physics. It also supports optional Gaussian Splatting for the operational area.
 
 ---
 
 ## Engine Version
+
+The **Living World** simulation demo adds population settings, route-following crowds, airborne activity and a simulated PTZ camera with WebRTC output. See [implementation status and setup](docs/living-world-implementation.md) for the demo, verified behavior and remaining production work.
+
+Living World includes Mavic/Orqa drones, F-4 aircraft, Huey/Super Cobra helicopters, pigeon/gull/crow flocks, animated people and jeep traffic. `Scripts/run_living_demo.ps1` now opens the main Cesium scene; use `-Scene LivingWorldDemo` for the flat test fixture. Its independent signalling service feeds the Pi viewer, with bounded recovery after unexpected simulator exits. Open **Environment > Living World** (F9) to adjust the population. See [MainLevel integration](docs/living-world-cesium.md), [packaged demo](docs/living-world-packaged-demo.md), [air assets](docs/living-world-air-assets.md), [ground movement](docs/living-world-movement.md), [vehicle steering and suspension](docs/living-world-vehicles.md), [recording/replay](docs/living-world-replay.md), and [Cesium route validation](docs/living-world-routes.md).
 
 **Unreal Engine 5.8** is required. Download and install it from the [Epic Games Launcher](https://www.unrealengine.com/en-US/download).
 
@@ -29,13 +33,19 @@ New scenes are automatically discovered from `Content/*.umap` and cooked via `-a
 
 ---
 
-## Required Plugins
+## Dependencies and plugins
+
+Install **Git LFS** before cloning and run `git lfs pull` to retrieve the Unreal assets and editable art. See [dependency versions, installation and repository policy](docs/dependencies.md) for a fresh checkout.
 
 | Plugin | Purpose | Installation Status | 
 |--------|--------|--------|
 | **[Cosys-AirSim](https://cosys-lab.github.io/Cosys-AirSim/)** | Core simulation backend | Already included in this repository |
 | **[Cesium for Unreal](https://www.fab.com/listings/76c295fe-0dc6-4fd6-8319-e9833be427cd)** | Streaming real-world 3D terrain | Install manually via Fab Marketplace |
-| **[XScene-UE (Gaussian Splatting)](https://github.com/xverse-engine/XScene-UEPlugin)** | Enables 3D Gaussian Splatting rendering for high-fidelity environment scenes | Requires manual install |
+| **[Tripo DCC Bridge](https://studio.tripo3d.ai)** | Optional editor asset import | Download separately; see [bridge setup](docs/tripo-bridge-setup.md) |
+| **Pixel Streaming 2 / Pixel Capture / Niagara** | Camera streaming and effects | Included with Unreal Engine 5.8 |
+| **[XScene-UE (Gaussian Splatting)](https://github.com/xverse-engine/XScene-UEPlugin)** | Optional Gaussian Splatting scenes | Disabled by default; install separately |
+
+Store and vendor plugin downloads are excluded from Git. The existing Cosys-AirSim source integration is retained. Builds, caches, local recordings and test evidence stay under ignored `Saved/`. Run `python Scripts/check_repository.py` before committing to check the staged repository contents and LFS attributes.
 
 > After installing Cesium, enable it under *Edit → Plugins*, then restart Unreal.
 

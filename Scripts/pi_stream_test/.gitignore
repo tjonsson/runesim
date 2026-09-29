@@ -1,0 +1,7 @@
+build/
+install/
+log/
+logs/
+browser-profile/
+.test_venv/
+__pycache__/

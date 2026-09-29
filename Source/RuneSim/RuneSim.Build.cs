@@ -21,12 +21,23 @@ public class RuneSim : ModuleRules
 
 		PrivateDependencyModuleNames.AddRange(new string[] {
             "CesiumRuntime",
+            "AnimationCore",
             "HeadMountedDisplay",
             "AirSim",
             "UMG",
             "Slate",
-            "SlateCore"
+            "SlateCore",
+            "AssetRegistry",
+            "Niagara",
+            "PixelStreaming2",
+            "PixelStreaming2Core",
+            "PixelCapture",
+            "RHI",
+            "RenderCore"
         });
+
+        if (Target.bBuildEditor)
+            PrivateDependencyModuleNames.Add("NiagaraEditor");
 
 		// Uncomment if you are using Slate UI
 		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });

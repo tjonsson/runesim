@@ -1,0 +1,42 @@
+[
+  {
+    "name": "helicopter_loop",
+    "source": "aquinn / Helicopter Sounds / CC0",
+    "seconds": 7.88,
+    "peak_dbfs": -12.041199826559248,
+    "rms_dbfs": -24.63651077782923,
+    "loop_edge_delta": 2.356417764476357e-05
+  },
+  {
+    "name": "woodland_birds",
+    "source": "isaiah658 / Ambient Bird Sounds / CC0",
+    "seconds": 30.56825,
+    "peak_dbfs": -18.416375079047505,
+    "rms_dbfs": -41.567226553683895,
+    "loop_edge_delta": 1.0054736878628546e-05
+  },
+  {
+    "name": "drone_loop",
+    "source": "Original RuneSim procedural sound design",
+    "seconds": 7.88,
+    "peak_dbfs": -12.041199826559248,
+    "rms_dbfs": -19.267169447900812,
+    "loop_edge_delta": 0.0036225929519928465
+  },
+  {
+    "name": "utility_engine_loop",
+    "source": "Original RuneSim procedural sound design",
+    "seconds": 7.88,
+    "peak_dbfs": -12.041199826559248,
+    "rms_dbfs": -19.425041021292436,
+    "loop_edge_delta": 0.0024235741771558503
+  },
+  {
+    "name": "jet_loop",
+    "source": "Original RuneSim procedural sound design",
+    "seconds": 7.88,
+    "peak_dbfs": -12.041199826559248,
+    "rms_dbfs": -23.917996822445797,
+    "loop_edge_delta": 0.0062328846958413335
+  }
+]

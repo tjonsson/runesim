@@ -1,0 +1,17 @@
+{
+  "id": "F4",
+  "dimensions_m": [
+    18.93671989440918,
+    11.720378875732422,
+    5.002633094787598
+  ],
+  "bones": [
+    "root"
+  ],
+  "triangles": 100171,
+  "parts": 460,
+  "source_forward": "-X",
+  "rotors": {},
+  "license": "User-supplied; private project use; redistribution rights unverified",
+  "fbx": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\Flight\\F4.fbx"
+}

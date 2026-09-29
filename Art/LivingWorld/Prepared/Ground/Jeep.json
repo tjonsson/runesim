@@ -1,0 +1,15 @@
+{
+  "source_task": "27449fe4-f4cd-441b-8edc-ebc01c6b3137",
+  "length_m": 4.1,
+  "wheel_radius_m": 0.5093714214680837,
+  "bone_vertices": {
+    "root": 17352,
+    "wheel_LF": 2589,
+    "wheel_LR": 2091,
+    "wheel_RF": 2228,
+    "wheel_RR": 1998
+  },
+  "source_forward": "-Y",
+  "license": "Existing user Tripo generated asset; no new credits consumed",
+  "scope": "Generic textured utility vehicle with approximate rigid wheel segmentation; not a verified NATO subtype"
+}

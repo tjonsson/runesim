@@ -1,0 +1,56 @@
+{
+  "authorized_existing_credits": 1000,
+  "starting_balance": 2350,
+  "currency_purchases_authorized": false,
+  "spent_this_stage": 315,
+  "latest_verified_balance": 2035,
+  "transactions": [
+    {
+      "asset": "pigeon",
+      "action": "H3.1 image-to-3D",
+      "credits": 55,
+      "balance_after": 2295,
+      "task_id": "4411f44d-f3f8-4383-ac59-478c03190b84"
+    },
+    {
+      "asset": "civilian",
+      "action": "H3.1 image-to-3D",
+      "credits": 55,
+      "balance_after": 2240,
+      "task_id": "6acbe805-a0da-473a-871e-789f5a7d5eac"
+    },
+    {
+      "asset": "soldier",
+      "action": "H3.1 image-to-3D",
+      "credits": 55,
+      "balance_after": 2185,
+      "task_id": "74818ab1-3510-4136-9d96-43c4314acdec"
+    },
+    {
+      "asset": "civilian",
+      "action": "Mixamo humanoid auto rig",
+      "credits": 20,
+      "balance_after": 2165
+    },
+    {
+      "asset": "soldier",
+      "action": "Mixamo humanoid auto rig",
+      "credits": 20,
+      "balance_after": 2145
+    },
+    {
+      "asset": "herring-gull",
+      "action": "H3.1 image-to-3D",
+      "credits": 55,
+      "balance_after": 2090,
+      "task_id": "fe593b72-bc1e-406a-9bd4-1f71f0c0ddac"
+    },
+    {
+      "asset": "crow",
+      "action": "H3.1 image-to-3D",
+      "credits": 55,
+      "balance_after": 2035,
+      "task_id": "29b878a8-ebe4-45b9-8d10-a86f760e8f4f"
+    }
+  ]
+}

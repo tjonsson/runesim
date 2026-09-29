@@ -1,0 +1,124 @@
+[
+  {
+    "id": "Mavic3",
+    "source": "C:\\Users\\tommy\\Desktop\\synthetic_image_gen\\assets\\models\\drone\\DJI_Mavic_3_Cine.glb",
+    "dimensions_m": [
+      0.4384118914604187,
+      0.4363674819469452,
+      0.10744743049144745
+    ],
+    "bones": [
+      "root"
+    ],
+    "status": "rigged draft; visual, pivots, scale and license review required",
+    "fbx": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\Mavic3.fbx",
+    "blend": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\Mavic3.blend"
+  },
+  {
+    "id": "MQ27",
+    "source": "C:\\Users\\tommy\\Desktop\\synthetic_image_gen\\assets\\models\\drone\\MQ27_Dragonfire.glb",
+    "dimensions_m": [
+      4.14954948425293,
+      4.143299579620361,
+      1.2349669933319092
+    ],
+    "bones": [
+      "root"
+    ],
+    "status": "rigged draft; visual, pivots, scale and license review required",
+    "fbx": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\MQ27.fbx",
+    "blend": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\MQ27.blend"
+  },
+  {
+    "id": "UH1",
+    "source": "C:\\Users\\tommy\\Desktop\\synthetic_image_gen\\assets\\models\\helicopter\\Bell_UH1_Iroquois_Huey.glb",
+    "dimensions_m": [
+      16.593616485595703,
+      2.695065975189209,
+      3.810431957244873
+    ],
+    "bones": [
+      "root",
+      "main_rotor",
+      "tail_rotor"
+    ],
+    "status": "rigged draft; visual, pivots, scale and license review required",
+    "fbx": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\UH1.fbx",
+    "blend": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\UH1.blend"
+  },
+  {
+    "id": "F15SMT",
+    "source": "C:\\Users\\tommy\\Desktop\\synthetic_image_gen\\assets\\models\\plane\\F15SMT_AceCombat3.glb",
+    "dimensions_m": [
+      19.90000343322754,
+      13.10000228881836,
+      4.699999809265137
+    ],
+    "bones": [
+      "root"
+    ],
+    "status": "rigged draft; visual, pivots, scale and license review required",
+    "fbx": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\F15SMT.fbx",
+    "blend": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\F15SMT.blend"
+  },
+  {
+    "id": "F4",
+    "source": "C:\\Users\\tommy\\Desktop\\synthetic_image_gen\\assets\\models\\plane\\McDonnell_Douglas_F4_Phantom.glb",
+    "dimensions_m": [
+      18.93671989440918,
+      11.720378875732422,
+      6.208006858825684
+    ],
+    "bones": [
+      "root"
+    ],
+    "status": "rigged draft; visual, pivots, scale and license review required",
+    "fbx": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\F4.fbx",
+    "blend": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\F4.blend"
+  },
+  {
+    "id": "AH1W",
+    "source": "C:\\Users\\tommy\\Desktop\\synthetic_image_gen\\assets\\models\\helicopter\\supercopra\\AH-1W Supercobra Helicopter.usd",
+    "dimensions_m": [
+      17.152664184570312,
+      3.2385425567626953,
+      3.82901668548584
+    ],
+    "bones": [
+      "root"
+    ],
+    "status": "rigged draft; visual, pivots, scale and license review required",
+    "fbx": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\AH1W.fbx",
+    "blend": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\AH1W.blend"
+  },
+  {
+    "id": "Geranium2",
+    "source": "C:\\Users\\tommy\\Desktop\\synthetic_image_gen\\assets\\models\\drone\\Geranium-2\\scene.usdc",
+    "dimensions_m": [
+      3.49575138092041,
+      2.4961376190185547,
+      0.49373599886894226
+    ],
+    "bones": [
+      "root"
+    ],
+    "status": "rigged draft; visual, pivots, scale and license review required",
+    "fbx": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\Geranium2.fbx",
+    "blend": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\Geranium2.blend"
+  },
+  {
+    "id": "Orqa",
+    "source": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Saved\\LivingWorld\\OrqaSource\\tripo_convert_a8ad98d2-7e4e-4e90-9086-9d8812a1b219.fbx",
+    "dimensions_m": [
+      0.9806516766548157,
+      0.8742064237594604,
+      0.30822664499282837
+    ],
+    "bones": [
+      "root"
+    ],
+    "status": "rigged draft; visual, pivots, scale and license review required",
+    "fbx": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\Orqa.fbx",
+    "blend": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\Orqa.blend"
+  }
+]

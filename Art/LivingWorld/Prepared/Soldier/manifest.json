@@ -1,0 +1,47 @@
+{
+  "asset": "Soldier",
+  "source_height_units": 0.9794926575641512,
+  "height_m": 1.8,
+  "unit_scale_m": 1.8376860572659375,
+  "feet_z_m": -4.2569183799738536e-07,
+  "bones": 65,
+  "clips": [
+    {
+      "name": "Soldier_Walk",
+      "fbx": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\Soldier\\Soldier_Walk.fbx",
+      "frames": [
+        1,
+        57
+      ],
+      "removed_planar_travel_m": [
+        0.0,
+        -1.3242564972578727e-07
+      ]
+    },
+    {
+      "name": "Soldier_Run",
+      "fbx": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\Soldier\\Soldier_Run.fbx",
+      "frames": [
+        1,
+        31
+      ],
+      "removed_planar_travel_m": [
+        0.0,
+        2.1906924930404871e-07
+      ]
+    },
+    {
+      "name": "Soldier_Idle",
+      "fbx": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\Soldier\\Soldier_Idle.fbx",
+      "frames": [
+        1,
+        369
+      ],
+      "removed_planar_travel_m": [
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "note": "Generated approximation; target height is an artistic normalization, not measured anatomy."
+}

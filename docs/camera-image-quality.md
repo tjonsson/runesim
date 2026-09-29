@@ -1,0 +1,17 @@
+# Streamed sensor image quality
+
+The current deployed [crowd-flow build](living-world-movement.md) retains the image correction below and [Cesium view cadence](cesium-view-cadence.md). Its separate five-minute Pi check passed at 27.94 fps median with no freezes, stalls or restarts and 12 dropped presentation frames. The preceding cadence build passed a ten-minute Pi check at 29.38 fps median. The earlier 24.14 fps result below is preserved as a separate measurement of the camera-only build.
+
+The PTZ stream uses a display-encoded `FinalColorLDR` scene capture. Its BGRA8 render target is explicitly non-sRGB, with a 2.2 display gamma for the tone mapper. This avoids adding an sRGB render-target write conversion to the already display-encoded video before Pixel Streaming consumes the texture. The browser receives ordinary SDR H.264; no CSS brightness filter or Pi display calibration is applied.
+
+The stream component applies neutral **0 EV exposure compensation** instead of Unreal's inherited +1 EV bias. Scene exposure metering remains active and white balance is unchanged. Bloom is reduced to 0.1, with motion blur, lens flare, chromatic fringe and artificial film grain disabled so moving subjects remain legible. Persistent capture state retains exposure adaptation between frames.
+
+`ExposureCompensation` is editable on `SimCameraStreamComponent`, in stops from −4 to +4. Call `ApplyCameraAppearance()` after changing it at runtime. Non-finite values fall back to zero. These settings affect streamed sensors, not the main AirSim camera or global scene lighting.
+
+Before/after Pi screenshots and playback measurements are saved under `Saved/LivingWorld/CameraReview`. The original MainLevel camera package is retained for rollback. Photogrammetry texture resolution, baked source lighting and missing surface detail still limit ground-level realism; image processing cannot recover absent geometry or texture detail.
+
+## Deployed verification — September 29
+
+`package-camera.log` completed successfully. The current package at `Saved/LivingWorld/Packaged/Windows` contains this correction; `PackagedBeforeCamera` preserves the preceding build. Live inspection confirmed 0 EV compensation, a non-sRGB render target and 2.2 display gamma after restart. Pi screenshots were reviewed at sky (55° tilt), ground (−15°) and horizon (18°) angles. ROS2 control and automatic pose restoration passed, with 189 monotonic state messages. The capture retains cloud variation, ground midtones and character clothing that were washed out in the earlier image. Test helper and screenshots are under `Saved/LivingWorld/CameraReview/final`, including `camera-appearance-sweep.json` and `camera-{sky,ground,horizon}.png`.
+
+The accompanying 180-second stream measurement had no freezes, stale/stalled samples, browser restarts, counter resets or dropped presentation frames. Its **24.14 fps median / 22.35 minimum** missed the existing 25 fps median acceptance floor, so `camera-appearance-deploy.json` correctly reports `passed: false`. The host continuity check completed without a simulator restart (`camera-appearance-host.json`). A timing snapshot showed roughly 43 ms game-thread time versus 7 ms GPU time; a cause of the frame-rate difference has not been established. This is visual correction and uninterrupted playback over a bounded interval, not a new frame-rate or endurance pass. The simulator and Pi viewer were left running.

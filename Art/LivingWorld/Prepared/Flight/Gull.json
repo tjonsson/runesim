@@ -1,0 +1,20 @@
+{
+  "id": "Gull",
+  "span_m": 1.4,
+  "frequency_hz": 2.5,
+  "bones": [
+    "root",
+    "wing_L",
+    "tip_L",
+    "wing_R",
+    "tip_R"
+  ],
+  "clips": [
+    "Flapping",
+    "Gliding"
+  ],
+  "source": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Generated\\Gull\\Gull_Tripo.glb",
+  "fbx": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\Flight\\Gull.fbx",
+  "license": "AI generated with user-authorized Tripo credits; retain service provenance",
+  "scope": "Flight rig, no landing/perching; dimensions are representative artistic scaling"
+}
