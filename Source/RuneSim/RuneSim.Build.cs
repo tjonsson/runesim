@@ -33,7 +33,8 @@ public class RuneSim : ModuleRules
             "PixelStreaming2Core",
             "PixelCapture",
             "RHI",
-            "RenderCore"
+            "RenderCore",
+            "ImageWrapper"
         });
 
         if (Target.bBuildEditor)

@@ -1,0 +1,32 @@
+{
+  "id": "FPVDrone",
+  "source": "User-supplied fpv-drone.zip (OBJ with PBR textures), 2026-10-01",
+  "triangles": 58828,
+  "width_m": 0.476,
+  "length_m": 0.555,
+  "height_m": 0.291,
+  "propeller_centres_m": {
+    "propeller_1": [
+      -0.143,
+      -0.174,
+      0.008
+    ],
+    "propeller_2": [
+      -0.143,
+      0.192,
+      0.008
+    ],
+    "propeller_3": [
+      0.143,
+      -0.174,
+      0.008
+    ],
+    "propeller_4": [
+      0.143,
+      0.192,
+      0.008
+    ]
+  },
+  "source_forward": "-Y",
+  "scope": "Source scale kept (about 0.48 m across the propellers, a 7-10 inch strike quad)"
+}

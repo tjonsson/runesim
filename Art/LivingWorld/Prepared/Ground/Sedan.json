@@ -1,0 +1,19 @@
+{
+  "id": "Sedan",
+  "source_task": "16c752e1-3bff-49f5-bda5-18ba6c408812",
+  "length_m": 4.7,
+  "width_m": 2.255,
+  "height_m": 1.662,
+  "wheel_radius_m": 0.35825108585308135,
+  "wheelbase_m": 2.7518671092703895,
+  "bone_vertices": {
+    "root": 18342,
+    "wheel_LF": 1478,
+    "wheel_LR": 1513,
+    "wheel_RF": 1646,
+    "wheel_RR": 1637
+  },
+  "source_forward": "-Y",
+  "license": "Account-generated Tripo asset (user-authorized credits)",
+  "scope": "Generic civilian mid-size sedan; generated grille badge resembles a real maker badge"
+}

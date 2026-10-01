@@ -9,6 +9,7 @@
 #include "Misc/FileHelper.h"
 #include "Misc/Paths.h"
 #include "HAL/FileManager.h"
+#include "SimScenario.h"
 
 ASimReplay::ASimReplay()
 {
@@ -21,7 +22,7 @@ void ASimReplay::ClearReplay()
 {
     bPlaying = false;
     for (UMeshComponent* Visual : Visuals) if (Visual) Visual->DestroyComponent();
-    Visuals.Empty(); Tracks.Empty(); Duration = PlaybackTime = 0;
+    Visuals.Empty(); Tracks.Empty(); Events.Empty(); EventCount = EffectsPlayed = 0; Duration = PlaybackTime = 0;
 }
 
 bool ASimReplay::LoadRecording(const FString& Name)
@@ -36,6 +37,7 @@ bool ASimReplay::LoadRecording(const FString& Name)
     if (!FFileHelper::LoadFileToString(Text, *Path)) return Fail(TEXT("Cannot read recording"));
     TArray<FString> Lines; Text.ParseIntoArrayLines(Lines, true);
     TArray<FSimReplayTrack> Parsed;
+    TArray<FSimReplayEvent> ParsedEvents;
     TMap<FString, int32> Indices;
     double Start = -1, Previous = -1, End = 0;
     int32 PoseCount = 0;
@@ -49,6 +51,25 @@ bool ASimReplay::LoadRecording(const FString& Name)
             !Frame->TryGetArrayField(TEXT("actors"), Actors)) return Fail(TEXT("Invalid or out-of-order recording frame"));
         if (Start < 0) Start = Time;
         Previous = Time; End = Time - Start;
+        const TArray<TSharedPtr<FJsonValue>>* FrameEvents = nullptr;
+        if (Frame->HasField(TEXT("events")))
+        {
+            if (!Frame->TryGetArrayField(TEXT("events"), FrameEvents)) return Fail(TEXT("Invalid event array"));
+            for (const auto& Value : *FrameEvents)
+            {
+                const TSharedPtr<FJsonObject>* Object = nullptr; FSimReplayEvent Event; FString Type, Location; double EventTime = 0;
+                if (!Value->TryGetObject(Object) || !(*Object)->TryGetNumberField(TEXT("time"), EventTime) || !FMath::IsFinite(EventTime) ||
+                    !(*Object)->TryGetStringField(TEXT("type"), Type) || Type.IsEmpty() || Type.Len() > 32 ||
+                    !(*Object)->TryGetStringField(TEXT("location_cm"), Location) || !Event.Location.InitFromString(Location) || Event.Location.ContainsNaN())
+                    return Fail(TEXT("Invalid recorded event"));
+                if (ParsedEvents.Num() >= 4096) return Fail(TEXT("Recording exceeds event budget"));
+                // Events occur between samples; clamp into the recording's span.
+                Event.Time = FMath::Clamp(EventTime - Start, 0.0, End);
+                Event.Type = FName(*Type);
+                (*Object)->TryGetStringField(TEXT("subject"), Event.Subject);
+                ParsedEvents.Add(MoveTemp(Event));
+            }
+        }
         TSet<FString> Seen;
         for (const auto& Value : *Actors)
         {
@@ -133,6 +154,8 @@ bool ASimReplay::LoadRecording(const FString& Name)
     if (Parsed.IsEmpty()) return Fail(TEXT("Recording has no subjects"));
     // Commit only after full validation: failed loads leave the current replay intact.
     ClearReplay(); Tracks = MoveTemp(Parsed); Duration = End;
+    ParsedEvents.StableSort([](const FSimReplayEvent& A, const FSimReplayEvent& B) { return A.Time < B.Time; });
+    Events = MoveTemp(ParsedEvents); EventCount = Events.Num();
     for (const FSimReplayTrack& Track : Tracks)
     {
         UMeshComponent* Visual = nullptr;
@@ -165,9 +188,28 @@ void ASimReplay::Tick(float DeltaTime)
     Super::Tick(DeltaTime);
     if (!bPlaying) return;
     const float Rate = FMath::IsFinite(PlaybackRate) ? FMath::Clamp(PlaybackRate, .05f, 8.f) : 1.f;
+    const float From = PlaybackTime;
     float Next = PlaybackTime + FMath::Max(DeltaTime, 0.f) * Rate;
-    if (Next >= Duration) { if (bLoop && Duration > 0) Next = FMath::Fmod(Next, Duration); else { Next = Duration; bPlaying = false; } }
+    if (Next >= Duration)
+    {
+        if (bLoop && Duration > 0) { Next = FMath::Fmod(Next, Duration); PlayEventsBetween(From, Duration); PlayEventsBetween(-1., Next); }
+        else { Next = Duration; bPlaying = false; PlayEventsBetween(From, Duration); }
+    }
+    else PlayEventsBetween(From, Next);
     Seek(Next);
+}
+void ASimReplay::PlayEventsBetween(double From, double To)
+{
+    // Half-open interval (From, To]; an event at exactly zero plays on the first tick.
+    if (From == 0. && To > 0.) From = -1.;
+    for (const FSimReplayEvent& Event : Events)
+    {
+        if (Event.Time <= From) continue;
+        if (Event.Time > To) break;
+        if (!SimEvents::IsReplayable(Event.Type)) continue;
+        ++EffectsPlayed;
+        if (bReplayEffects) SimEvents::PlayEffect(GetWorld(), Event.Type, Event.Location);
+    }
 }
 void ASimReplay::UpdateVisuals()
 {

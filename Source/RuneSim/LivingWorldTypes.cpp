@@ -12,6 +12,7 @@ void FLivingWorldOptions::Sanitize()
     MaxActors = FMath::Clamp(MaxActors, 1, 300);
     ActivityRadiusMeters = FMath::IsFinite(ActivityRadiusMeters) ? FMath::Clamp(ActivityRadiusMeters, 100.f, 3000.f) : 500.f;
     AmbientVolumeDb = FMath::IsFinite(AmbientVolumeDb) ? FMath::Clamp(AmbientVolumeDb, -60.f, 0.f) : -12.f;
+    SensorStreams = FMath::Clamp(SensorStreams, 0, 4);
     if (static_cast<uint8>(Population) > 2) Population = ELivingPopulation::Mixed;
     if (static_cast<uint8>(Preset) > 3) Preset = ELivingPreset::Custom;
 }
@@ -75,4 +76,47 @@ float LivingWorld::AdvanceRoute(float Distance, float Travel, float Length, bool
     Phase = FMath::Fmod(FMath::Fmod(Phase + Travel, 2.f * Length) + 2.f * Length, 2.f * Length);
     Direction = Phase < Length ? 1 : -1;
     return Phase <= Length ? Phase : 2.f * Length - Phase;
+}
+
+float LivingWorld::DefaultTargetHealth(ELivingKind Kind)
+{
+    switch (Kind)
+    {
+    case ELivingKind::Drone: return 35.f;
+    case ELivingKind::Helicopter: return 75.f;
+    case ELivingKind::Plane: return 85.f;
+    case ELivingKind::Car: return 100.f;
+    default: return 0.f;
+    }
+}
+
+bool LivingWorld::IsEngageable(ELivingKind Kind)
+{
+    // People and wildlife are never virtual targets.
+    return Kind == ELivingKind::Car || Kind == ELivingKind::Plane || Kind == ELivingKind::Helicopter || Kind == ELivingKind::Drone;
+}
+
+bool LivingWorld::MatchesPopulation(const ULivingAssetProfile& Profile, ELivingPopulation Population)
+{
+    if (Profile.Kind != ELivingKind::Car || Population == ELivingPopulation::Mixed) return true;
+    return Profile.bMilitary == (Population == ELivingPopulation::Military);
+}
+
+float LivingWorld::YieldOffset(float ThreatLateral, float Limit)
+{
+    if (!FMath::IsFinite(ThreatLateral) || !FMath::IsFinite(Limit) || Limit <= 0.f) return 0.f;
+    return ThreatLateral > 0.f ? -Limit : Limit;
+}
+
+float LivingWorld::DopplerFactor(const FVector& ToListener, const FVector& Velocity)
+{
+    if (ToListener.ContainsNaN() || Velocity.ContainsNaN() || ToListener.IsNearlyZero()) return 1.f;
+    constexpr float SpeedOfSound = 34300.f;
+    const float Approach = FMath::Clamp(float(FVector::DotProduct(Velocity, ToListener.GetSafeNormal())), -.5f * SpeedOfSound, .5f * SpeedOfSound);
+    return FMath::Clamp(SpeedOfSound / (SpeedOfSound - Approach), .75f, 1.35f);
+}
+
+bool LivingWorld::IsUrgentThreat(float DistanceCm, float ClosingSpeedCmPerSecond)
+{
+    return DistanceCm < 1000.f || (DistanceCm < 1800.f && ClosingSpeedCmPerSecond > 300.f);
 }

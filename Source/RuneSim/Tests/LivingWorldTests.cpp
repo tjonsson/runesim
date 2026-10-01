@@ -185,7 +185,9 @@ bool FLivingSlopeLaneTest::RunTest(const FString& Parameters)
     FLivingWorldOptions Options; const TArray<ALivingAgent*> Agents = {Agent};
     for (int32 I=0; I<300; ++I) Agent->Step(1.f/30, Options, Agents, nullptr);
     TestTrue(TEXT("Normal clearance does not accumulate as lateral lane drift"), Agent->GetActorLocation().X > 1000 && Agent->Behavior != ELivingBehavior::Blocked);
-    TestTrue(TEXT("Foot placement remains on the centreline despite raised root"), FMath::Abs((Agent->GetActorLocation() - Up*90).Y) < 1);
+    // People stand upright on a cross-slope: the root sits vertically above the centreline contact.
+    TestTrue(TEXT("Foot placement remains on the centreline despite raised root"), FMath::Abs(Agent->GetActorLocation().Y) < 1);
+    TestTrue(TEXT("Pedestrian stays upright on a cross-slope"), FVector::DotProduct(Agent->GetActorUpVector(), FVector::UpVector) > .999f);
     Route->bRetireAtEnds = true;
     Route->SampleGround(9980, Position, Up);
     Agent->SetActorLocation(Position + Up*90); Agent->Activate(Profile, Route, 9980, FVector::ZeroVector, 2, 0);
@@ -307,6 +309,35 @@ bool FLivingVehicleContactTest::RunTest(const FString& Parameters)
         Route->ReviewedHalfWidthCm = 400;
         Floor->SetActorEnableCollision(false); Agent->Step(1.f/30, Options, Agents, nullptr);
         TestTrue(TEXT("Missing support blocks vehicle"), Agent->Behavior == ELivingBehavior::Blocked);
+        // An isolated missing facet under one wheel: strict routes block, scanned routes bridge it.
+        Floor->SetActorEnableCollision(false);
+        AActor* Pad = MakeBox(FVector(0,0,-10), FVector(20000,20000,10));
+        Pad->SetActorEnableCollision(false);
+        const FVector Hole = Agent->AnimatedVisual->GetSocketLocation(TEXT("wheel_LF"));
+        TArray<AActor*> Tiles;
+        for (const FVector& Centre : {FVector(Hole.X-10030,0,-10), FVector(Hole.X+10030,0,-10), FVector(Hole.X,Hole.Y-10030,-10), FVector(Hole.X,Hole.Y+10030,-10)})
+            Tiles.Add(MakeBox(Centre, FVector(10000,10000,10)));
+        Pad->Destroy();
+        Agent->Step(1.f/30, Options, Agents, nullptr);
+        TestTrue(TEXT("Strict route blocks a wheel over a missing facet"), Agent->Behavior == ELivingBehavior::Blocked);
+        Route->MaxBridgedWheels = 1; Agent->Step(1.f/30, Options, Agents, nullptr);
+        TestTrue(TEXT("Scanned route bridges one wheel over an isolated facet"), Agent->Behavior != ELivingBehavior::Blocked);
+        for (int32 I=0; I<30; ++I) Agent->Step(1.f/30, Options, Agents, nullptr); // Extension settles smoothly.
+        TestTrue(TEXT("Bridged wheel hangs at neutral suspension"), Agent->WheelPoses[0].Offset.Size() < 1.f);
+        TestTrue(TEXT("Chassis stays level on the supported wheels"), FVector::DotProduct(Agent->GetActorUpVector(), FVector::UpVector) > .999f);
+        AActor* Water = MakeBox(FVector(Hole.X,Hole.Y,-10), FVector(25,25,10)); Water->Tags.Add(TEXT("Water"));
+        Agent->Step(1.f/30, Options, Agents, nullptr);
+        TestTrue(TEXT("Bridging never crosses a water-tagged surface"), Agent->Behavior == ELivingBehavior::Blocked);
+        Water->Destroy();
+        const FVector Rear = Agent->AnimatedVisual->GetSocketLocation(TEXT("wheel_RR"));
+        AActor* Cover = MakeBox(FVector(Rear.X,Rear.Y,-10), FVector(40,40,10));
+        for (AActor* Tile : Tiles) Tile->SetActorEnableCollision(false);
+        Cover->SetActorEnableCollision(false);
+        Agent->Step(1.f/30, Options, Agents, nullptr);
+        TestTrue(TEXT("Bridging never supports a vehicle with two unsupported wheels"), Agent->Behavior == ELivingBehavior::Blocked);
+        for (AActor* Tile : Tiles) Tile->Destroy();
+        Cover->Destroy();
+        Route->MaxBridgedWheels = 0;
         Floor->SetActorEnableCollision(true); Profile->SpeedMetersPerSecond = 3;
         for (int32 I=0; I<60; ++I) Agent->Step(1.f/30, Options, Agents, nullptr);
         TestTrue(TEXT("Restored contacts allow movement"), Agent->Velocity.Size() > 100);

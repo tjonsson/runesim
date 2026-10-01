@@ -29,7 +29,7 @@ try {
         Add-Content -LiteralPath $LogPath -Value "$(Get-Date -Format o) Starting simulator (NVENC CUDA interop)"
         # Monitor the actual game binary so a bootstrap launcher cannot mask its exit code.
         # Interactive simulator is deliberately visible; this supervising shell is hidden.
-        $SimProcess = Start-Process -FilePath $DemoExe -ArgumentList ($ScenePath + $SettingsArgument + ' -windowed -ResX=1280 -ResY=720 -nosplash -AVCodecs.NvEnc.D3D12UsesCUDA=true -ExecCmds="t.MaxFPS 30" -LogCmds="LogRenderer Warning"') -WindowStyle Normal -PassThru
+        $SimProcess = Start-Process -FilePath $DemoExe -ArgumentList ($ScenePath + $SettingsArgument + ' -windowed -ResX=1280 -ResY=720 -nosplash -AVCodecs.NvEnc.D3D12UsesCUDA=true -ExecCmds="t.MaxFPS 30, PixelStreaming2.UseMediaCapture 0, PixelStreaming2.CaptureUseFence 0" -LogCmds="LogRenderer Warning"') -WindowStyle Normal -PassThru
         # Start-Process -Wait also waits for descendant processes; a helper may outlive a crash.
         $SimProcess.WaitForExit()
         $Result = $SimProcess.ExitCode

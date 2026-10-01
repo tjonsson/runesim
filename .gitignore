@@ -48,3 +48,7 @@ node_modules/
 *.blend@
 .DS_Store
 Thumbs.db
+
+# Sketchfab "Standard"-licensed source downloads: usable in the project, not redistributable raw.
+/Art/LivingWorld/Sourced/Sketchfab/
+/Art/LivingWorld/Prepared/Ground/Ariete.*

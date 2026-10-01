@@ -56,3 +56,9 @@ Evidence: `Saved/LivingWorld/StancePiTest/final`, `stance-packaged-flow.json` an
 This improves small height differences and adds bounded stance locking. It does not implement heel/toe rolling, foot orientation alignment, stair planning, dedicated sidestep clips or replacement ground geometry. Photogrammetry resolution still limits close-up terrain detail. Body orientation continues to follow the existing route surface normal; contact-phase authoring remains separate work.
 
 The playback median has limited margin above 25 fps. These measurements do not claim a steady 30 fps, overnight endurance or multi-camera performance.
+
+## Slope-aligned feet — September 30
+
+The planted foot now pitches and rolls to the ground normal sampled under that foot, weighted by contact and limited to 25° of ankle travel (`LivingWorld::FootTilt`). Swing keeps the authored heel/toe roll from the Mixamo clips, because the solver preserves the animated foot rotation and only adds the ground alignment while the foot carries weight. Combined with the upright body on slopes ([movement](living-world-movement.md)), the uphill foot is lifted and the downhill foot lowered, instead of the whole body leaning.
+
+Remaining limits: normals are not recorded for replay (replayed feet stay level), and there are no stairs or dedicated sidestep clips.

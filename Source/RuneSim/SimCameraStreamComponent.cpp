@@ -9,6 +9,17 @@
 #include "TextureResource.h"
 #include "CesiumCameraManager.h"
 #include "CesiumCamera.h"
+#include "CesiumGeoreference.h"
+
+namespace
+{
+    // A full-size feed view near the horizon made Cesium traverse tiles out to the horizon at feed
+    // resolution: about 116 ms per frame (4 fps) with the tripod at 3 degrees down and 30 degrees FOV. A
+    // quarter-size view costs nothing measurable, and the MainLevel feed looks the same because the
+    // dataset's finest tiles are already selected at that size (compared at the near, default and zoomed poses).
+    TAutoConsoleVariable<float> CVarFeedCesiumDetail(TEXT("sim.camera.CesiumDetail"), .25f,
+        TEXT("Scale of the Cesium tile-selection view registered by camera feeds (tripods, sensors); 0 registers none."));
+}
 
 class FSimVideoProducer final : public IPixelStreaming2VideoProducer
 {
@@ -34,14 +45,41 @@ void USimCameraStreamComponent::BeginPlay()
         // non-sRGB target so the render-target write does not encode them again.
         RenderTarget->InitCustomFormat(FMath::Clamp(Width, 160, 3840), FMath::Clamp(Height, 90, 2160), PF_B8G8R8A8, true);
         RenderTarget->TargetGamma = 2.2f;
-        Capture->TextureTarget = RenderTarget;
-        Capture->CaptureSource = ESceneCaptureSource::SCS_FinalColorLDR;
-        Capture->bCaptureEveryFrame = false; Capture->bCaptureOnMovement = false;
-        // Scheduled captures still need exposure and temporal history between frames.
-        Capture->bAlwaysPersistRenderingState = true;
+        ConfigureCapture(Capture);
         ApplyCameraAppearance();
     }
     if (bAutoStart) StartStream();
+}
+
+void USimCameraStreamComponent::ConfigureCapture(USceneCaptureComponent2D* Target)
+{
+    if (!Target || !RenderTarget) return;
+    Target->TextureTarget = RenderTarget;
+    Target->CaptureSource = ESceneCaptureSource::SCS_FinalColorLDR;
+    Target->bCaptureEveryFrame = false; Target->bCaptureOnMovement = false;
+    // Scheduled captures still need exposure and temporal history between frames.
+    Target->bAlwaysPersistRenderingState = true;
+}
+
+USceneCaptureComponent2D* USimCameraStreamComponent::GetActiveCapture() const
+{
+    return Override.IsValid() ? Override.Get() : Capture.Get();
+}
+
+void USimCameraStreamComponent::SetCaptureOverride(USceneCaptureComponent2D* Source)
+{
+    if (Override.Get() == Source) return;
+    if (Override.IsValid() && Override->TextureTarget == RenderTarget) Override->TextureTarget = nullptr;
+    Override = Source != Capture ? Source : nullptr;
+    if (Override.IsValid())
+    {
+        ConfigureCapture(Override.Get());
+        // The seeker inherits the sensor's calibrated look; only its optics differ.
+        if (Capture) Override->PostProcessSettings = Capture->PostProcessSettings;
+    }
+    else if (Capture) ConfigureCapture(Capture);
+    // Viewers see the switch immediately instead of waiting for the next GOP.
+    if (Streamer) Streamer->ForceKeyFrame();
 }
 
 void USimCameraStreamComponent::ApplyCameraAppearance()
@@ -83,6 +121,11 @@ void USimCameraStreamComponent::TickComponent(float DeltaTime, ELevelTick TickTy
     Super::TickComponent(DeltaTime, TickType, Function);
     if (bAutoStart && !Streamer) StartStream();
     if (!Capture || !RenderTarget || !Streamer) return;
+    if (Override.IsValid() && !IsValid(Override->GetOwner())) SetCaptureOverride(nullptr);
+    ViewerPollTimer -= DeltaTime;
+    if (ViewerPollTimer <= 0.f) { ViewerPollTimer = .5f; ConnectedViewers = Streamer->GetConnectedPlayers().Num(); }
+    if (bCaptureOnlyWhenViewed && ConnectedViewers == 0) return;
+    USceneCaptureComponent2D* Active = GetActiveCapture();
     CaptureTimer += DeltaTime;
     const float Interval = 1.f / FMath::Clamp(FramesPerSecond, 1, 60);
     if (CaptureTimer < Interval) return;
@@ -93,15 +136,32 @@ void USimCameraStreamComponent::TickComponent(float DeltaTime, ELevelTick TickTy
     // retaining the real frustum, rendered resolution and optical zoom. Authored
     // route cameras independently retain the collision detail needed by agents.
     const float DetailFloor = FMath::IsFinite(TerrainDetailFovFloorDegrees) ? FMath::Clamp(TerrainDetailFovFloorDegrees, 1.f, 100.f) : 30.f;
-    const float SelectionScale = FMath::Min(1.f, FMath::Tan(FMath::DegreesToRadians(Capture->FOVAngle*.5f)) /
+    const float SelectionScale = FMath::Min(1.f, FMath::Tan(FMath::DegreesToRadians(Active->FOVAngle*.5f)) /
         FMath::Tan(FMath::DegreesToRadians(DetailFloor*.5f)));
-    FCesiumCamera Camera(FVector2D(RenderTarget->SizeX, RenderTarget->SizeY)*SelectionScale, Capture->GetComponentLocation(), Capture->GetComponentRotation(), Capture->FOVAngle);
-    if (CesiumManager.IsValid())
+    float ViewScale = FMath::IsFinite(CesiumViewScale) ? FMath::Clamp(CesiumViewScale, 0.f, 1.f) : 1.f;
+    // Global feed detail (sim.camera.CesiumDetail): every registered feed view adds Cesium selection work on the game thread.
+    ViewScale *= FMath::Clamp(CVarFeedCesiumDetail.GetValueOnGameThread(), 0.f, 1.f);
+    if (bSkipCesiumViewAboveHorizon && ViewScale > 0.f)
+    {
+        FVector Up = FVector::UpVector;
+        if (const ACesiumGeoreference* Georeference = ACesiumGeoreference::GetDefaultGeoreference(this))
+        {
+            FMatrix Frame = Georeference->ComputeEastSouthUpToUnrealTransformation(Active->GetComponentLocation());
+            Up = Frame.GetUnitAxis(EAxis::Z);
+        }
+        const float Elevation = FMath::RadiansToDegrees(FMath::Asin(FMath::Clamp(float(FVector::DotProduct(Active->GetForwardVector(), Up)), -1.f, 1.f)));
+        const float HalfVertical = FMath::RadiansToDegrees(FMath::Atan(FMath::Tan(FMath::DegreesToRadians(Active->FOVAngle * .5f)) *
+            float(RenderTarget->SizeY) / FMath::Max(1.f, float(RenderTarget->SizeX))));
+        if (Elevation - HalfVertical > 1.f) ViewScale = 0.f;
+    }
+    FCesiumCamera Camera(FVector2D(RenderTarget->SizeX, RenderTarget->SizeY)*SelectionScale*ViewScale, Active->GetComponentLocation(), Active->GetComponentRotation(), Active->FOVAngle);
+    if (CesiumManager.IsValid() && ViewScale <= 0.f && CesiumCameraId >= 0) { CesiumManager->RemoveCamera(CesiumCameraId); CesiumCameraId = -1; }
+    else if (CesiumManager.IsValid() && ViewScale > 0.f)
     {
         if (CesiumCameraId < 0) CesiumCameraId = CesiumManager->AddCamera(Camera);
         else CesiumManager->UpdateCamera(CesiumCameraId, Camera);
     }
-    Capture->CaptureScene();
+    Active->CaptureScene();
     LastCaptureSimulationTime = GetWorld()->GetTimeSeconds(); ++FrameNumber;
     FTextureRenderTargetResource* Resource = RenderTarget->GameThread_GetRenderTargetResource();
     TSharedPtr<IPixelStreaming2VideoProducer> Output = Producer;
@@ -118,6 +178,7 @@ void USimCameraStreamComponent::TickComponent(float DeltaTime, ELevelTick TickTy
 void USimCameraStreamComponent::StopStream()
 {
     bAutoStart = false;
+    SetCaptureOverride(nullptr);
     if (Streamer)
     {
         Streamer->StopStreaming();

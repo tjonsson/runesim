@@ -1,0 +1,19 @@
+{
+  "id": "GlobalHawk",
+  "span_m": 35.4,
+  "length_m": 17.4,
+  "height_m": 6.33,
+  "scale_from_source": 0.0848002128801248,
+  "vertices": 25855,
+  "materials": [
+    "GlobalHawkJustModelFinal_DeletedHistory_lambert5SG",
+    "GlobalHawkJustModelFinal_DeletedHistory_globalhawk_justwheels_a",
+    "GlobalHawkJustModelFinal_DeletedHistory_lambert4SG",
+    "GlobalHawkJustModelFinal_DeletedHistory_blinn1SG",
+    "globalhawk_justwheels_lambert6SG",
+    "initialShadingGroup"
+  ],
+  "source": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Sourced\\NASA\\GlobalHawk.glb",
+  "credit": "NASA / Michael D. Carbajal",
+  "license": "NASA media usage guidelines; no endorsement implied"
+}

@@ -3,6 +3,85 @@
 Test host: `optimus@optimuspi.local`. Workspace: `/home/optimus/Code/runesim_test`.
 Every remote test command starts with `export DISPLAY=:0`.
 
+## Overnight combat-build run — September 30, 16:00 to October 1, 00:00 Stockholm
+
+This was an eight-hour run on the combat package with the default options: 120 agents, combat targets, two sensor feeds and runtime perches. The Pi side ran `test_stream_stability.py --seconds 28800 --report overnight-combat`; the Windows side ran `measure_stream_host.ps1 -Seconds 28800 -Report overnight-combat-host`, with `-ExecutionPolicy Bypass` because script execution is disabled on this PC.
+
+**Continuity: passed.**
+
+- The same simulator process (PID 45380) ran all 28,800 s, with zero host interruptions.
+- There were zero stalled or stale samples, browser restarts or counter resets.
+
+**Frame rate: failed the floor by design.** Playback was 23.95 fps median against the 25 fps floor. The engine itself runs about 23 fps with two sensor feeds; set **Airborne sensor feeds** to 0 for the earlier 26–30 fps. The 5.4 fps minimum came during the editor and packaging work below.
+
+**WebRTC freezes: 23.**
+
+- 3 in the first 5.7 hours, while the host was otherwise idle (about 20:08, 21:39 and 21:43).
+- 20 between 23:05 and 00:00, while the editor, Cesium PIE tests, a C++ build and packaging ran on the same GPU.
+- The interval is therefore a mixed workload; about 0.5 freezes per hour is the idle-host figure.
+
+**Memory: grew in steps.** Private bytes rose from 5.8 to 7.5 GiB, about 210 MiB per hour, mostly at a few discrete points (roughly +0.3 GiB at 4.5 h and +0.4 GiB at 6 h) rather than continuously. Continuous 24-hour operation should be checked, and a Cesium tile or render-target cache is the first suspect.
+
+**Evidence:** `logs/overnight-combat.json` on the Pi and `Saved/LivingWorld/overnight-combat-host.json` on Windows.
+
+## Asset-batch deployment — October 1, 00:02 Stockholm
+
+- The asset build (`RuneSim.exe` SHA-256 `BEA22BD3…3255`) was promoted; the previous archive is kept as `PackagedCombatV11`.
+- The engine runs at 22.1 fps median (min 21.1) with the default options, about 1–2 fps below the previous build, since the traffic now includes the 140k-triangle tank and the new vehicles.
+- The Pi's 120-second check passed: 21.96 fps median, zero stalls, restarts or freezes, and one dropped frame (`logs/assets-deploy.json`).
+
+## Pi playback with engagement — September 30, 12:45 Stockholm
+
+Key-based SSH to the Pi is set up. The Pi's rosbridge was restarted with the updated `start_rosbridge.sh`, which adds `engage` to its allow-list; the previous script is backed up in `logs/start_rosbridge.sh.bak-202609301227`.
+
+**First run (failed).** It exposed a defect. Tracking an aircraft left the tripod zoomed into the sky, and the tripod's Cesium view kept refining distant horizon tiles, slowing the whole simulator to about 4 fps (4.2 fps median on the Pi). Three fixes, build `82840FFA…EC81`:
+
+- A stream view entirely above the horizon now requests no terrain tiles.
+- Stopping tracking restores the operator's previous pan/tilt/zoom.
+- The proximity fuse accounts for target size. A 35 m-span Global Hawk had been missed at 22 m from its centre.
+
+**Rerun (passed).** The 300-second Pi test (`logs/combat-deploy-2.json`) recorded:
+
+- **Frame rate**: **26.14 fps median / 22.74 minimum**.
+- **Stability**: 0 stalls, 0 freezes, 0 browser restarts; 20 dropped presentation frames.
+- **Engagements**: two engagements driven through the real ROS2 bridge (`Scripts/test_ros_engagement.py`), both targets destroyed (12.2 m and 6.7 m from centre).
+- **Engine**: stayed at 26 fps during tracking.
+
+## Combat and multi-camera deployment — September 30, 01:00 Stockholm
+
+Packaged MainLevel build `5FBB6A17…C9` (`Saved/LivingWorld/Packaged`) runs the 120-actor configuration with engagement, runtime bird landing sites and two carried `air-N` feeds. Four feeds were measured simultaneously for 138 s: the Pi on `ptz-1`, plus `air-1`, `air-2` and `ptz-1-seeker` decoded in a browser on the host.
+
+- **Engine**: 24.0 fps (25.8 with `ptz-1` alone). `ptz-1` is paced by the engine.
+- **Carried feeds**: 15.00 fps each at 960×540, with 0 dropped frames and 0 freezes.
+- **Capture**: 0 PixelCapture fence timeouts.
+
+Evidence: `Saved/LivingWorld/multicamera-packaged.json`.
+
+**Two-hour multi-camera endurance.** The same four feeds ran from 01:02 to 03:02 on the same build and passed:
+
+- **Process continuity**: 7,200 s with 0 process interruptions (`combat-multicam-endurance.json`).
+- **Engine**: 24.6–24.7 fps in every 10-minute window.
+- **Carried feeds**: exactly 15.00 fps each over 123 minutes, with 0 dropped frames.
+- **Freezes**: 3 WebRTC freezes in total (`air-1` 1, seeker 2, `air-2` 0).
+- **Capture**: 0 fence timeouts.
+- **Memory**: private memory grew from 7.83 to 8.14 GiB.
+
+It does not cover Pi-side playback or an overnight period; the earlier overnight NVENC crash history still needs a longer run on the CUDA-interop path.
+
+Two defects were found and fixed on the way:
+
+1. With Pixel Streaming's MediaCapture path, three or more encoded feeds stalled the render thread in 100 ms GPU-fence waits, down to about 3–4 fps. `Config/DefaultGame.ini` and the launcher now select the RDG copy capturer (`UseMediaCapture=False`, `CaptureUseFence=False`).
+2. Moving carried-feed Cesium views cost about 8 ms each per frame. Carried feeds no longer register their own tile-selection view.
+
+**Superseded:** Pi-side playback is measured in the section above. `optimus@optimuspi.local` accepts only password SSH, and Claude does not enter passwords. Install an SSH key to let the automated Pi checks run again:
+
+```powershell
+ssh-keygen -t ed25519 -f $HOME/.ssh/id_ed25519 -N '""'
+type $HOME\.ssh\id_ed25519.pub | ssh optimus@optimuspi.local "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys"
+```
+
+The Pi's rosbridge must also be restarted with the updated `start_rosbridge.sh`, which adds the `engage` topic to its allow-list. The current bridge still relays `command`/`state` and delivered 81 state messages including the new engagement fields.
+
 ## Stance-locking deployment — September 29, 23:10 Stockholm
 
 The stance-locking MainLevel package passed the completed 300.01-second Pi playback check at **28.55 fps median / 27.35 minimum**, against the unchanged 25 fps median floor. It recorded 0 stale/stalled samples, 0 new WebRTC freezes, 0 viewer restarts, 0 counter resets and 49 dropped presentation frames.

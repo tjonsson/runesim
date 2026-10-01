@@ -1,28 +1,37 @@
 """Normalize bridge-imported humanoids and export three clips using Blender 5.2.
 
-Run in background Blender, --disable-autoexec --python this-file -- Civilian.
+Run in background Blender, --disable-autoexec --python this-file -- Civilian (Soldier, CivilianMan).
 Source libraries are written by the DCC bridge capture step; never modify them.
 """
 import bpy
 import json
 import sys
+import types
 from pathlib import Path
 from mathutils import Vector
 
 root = Path(__file__).resolve().parents[1]
 kind = sys.argv[sys.argv.index('--') + 1]
-assert kind in ('Civilian', 'Soldier')
-target_height = 1.70 if kind == 'Civilian' else 1.80
-source = root / f'Art/LivingWorld/Generated/{kind}/{kind}_Tripo_Source.blend'
+assert kind in ('Civilian', 'Soldier', 'CivilianMan')
+target_height = {'Civilian': 1.70, 'Soldier': 1.80, 'CivilianMan': 1.78}[kind]
 out = root / f'Art/LivingWorld/Prepared/{kind}'
 out.mkdir(parents=True, exist_ok=True)
 bpy.ops.wm.read_factory_settings(use_empty=True)
-with bpy.data.libraries.load(str(source), link=False) as (available, loaded):
-    loaded.objects = available.objects
-    prefix = 'Armature|' if kind == 'Civilian' else 'SoldierSource_'
-    loaded.actions = [n for n in available.actions if n in tuple(prefix + clip for clip in ('walk', 'run', 'idle'))]
-for obj in loaded.objects:
-    bpy.context.collection.objects.link(obj)
+if kind == 'CivilianMan':
+    # Studio export (rig + walk/run/idle presets, in place) as one GLB rather than a bridge capture.
+    bpy.ops.import_scene.gltf(filepath=str(root / f'Art/LivingWorld/Generated/{kind}/{kind}_Tripo.glb'))
+    for obj in [o for o in bpy.context.scene.objects if o.type == 'MESH' and not o.vertex_groups]:
+        bpy.data.objects.remove(obj, do_unlink=True)  # glTF bone-shape helper, not the character
+    loaded = types.SimpleNamespace(objects=list(bpy.context.scene.objects), actions=list(bpy.data.actions))
+    prefix = ''
+else:
+    source = root / f'Art/LivingWorld/Generated/{kind}/{kind}_Tripo_Source.blend'
+    with bpy.data.libraries.load(str(source), link=False) as (available, loaded):
+        loaded.objects = available.objects
+        prefix = 'Armature|' if kind == 'Civilian' else 'SoldierSource_'
+        loaded.actions = [n for n in available.actions if n in tuple(prefix + clip for clip in ('walk', 'run', 'idle'))]
+    for obj in loaded.objects:
+        bpy.context.collection.objects.link(obj)
 rig = next(o for o in loaded.objects if o.type == 'ARMATURE')
 meshes = [o for o in loaded.objects if o.type == 'MESH']
 rig.animation_data_create()

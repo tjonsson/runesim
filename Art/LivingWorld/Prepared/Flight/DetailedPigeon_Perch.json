@@ -1,0 +1,12 @@
+{
+  "id": "DetailedPigeon",
+  "fbx": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\Flight\\DetailedPigeon_Perch.fbx",
+  "clips": [
+    "Landing",
+    "Perched",
+    "TakeOff"
+  ],
+  "fps": 60,
+  "perch_height_cm": 14.7,
+  "scope": "Rotation-only wing fold on a flight-posture mesh; distance-view quality"
+}

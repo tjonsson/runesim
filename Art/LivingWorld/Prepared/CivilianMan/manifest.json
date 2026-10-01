@@ -1,0 +1,47 @@
+{
+  "asset": "CivilianMan",
+  "source_height_units": 0.979553670897559,
+  "height_m": 1.78,
+  "unit_scale_m": 1.8171541314004744,
+  "feet_z_m": -2.729694139179838e-07,
+  "bones": 65,
+  "clips": [
+    {
+      "name": "CivilianMan_Walk",
+      "fbx": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\CivilianMan\\CivilianMan_Walk.fbx",
+      "frames": [
+        0,
+        56
+      ],
+      "removed_planar_travel_m": [
+        0.0,
+        8.800254653471025e-08
+      ]
+    },
+    {
+      "name": "CivilianMan_Run",
+      "fbx": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\CivilianMan\\CivilianMan_Run.fbx",
+      "frames": [
+        0,
+        30
+      ],
+      "removed_planar_travel_m": [
+        0.0,
+        -1.0831082650425878e-07
+      ]
+    },
+    {
+      "name": "CivilianMan_Idle",
+      "fbx": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\CivilianMan\\CivilianMan_Idle.fbx",
+      "frames": [
+        0,
+        368
+      ],
+      "removed_planar_travel_m": [
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "note": "Generated approximation; target height is an artistic normalization, not measured anatomy."
+}

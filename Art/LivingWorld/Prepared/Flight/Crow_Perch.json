@@ -1,0 +1,12 @@
+{
+  "id": "Crow",
+  "fbx": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\Flight\\Crow_Perch.fbx",
+  "clips": [
+    "Landing",
+    "Perched",
+    "TakeOff"
+  ],
+  "fps": 60,
+  "perch_height_cm": 14.4,
+  "scope": "Rotation-only wing fold on a flight-posture mesh; distance-view quality"
+}

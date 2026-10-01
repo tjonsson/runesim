@@ -9,6 +9,7 @@
 Art/**/*.blend filter=lfs diff=lfs merge=lfs -text
 Art/**/*.fbx filter=lfs diff=lfs merge=lfs -text
 Art/**/*.glb filter=lfs diff=lfs merge=lfs -text
+Art/**/*.obj filter=lfs diff=lfs merge=lfs -text
 Art/**/*.png filter=lfs diff=lfs merge=lfs -text
 Art/**/*.jpg filter=lfs diff=lfs merge=lfs -text
 Art/**/*.jpeg filter=lfs diff=lfs merge=lfs -text

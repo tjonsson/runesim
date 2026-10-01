@@ -46,3 +46,38 @@ Verification:
 Evidence: `Saved/LivingWorld/MovementAutomation/index.json`, `human-locomotion.json`, `pie-report.json`, and `replay-integration.json`.
 
 The subsequent [vehicle articulation update](living-world-vehicles.md) adds bounded front-wheel steering and four-wheel contact suspension to the jeep. Remaining refinements include authored foot contact phases, contact synchronization on uneven surfaces, chassis/tire dynamics, junction traffic logic and detailed bird landing clips.
+
+## Reactions, patrols and crossings — September 30
+
+- **Graded civilian reactions.** A threat inside 18 m that is distant (over 10 m) and not closing faster than 3 m/s makes civilians **step aside** to the edge of the reviewed corridor, on the side away from the threat, at half walking speed. A close or fast-approaching threat still makes them **flee** at a run. Both recover once it leaves. The threat's velocity now comes from the moving pawn.
+- **Soldiers** do not flee:
+  - They **halt and turn to watch** a threat.
+  - They sidestep only when it bears down within 6 m.
+  - On patrol they stop for 3–7 s every 25–60 m to observe.
+  - A halted person holds their lateral position.
+- **Crossings and junctions.** `LivingWorld::FindConflictZones` finds where a vehicle corridor crosses another corridor at more than 30°. Parallel roads and shoulders are not crossings.
+  - Vehicles stop before a crossing that a pedestrian occupies or is approaching.
+  - Pedestrians wait for a vehicle already inside it.
+  - Vehicles at a vehicle junction take a first-come reservation.
+  - Nobody stops inside a zone.
+  - MainLevel's two corridors are parallel, so no zones are active there. The logic covers maps with crossing corridors.
+- **Upright posture on slopes.** People now stand along local gravity (Cesium up) instead of tilting with the terrain normal; their feet absorb the height difference. Vehicles still fit the ground.
+- **Surface footsteps.** Routes carry a `Surface` (Paved, Dirt, Gravel, Grass). Each human profile has dirt, gravel and grass footstep sets (five synthesized variations each), and MainLevel's corridors are tagged Dirt.
+
+Verified by the `CrowdReactions`, `Crossings`, `SlopedCorridor` and `GroundMotion` automation suites, plus soldier patrol pauses in the live MainLevel test ([combat verification](living-world-combat.md)).
+
+## Network flow — September 30 (afternoon)
+
+The first network runs gridlocked within a minute, as pedestrians and queued cars waited on each other at crossings. Four changes fixed it:
+
+- **Route links:** an agent at the end of a route continues onto a linked route. Retiring routes always do; two-way routes do so 60% of the time.
+- **Don't block the box:** a car does not enter a crossing unless the queue ahead leaves room to clear it.
+- **Gap acceptance:**
+  - Pedestrians wait at the kerb, 1 m back, for a car in the crossing or one arriving within 3 s.
+  - Cars yield only to people at the kerb or already crossing.
+- **Patience:**
+  - A person who has made no progress for 6 s turns back.
+  - A car held for 30 s leaves and is recycled; it never U-turns into oncoming flow.
+  - Deliberate soldier halts don't count.
+
+Covered by the `Crossings`, `CrowdReactions` and `RouteNetwork` automation suites (20 suites, all passing).

@@ -3,6 +3,7 @@
 #include "Animation/BlendSpace1D.h"
 #include "Animation/AnimSequence.h"
 #include "UObject/Package.h"
+#include "Algo/AllOf.h"
 #if WITH_EDITOR
 #include "AssetRegistry/AssetRegistryModule.h"
 #endif
@@ -10,7 +11,10 @@
 UBlendSpace* ULivingAnimationAuthoring::BuildLocomotion(ULivingAssetProfile* Profile, const FString& AssetName)
 {
 #if WITH_EDITOR
-    if (!Profile || Profile->Kind > ELivingKind::Soldier || (AssetName != TEXT("BS_Civilian") && AssetName != TEXT("BS_Soldier"))) return nullptr;
+    // Asset names are restricted to BS_<letters/digits> under /Game/LivingWorld/Animations.
+    const bool bValidName = AssetName.StartsWith(TEXT("BS_")) && AssetName.Len() > 3 && AssetName.Len() <= 64 &&
+        Algo::AllOf(AssetName.Mid(3), [](TCHAR C) { return FChar::IsAlnum(C); });
+    if (!Profile || Profile->Kind > ELivingKind::Soldier || !bValidName) return nullptr;
     UAnimSequence* Idle = Cast<UAnimSequence>(Profile->IdleAnimation.LoadSynchronous());
     UAnimSequence* Walk = Cast<UAnimSequence>(Profile->CruiseAnimation.LoadSynchronous());
     UAnimSequence* Run = Cast<UAnimSequence>(Profile->FleeAnimation.LoadSynchronous());

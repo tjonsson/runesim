@@ -2,8 +2,8 @@
   "authorized_existing_credits": 1000,
   "starting_balance": 2350,
   "currency_purchases_authorized": false,
-  "spent_this_stage": 315,
-  "latest_verified_balance": 2035,
+  "spent_this_stage": 610,
+  "latest_verified_balance": 1740,
   "transactions": [
     {
       "asset": "pigeon",
@@ -51,6 +51,54 @@
       "credits": 55,
       "balance_after": 2035,
       "task_id": "29b878a8-ebe4-45b9-8d10-a86f760e8f4f"
+    },
+    {
+      "asset": "tb2-text-draft",
+      "action": "H3.1 text-to-3D (rejected: MQ-9-like tail; free retry also rejected)",
+      "credits": 55,
+      "balance_after": 1980,
+      "task_id": "22764115-c592-48ef-af6e-5ef640179296"
+    },
+    {
+      "asset": "humvee",
+      "action": "H3.1 text-to-3D",
+      "credits": 55,
+      "balance_after": 1925,
+      "task_id": "7eb00043-1659-4fe2-8f38-3ff420335e71"
+    },
+    {
+      "asset": "sedan",
+      "action": "H3.1 text-to-3D",
+      "credits": 55,
+      "balance_after": 1870,
+      "task_id": "16c752e1-3bff-49f5-bda5-18ba6c408812"
+    },
+    {
+      "asset": "civilian-man",
+      "action": "H3.1 text-to-3D (T-pose)",
+      "credits": 55,
+      "balance_after": 1815,
+      "task_id": "fd1604d5-f003-438c-8c87-aa0448c37c93"
+    },
+    {
+      "asset": "civilian-man",
+      "action": "Mixamo humanoid auto rig (walk/run/idle presets free)",
+      "credits": 20,
+      "balance_after": 1795
+    },
+    {
+      "asset": "tb2-reference",
+      "action": "GPT Image 2.5 reference images (free allowance)",
+      "credits": 0,
+      "balance_after": 1795
+    },
+    {
+      "asset": "tb2",
+      "action": "H3.1 image-to-3D from References/tb2.png",
+      "credits": 55,
+      "balance_after": 1740,
+      "task_id": "502a3497-2c68-4ee1-8365-c8f54b0b46e6"
     }
-  ]
+  ],
+  "authorization_2026_09_30": "User authorized additional credit use in chat (\"go ahead and use more credits\"); no purchases."
 }

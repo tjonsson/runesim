@@ -17,6 +17,13 @@ struct FSimReplayPose
     TArray<FLivingWheelPose> WheelPoses;
     TArray<FLivingFootSupport> FootSupports;
 };
+struct FSimReplayEvent
+{
+    double Time = 0;
+    FName Type;
+    FVector Location = FVector::ZeroVector;
+    FString Subject;
+};
 struct FSimReplayTrack
 {
     FString Id, StaticMesh, SkeletalMesh;
@@ -38,6 +45,10 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite) bool bLoop = false;
     UPROPERTY(BlueprintReadOnly) FString LastError;
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly) TArray<TObjectPtr<UMeshComponent>> Visuals;
+    /** Recorded events and how many effects playback has reproduced. Seeking never replays effects. */
+    UPROPERTY(BlueprintReadOnly) int32 EventCount = 0;
+    UPROPERTY(BlueprintReadOnly) int32 EffectsPlayed = 0;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite) bool bReplayEffects = true;
     UFUNCTION(BlueprintCallable) bool LoadRecording(const FString& Name);
     UFUNCTION(BlueprintCallable) void PlayReplay();
     UFUNCTION(BlueprintCallable) void PauseReplay();
@@ -46,5 +57,7 @@ public:
     virtual void Tick(float DeltaTime) override;
 private:
     TArray<FSimReplayTrack> Tracks;
+    TArray<FSimReplayEvent> Events;
+    void PlayEventsBetween(double From, double To);
     void UpdateVisuals();
 };

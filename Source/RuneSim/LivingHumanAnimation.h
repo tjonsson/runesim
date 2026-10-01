@@ -12,6 +12,8 @@ struct RUNESIM_API FLivingFootSupport
     UPROPERTY(BlueprintReadWrite) float HeightCm = 0;
     /** Evaluated mesh-space stance correction; recorded verbatim for visual replay. */
     UPROPERTY(BlueprintReadWrite) FVector StanceOffsetCm = FVector::ZeroVector;
+    /** Surface normal under the foot in mesh space; the planted foot pitches/rolls to match. */
+    UPROPERTY(BlueprintReadWrite) FVector GroundNormal = FVector::UpVector;
     bool bGrounded = false;
 };
 
@@ -50,4 +52,6 @@ namespace LivingWorld
     RUNESIM_API FVector UpdateFootPlant(FLivingFootPlant& Plant, const FTransform& Mesh,
         const FVector& AnimatedFoot, float ContactWeight, bool bSupported, float Dt);
     RUNESIM_API bool SolveGroundedLeg(FTransform& Thigh, FTransform& Calf, FTransform& Foot, const FVector& Target);
+    /** Weighted rotation taking mesh up onto the ground normal, limited to a plausible ankle range. */
+    RUNESIM_API FQuat FootTilt(const FVector& GroundNormal, float Weight, float MaxDegrees = 25.f);
 }

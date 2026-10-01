@@ -51,3 +51,78 @@ The existing generated jeep was downloaded without new credits and added separat
 `DA_Crow` uses a new generated reference and Tripo H3.1 task `29b878a8-ebe4-45b9-8d10-a86f760e8f4f` (55 credits). The reference, original 4K GLB and provenance live in `Art/LivingWorld/Generated/Crow`. Editable rig and FBX are in `Prepared/Flight`. Wingspan is an artistic 0.95 m reference; the five deform bones provide 4 Hz flapping and gliding. Four LODs contain 22,281 / 12,464 / 6,900 / 3,827 vertices. Blender and Unreal renders were inspected, symmetric wing-tip motion checked, and actual bone animation passed the mixed-population integration. Detailed generated birds remain flight-only.
 
 The credit ledger now totals 315 of the 1,000 authorized credits. No purchase or subscription change occurred.
+
+## Landing, perching and calls — September 30
+
+`Scripts/add_bird_perch_clips.py` adds **Landing** (flare, then fold, 0.8 s), **Perched** (folded wings with breathing and head-bob, a 3 s loop) and **TakeOff** (0.6 s) to the detailed pigeon, gull and crow rigs. Each species has a resting pose tuned from rendered previews: the gull's wingtips cross over the tail, and the upright pigeon mesh is pitched forward.
+
+The generated meshes are modeled in flight posture with tucked legs, so a perched bird reads as resting or sitting at sensor-camera distances; it is not a close-up standing pose. `PerchHeightCm` (pigeon 14.7, gull 19.9, crow 14.4) seats the body on the surface. Profiles now allow perching.
+
+With **Bird landing sites on walkways** enabled, the population places up to 16 landing sites along reviewed pedestrian corridors, alternating sides. Birds search within 150 m. They flush when a person comes within 4 m or a vehicle within 9 m, as well as on an alarm.
+
+In the live MainLevel test, 30 birds landed, perched and took off again.
+
+Species calls (pigeon coo, gull "kyow", crow caw; three synthesized variations each) play every 12–18 s per bird, with an alarm call on startle. They use 70 m attenuation and a 6-voice limit.
+
+## NASA Global Hawk — September 30
+
+The downloaded NASA model (credit NASA / Michael D. Carbajal; NASA media usage guidelines, no endorsement implied) is complete. The "detached wing" in the earlier review was an artifact of the render setup, not of the geometry.
+
+- `Scripts/prepare_global_hawk.py` scales it to the RQ-4A's published 35.4 m span (NASA operates the RQ-4A). The model's proportions differ from published figures, so its length reads 17.4 m against a published 13.5 m.
+- `Scripts/import_global_hawk.py` creates `SM_GlobalHawk` (four LODs) and the approved `DA_GlobalHawk` aircraft profile, with a 180° visual yaw. It flies at a scenery speed of 60 m/s around 650 m altitude, turns at 10°/s, and uses the jet loop.
+- Review renders are in `Saved/LivingWorld/GlobalHawk-unreal-*.png`.
+- A MainLevel PIE check showed Global Hawks and F-4s both spawning, flying and engageable (`main-aircraft-mix.json`).
+- No Tripo credits were used.
+
+## Bayraktar TB2 — October 1
+
+`DA_TB2` now uses the Sketchfab model "Baykar Bayraktar TB2" by TheDevilsEye (CC BY 4.0), which you downloaded on October 1. It replaces the Tripo-generated stand-in from September 30.
+
+**Preparation.** `Scripts/prepare_tb2_sketchfab.py`:
+
+- The source is metric: 12.0 m span (published 12 m), 7.5 m long, nose −Y.
+- It links the supplied 4K PBR set.
+- The three-blade pusher propeller is part of the single mesh. It was located on orthographic renders and a vertex histogram (hub 1.225 m up, blade tips 0.97 m) and weighted to a bone that spins three times a second.
+
+**Flight profile.** 36 m/s at 450 m, piston-engine loop, engageable Plane kind. Credit is recorded in the profile.
+
+The discarded Tripo generations (text task `22764115…`, image task `502a3497…`) remain in the credit ledger; the generated files stay in `Generated/TB2` as history.
+
+## Shahed-136 — October 1
+
+`DA_Shahed136` uses your `shahed-136-drone.zip`, a Tripo-generated OBJ with vertex colours: 1.95 M triangles and no textures. It replaces the Geranium-2. The Geranium's prepared files were deleted, and it was removed from `prepare_living_assets.py` and the manifest; it never had a Living World profile.
+
+**Conversion.** `Scripts/prepare_shahed.py`:
+
+- decimates the mesh to 60k triangles, keeping the vertex colours
+- turns the nose to −Y, since the source stands on its nose
+- scales to the published 2.5 m span; the generated proportions give 2.56 m length against the published 3.5 m
+- weights the pusher propeller to a spinning bone
+
+Unreal shows the colours through `M_VertexColour`.
+
+**Flight profile.** Drone kind, so it flies in the **Drones** count with the quadcopters. It cruises at 50 m/s (published cruise about 185 km/h) at 150 m, with 12°/s turns and a 35° bank limit, and uses the small-engine loop. Engageable with drone health.
+
+## FPV strike drone — October 1
+
+`DA_FPVDrone` uses your `fpv-drone.zip`: a metric OBJ in separate parts, about 0.48 m across the propellers, carrying an RPG-style warhead, with two PBR texture sets.
+
+**Preparation.** `Scripts/prepare_fpv_drone.py`:
+
+- rebuilds the colour and normal materials
+- makes four propeller bones at the propeller centres; diagonal pairs counter-rotate
+- drops a magenta placeholder part
+
+**Flight profile.** Drone kind. 28 m/s at 35 m, agile (60°/s turns, 40° bank), with the drone loop.
+
+**Import and check.** `Scripts/import_air_batch.py` imports all three with four LODs:
+
+| Model | LOD0 vertices |
+|---|---|
+| TB2 | 7,689 |
+| Shahed-136 | 29,999 |
+| FPV drone | 47,094 |
+
+`Scripts/test_main_new_assets.py` confirmed that every profile spawns, flies, is engageable and is photographed in the live MainLevel (`NewAssets-*.png`).
+
+**Licences.** On 30 September you confirmed that you hold the rights to the supplied aircraft models, including these downloads.

@@ -38,7 +38,7 @@ struct FLivingHumanAnimationProxy final : FAnimSingleNodeInstanceProxy
         FCSPose<FCompactPose> Pose; Pose.InitPose(Output.Pose);
         const FBoneContainer& Bones = Output.Pose.GetBoneContainer();
         const FReferenceSkeleton& Ref = Bones.GetReferenceSkeleton();
-        struct FLeg { FCompactPoseBoneIndex Thigh, Calf, Foot; FTransform T, C, F; float Offset; FVector Stance = FVector::ZeroVector; };
+        struct FLeg { FCompactPoseBoneIndex Thigh, Calf, Foot; FTransform T, C, F; float Offset; FVector Stance = FVector::ZeroVector; FQuat Tilt = FQuat::Identity; };
         TArray<FLeg, TInlineAllocator<2>> Legs;
         float PelvisDrop = 0;
         FCompactPoseBoneIndex Pelvis(INDEX_NONE);
@@ -57,6 +57,8 @@ struct FLivingHumanAnimationProxy final : FAnimSingleNodeInstanceProxy
             for (int32 Parent = Ref.GetParentIndex(MeshFoot); Parent != INDEX_NONE; Parent = Ref.GetParentIndex(Parent)) Reference *= Ref.GetRefBonePose()[Parent];
             const float Weight = LivingWorld::FootContactWeight(Leg.F.GetLocation().Z, Reference.GetLocation().Z);
             Leg.Offset = FMath::Clamp(Support.HeightCm, -18.f, 18.f) * Weight;
+            // Ankle follows the slope only while the foot carries weight; swing keeps the authored roll.
+            Leg.Tilt = Support.bGrounded || bReplay ? LivingWorld::FootTilt(Support.GroundNormal, Weight) : FQuat::Identity;
             if (!bReplay && I < 2) Support.StanceOffsetCm = LivingWorld::UpdateFootPlant(Plants[I], MeshTransform,
                 Leg.F.GetLocation(), Weight, Support.bGrounded, DeltaSeconds);
             if (!Support.StanceOffsetCm.ContainsNaN() && Support.StanceOffsetCm.SizeSquared() <= FMath::Square(18.01f))
@@ -75,10 +77,11 @@ struct FLivingHumanAnimationProxy final : FAnimSingleNodeInstanceProxy
         TArray<FBoneTransform> Changes;
         for (const FLeg& Leg : Legs)
         {
-            if (FMath::IsNearlyZero(Leg.Offset) && FMath::IsNearlyZero(PelvisDrop) && Leg.Stance.IsNearlyZero()) continue;
+            if (FMath::IsNearlyZero(Leg.Offset) && FMath::IsNearlyZero(PelvisDrop) && Leg.Stance.IsNearlyZero() && Leg.Tilt.Equals(FQuat::Identity, 1e-4)) continue;
             FTransform Thigh = Pose.GetComponentSpaceTransform(Leg.Thigh), Calf = Pose.GetComponentSpaceTransform(Leg.Calf), Foot = Pose.GetComponentSpaceTransform(Leg.Foot);
             const FVector Target = Leg.F.GetLocation() + FVector(0,0,Leg.Offset) + Leg.Stance;
             if (!LivingWorld::SolveGroundedLeg(Thigh, Calf, Foot, Target)) continue;
+            Foot.SetRotation((Leg.Tilt * Foot.GetRotation()).GetNormalized());
             Changes.Emplace(Leg.Thigh, Thigh); Changes.Emplace(Leg.Calf, Calf); Changes.Emplace(Leg.Foot, Foot);
         }
         Changes.Sort([](const FBoneTransform& A, const FBoneTransform& B) { return A.BoneIndex < B.BoneIndex; });
@@ -136,14 +139,16 @@ void ULivingHumanAnimation::UpdateGrounding(float Dt)
     for (int32 I = 0; I < 2; ++I)
     {
         const FVector SupportedFoot = BaseFeet[I] + FootSupports[I].StanceOffsetCm;
-        FVector Contact; const FVector Probe = Transform.TransformPosition(FVector(SupportedFoot.X, SupportedFoot.Y, 0));
-        const bool bHit = !bDiscontinuity && Agent->SampleFootGround(Probe, Contact);
+        FVector Contact, Normal = FVector::UpVector; const FVector Probe = Transform.TransformPosition(FVector(SupportedFoot.X, SupportedFoot.Y, 0));
+        const bool bHit = !bDiscontinuity && Agent->SampleFootGround(Probe, Contact, &Normal);
         const float Height = bHit ? Transform.InverseTransformPosition(Contact).Z : 0;
         const bool bSupported = bHit && FMath::IsFinite(Height) && FMath::Abs(Height) <= 18.f;
         if (bSupported) ++SupportedFeet;
         FootSupports[I].bGrounded = bSupported;
         // Drop invalid support immediately; never retain a phantom contact on an unloaded tile.
         FootSupports[I].HeightCm = bSupported ? FMath::FInterpTo(FootSupports[I].HeightCm, Height, Dt, 15.f) : 0;
+        const FVector MeshNormal = bSupported ? Transform.InverseTransformVectorNoScale(Normal).GetSafeNormal(SMALL_NUMBER, FVector::UpVector) : FVector::UpVector;
+        FootSupports[I].GroundNormal = FMath::VInterpTo(FootSupports[I].GroundNormal, MeshNormal, Dt, 15.f).GetSafeNormal(SMALL_NUMBER, FVector::UpVector);
     }
 }
 
@@ -178,6 +183,16 @@ float LivingWorld::FootContactWeight(float AnimatedHeight, float ReferenceHeight
     if (!FMath::IsFinite(AnimatedHeight) || !FMath::IsFinite(ReferenceHeight)) return 0;
     const float T = FMath::Clamp((AnimatedHeight - ReferenceHeight - 3.f) / 12.f, 0.f, 1.f);
     return 1.f - T*T*(3.f - 2.f*T);
+}
+
+FQuat LivingWorld::FootTilt(const FVector& GroundNormal, float Weight, float MaxDegrees)
+{
+    if (GroundNormal.ContainsNaN() || !FMath::IsFinite(Weight) || !FMath::IsFinite(MaxDegrees) || GroundNormal.IsNearlyZero()) return FQuat::Identity;
+    FQuat Tilt = FQuat::FindBetweenNormals(FVector::UpVector, GroundNormal.GetSafeNormal());
+    FVector Axis; float Angle;
+    Tilt.ToAxisAndAngle(Axis, Angle);
+    Angle = FMath::Min(Angle, FMath::DegreesToRadians(FMath::Clamp(MaxDegrees, 0.f, 45.f)));
+    return FQuat::Slerp(FQuat::Identity, FQuat(Axis, Angle), FMath::Clamp(Weight, 0.f, 1.f)).GetNormalized();
 }
 
 bool LivingWorld::SolveGroundedLeg(FTransform& Thigh, FTransform& Calf, FTransform& Foot, const FVector& Target)

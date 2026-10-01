@@ -1,0 +1,12 @@
+{
+  "id": "Gull",
+  "fbx": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\Flight\\Gull_Perch.fbx",
+  "clips": [
+    "Landing",
+    "Perched",
+    "TakeOff"
+  ],
+  "fps": 60,
+  "perch_height_cm": 19.9,
+  "scope": "Rotation-only wing fold on a flight-posture mesh; distance-view quality"
+}

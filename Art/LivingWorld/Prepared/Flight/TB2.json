@@ -1,0 +1,15 @@
+{
+  "id": "TB2",
+  "source": "https://sketchfab.com/3d-models/baykar-bayraktar-tb2-8e5b6972f7d049f19688096e03949487",
+  "author": "TheDevilsEye",
+  "license": "CC BY 4.0 (credit: \"Baykar Bayraktar TB2\" by TheDevilsEye on Sketchfab)",
+  "span_m": 11.96,
+  "length_m": 7.54,
+  "height_m": 2.3,
+  "bone_vertices": {
+    "root": 4796,
+    "propeller": 194
+  },
+  "source_forward": "-Y",
+  "scope": "Metric source model (12 m span, published TB2 span 12 m); propeller segmented for animation"
+}

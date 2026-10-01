@@ -92,21 +92,6 @@
     "blend": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\AH1W.blend"
   },
   {
-    "id": "Geranium2",
-    "source": "C:\\Users\\tommy\\Desktop\\synthetic_image_gen\\assets\\models\\drone\\Geranium-2\\scene.usdc",
-    "dimensions_m": [
-      3.49575138092041,
-      2.4961376190185547,
-      0.49373599886894226
-    ],
-    "bones": [
-      "root"
-    ],
-    "status": "rigged draft; visual, pivots, scale and license review required",
-    "fbx": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\Geranium2.fbx",
-    "blend": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Art\\LivingWorld\\Prepared\\Geranium2.blend"
-  },
-  {
     "id": "Orqa",
     "source": "C:\\Users\\tommy\\Documents\\GitHub\\RuneSim\\Saved\\LivingWorld\\OrqaSource\\tripo_convert_a8ad98d2-7e4e-4e90-9086-9d8812a1b219.fbx",
     "dimensions_m": [

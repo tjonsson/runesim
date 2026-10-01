@@ -1,0 +1,19 @@
+{
+  "id": "Humvee",
+  "source_task": "7eb00043-1659-4fe2-8f38-3ff420335e71",
+  "length_m": 4.93,
+  "width_m": 2.669,
+  "height_m": 2.504,
+  "wheel_radius_m": 0.5138028110665048,
+  "wheelbase_m": 3.346756666604425,
+  "bone_vertices": {
+    "root": 22737,
+    "wheel_LF": 1318,
+    "wheel_LR": 1317,
+    "wheel_RF": 1246,
+    "wheel_RR": 1347
+  },
+  "source_forward": "-Y",
+  "license": "Account-generated Tripo asset (user-authorized credits)",
+  "scope": "HMMWV-style US utility vehicle (M1151 reference); generated shape, two-tone paint, not a verified variant"
+}

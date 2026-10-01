@@ -1,0 +1,11 @@
+{
+  "id": "Shahed136",
+  "source": "User-supplied shahed-136-drone.zip (Tripo-generated OBJ), 2026-10-01",
+  "triangles": 59999,
+  "propeller_vertices": 1148,
+  "span_m": 2.5,
+  "length_m": 2.56,
+  "height_m": 0.53,
+  "source_forward": "-Y",
+  "scope": "Scaled to the published 2.5 m span; generated proportions make it shorter than the published 3.5 m length"
+}

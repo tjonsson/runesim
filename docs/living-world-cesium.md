@@ -47,3 +47,44 @@ The final 180-second Pi measurement passed its 25 fps median floor with **28.53 
 Native UI verification confirmed F9 opens only Living World and F10 opens only AirSim's existing weather panel. The final packaged menu reported twelve profiles and two validated routes. The Pi screenshot shows the actual MainLevel terrain and an animated ground character. The simulator, independent signalling process and Pi viewer were left running.
 
 This establishes local MainLevel functional acceptance and a short single-camera stream pass. It does not establish constant 30 fps, overnight encoder stability, multi-camera endurance, full-city navigation or uniformly detailed ground imagery. The route authoring is deliberately bounded to the supported corridor; physical flight/tire models and the other production gaps remain listed in [implementation status](living-world-implementation.md#production-gaps-and-external-dependencies).
+
+## Extended reviewed corridors — September 30
+
+`Scripts/extend_main_corridors.py` rebuilds MainLevel's ground network from the loaded Cesium collision surface. It runs in two stages: `hold` adds refinement cameras along the authored road, then `scan` runs after the tiles load.
+
+| Corridor | Before | Now | Evidence |
+|---|---|---|---|
+| Vehicles: `Living Main Dirt road (scanned full length)` | 32 m | **312 m** | 1,220 of 1,220 full jeep placements (footprint, chassis fit, all wheel contacts) every 25 cm |
+| Pedestrians: `Living Main Pedestrian shoulder (scanned full length)` | 121 m | **239 m** | 944 of 944 civilian placements every 25 cm |
+
+How the corridors were built:
+
+- **Road.** The road follows a smooth curve through the original authored control points, re-projected every 2.5 m onto the collision surface. The first, polyline pass failed only where the wheelbase cut the corners.
+- **Wheel bridging.** The road allows **one wheel to bridge an isolated unsupported photogrammetry facet** (`MaxBridgedWheels = 1`). The chassis then rests on the plane of the other three wheels. Water- and no-walk-tagged surfaces still block, and so do two unsupported wheels. Earlier scans lost the road's full length to exactly such single facets.
+- **Shoulder.** The shoulder applies the reviewed shoulder's measured side offset (3 m) along the whole road.
+- **Rollback.** The superseded 32 m and 121 m corridors stay in the map, unvalidated.
+- **Streaming views.** Ground refinement cameras now cover long corridors with one close view per ~120 m segment (at most 8 views, 1024-pixel selection viewports).
+
+This validates physical support and clearance along the imaged road. It does not establish legal access, lane semantics, or water/building semantics beyond what the collision and tags express. OSM contains only two elements around this rural site, so there was no mapped network to import.
+
+## Trail network and rebuilt shoulder — September 30 (afternoon)
+
+The pedestrian network in MainLevel is now **643 m**: a 311 m shoulder plus three trails. Every segment passed the runtime civilian placement probe every 25 cm.
+
+- **Shoulder** (`rebuild_main_shoulder.py`): rebuilt as an exact 3.0 m offset from the validated, smoothed 312 m road. The previous shoulder followed the original polyline and came as close as 1.65 m on bends. All 1,235 probes passed. The earlier shoulders remain in the map, unvalidated.
+- **Trails** (`plan_main_trails.py`): a terrain-grid scan of 300×300 m at 3 m spacing found 4.8 ha of connected walkable ground, where the surface is within 16° of level and no step to a neighbouring cell exceeds 70 cm, which excludes canopy, walls and gullies. A* planned loop trails that leave the shoulder, cross the fields and rejoin it:
+  - a 113 m south loop
+  - a 75 m north loop
+  - a 144 m loop that crosses the road twice
+- **Route links** (`LivingWorld::LinkRoutes`): agents reaching a route end that meets another reviewed route of the same mode continue onto it rather than retiring or turning back. The trails, shoulder and crossings therefore behave as one network.
+
+**Live check** (`test_main_network.py`, PIE with 84 ground agents): all checks passed.
+- 3 crossing zones active.
+- All trails in use.
+- 61 transfers between routes.
+- At least 75% of pedestrians moving in every sample (deliberate patrol pauses excluded).
+- No pedestrian within 1.5 m of the road outside crossings.
+
+Evidence: `Saved/LivingWorld/main-network.json`, `MainRoutes/trails.json` and `MainRoutes/shoulder-rebuild.json`.
+
+**PIE alongside the running demo.** The editor needs `-settings=Samples/LivingWorld/MainLevel.editor.settings.json`, which uses AirSim API port 41452. Otherwise AirSim's RPC server collides with the packaged simulator's and the editor crashes at PIE start.

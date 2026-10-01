@@ -5,6 +5,10 @@
 #include "LivingRoute.h"
 #include "LivingGeography.h"
 #include "LivingTerrainBudgetComponent.h"
+#include "LivingPerch.h"
+#include "SimPTZ.h"
+#include "SimSensorCamera.h"
+#include "SimCameraStreamComponent.h"
 #include "CesiumGeoreference.h"
 #include "Cesium3DTileset.h"
 #include "AssetRegistry/AssetRegistryModule.h"
@@ -15,15 +19,6 @@
 #include "GameFramework/Pawn.h"
 #include "CesiumCameraManager.h"
 #include "CesiumCamera.h"
-#include "Widgets/SOverlay.h"
-#include "Widgets/Layout/SBorder.h"
-#include "Widgets/Layout/SBox.h"
-#include "Widgets/Layout/SScrollBox.h"
-#include "Widgets/Input/SButton.h"
-#include "Widgets/Input/SCheckBox.h"
-#include "Widgets/Input/SSpinBox.h"
-#include "Widgets/Text/STextBlock.h"
-#include "Framework/Application/SlateApplication.h"
 
 bool ULivingWorldSubsystem::ShouldCreateSubsystem(UObject* Outer) const
 {
@@ -66,6 +61,8 @@ void ULivingWorldSubsystem::RefreshPopulation()
     for (TActorIterator<ALivingRoute> It(GetWorld()); It; ++It) if (It->bValidated) Routes.Add(*It);
     Routes.Sort([](const ALivingRoute& A, const ALivingRoute& B) { return A.GetName() < B.GetName(); });
     for (ALivingAgent* Agent : Pool) if (IsValid(Agent)) Agent->Deactivate();
+    BuildConflictZones();
+    BuildRuntimePerches();
     Random.Initialize(Options.Seed);
     MaintenanceTimer = 1.f;
 }
@@ -98,7 +95,9 @@ void ULivingWorldSubsystem::Reconcile()
         const ELivingKind Kind = static_cast<ELivingKind>(K);
         const int32 Desired = Options.DesiredCount(Kind);
         TArray<ULivingAssetProfile*> Choices;
-        for (ULivingAssetProfile* Profile : Profiles) if (Profile->Kind == Kind) Choices.Add(Profile);
+        for (ULivingAssetProfile* Profile : Profiles) if (Profile->Kind == Kind && LivingWorld::MatchesPopulation(*Profile, Options.Population)) Choices.Add(Profile);
+        // A population with no matching vehicle keeps traffic from whatever vehicles exist.
+        if (Choices.IsEmpty()) for (ULivingAssetProfile* Profile : Profiles) if (Profile->Kind == Kind) Choices.Add(Profile);
         int32 Existing = 0;
         for (ALivingAgent* Agent : Pool) if (Agent->bActive && Agent->Profile->Kind == Kind) ++Existing;
         if (Choices.IsEmpty()) { Missing += Desired; continue; }
@@ -160,7 +159,9 @@ void ULivingWorldSubsystem::Reconcile()
             {
                 Agent->SetActorLocation(Location);
                 Agent->SetActorRotation(SpawnRotation);
+                Agent->ConflictZones = &ConflictZones;
                 Agent->Activate(Profile, Route, Distance, Home, Kind == ELivingKind::Bird ? Options.Seed + Flock * 7919 : Random.RandHelper(MAX_int32), Flock, Georeference.IsValid());
+                Agent->EnableCombatTarget(Options.bCombatTargets);
                 if (LivingWorld::IsGround(Kind))
                 {
                     bool bSpacing = true;
@@ -189,6 +190,109 @@ void ULivingWorldSubsystem::Reconcile()
         Missing ? TEXT(" · some activity awaits assets / safe routes") : TEXT(""));
 }
 
+void ULivingWorldSubsystem::BuildConflictZones()
+{
+    TArray<ALivingRoute*> Valid;
+    for (ALivingRoute* Route : Routes) if (IsValid(Route)) Valid.Add(Route);
+    ConflictZones = LivingWorld::FindConflictZones(Valid);
+    LivingWorld::LinkRoutes(Valid);
+}
+
+void ULivingWorldSubsystem::BuildRuntimePerches()
+{
+    for (ALivingPerch* Perch : RuntimePerches) if (IsValid(Perch)) Perch->Destroy();
+    RuntimePerches.Reset();
+    if (!Options.bRuntimePerches) return;
+    bool bAnyPercher = false;
+    for (const ULivingAssetProfile* Profile : Profiles) bAnyPercher |= Profile->Kind == ELivingKind::Bird && Profile->bAllowPerching;
+    if (!bAnyPercher) return;
+    // Ground-feeding spots along reviewed walkways, alternating sides. The perch's own
+    // landing probe still rejects water, steep ground and occupied positions at runtime.
+    int32 Side = 1;
+    for (ALivingRoute* Route : Routes)
+    {
+        if (!IsValid(Route) || Route->bVehicles || Route->ReviewedHalfWidthCm < 60.f) continue;
+        const float Length = Route->Path->GetSplineLength();
+        for (float Distance = 600.f; Distance < Length - 600.f && RuntimePerches.Num() < 16; Distance += 1200.f, Side = -Side)
+        {
+            FVector Location, Up;
+            const float Lateral = Side * Route->ReviewedHalfWidthCm * .6f;
+            if (!Route->SampleGround(Distance, Location, Up, Lateral, 20.f)) continue;
+            FActorSpawnParameters Params; Params.ObjectFlags |= RF_Transient;
+            ALivingPerch* Perch = GetWorld()->SpawnActor<ALivingPerch>(Location + Up * 20.f,
+                FRotationMatrix::MakeFromZ(Up).Rotator(), Params);
+            if (!Perch) continue;
+            Perch->bValidated = true;
+            Perch->Tags.Add(TEXT("LivingWorld.RuntimePerch"));
+            RuntimePerches.Add(Perch);
+        }
+    }
+}
+
+TArray<ASimFollowCamera*> ULivingWorldSubsystem::GetSensorCameras() const
+{
+    TArray<ASimFollowCamera*> Result;
+    for (ASimFollowCamera* Camera : SensorCameras) if (IsValid(Camera)) Result.Add(Camera);
+    return Result;
+}
+
+void ULivingWorldSubsystem::UpdateSensorCameras()
+{
+    const int32 Wanted = Options.bEnabled ? FMath::Clamp(Options.SensorStreams, 0, 4) : 0;
+    SensorCameras.RemoveAll([](const ASimFollowCamera* Camera) { return !IsValid(Camera); });
+    while (SensorCameras.Num() > Wanted) SensorCameras.Pop()->Destroy();
+    if (!Wanted) return;
+    // Drones carry the gimbal feeds first, then helicopters and aircraft. Names give a stable order.
+    TArray<ALivingAgent*> Carriers;
+    for (ALivingAgent* Agent : Pool)
+        if (IsValid(Agent) && Agent->bActive && Agent->Profile && Agent->Behavior != ELivingBehavior::Downed &&
+            (Agent->Profile->Kind == ELivingKind::Drone || Agent->Profile->Kind == ELivingKind::Helicopter || Agent->Profile->Kind == ELivingKind::Plane))
+            Carriers.Add(Agent);
+    auto Rank = [](ELivingKind Kind) { return Kind == ELivingKind::Drone ? 0 : Kind == ELivingKind::Helicopter ? 1 : 2; };
+    Carriers.Sort([&](const ALivingAgent& A, const ALivingAgent& B)
+        { return Rank(A.Profile->Kind) != Rank(B.Profile->Kind) ? Rank(A.Profile->Kind) < Rank(B.Profile->Kind) : A.GetName() < B.GetName(); });
+    for (int32 I = 0; I < Wanted; ++I)
+    {
+        if (I >= SensorCameras.Num())
+        {
+            const FTransform Start(Center);
+            ASimFollowCamera* Camera = GetWorld()->SpawnActorDeferred<ASimFollowCamera>(ASimFollowCamera::StaticClass(), Start);
+            if (!Camera) return;
+            Camera->Configure(FString::Printf(TEXT("air-%d"), I + 1), 70.f);
+            Camera->FinishSpawning(Start);
+            SensorCameras.Add(Camera);
+        }
+        ASimFollowCamera* Camera = SensorCameras[I];
+        ALivingAgent* Current = Cast<ALivingAgent>(Camera->Carrier.Get());
+        if (Current && Carriers.Contains(Current)) { Carriers.Remove(Current); continue; }
+        if (Carriers.IsEmpty()) { Camera->SetCarrier(nullptr, true, -20.f); continue; }
+        ALivingAgent* Next = Carriers[0]; Carriers.RemoveAt(0);
+        const float Radius = FMath::Max(20.f, Next->Profile->CollisionRadiusCm);
+        Camera->MountOffset = FVector(Radius * .6f, 0.f, -Radius * .4f);
+        Camera->SetCarrier(Next, true, Next->Profile->Kind == ELivingKind::Drone ? -25.f : -10.f);
+    }
+}
+
+ASimPTZ* ULivingWorldSubsystem::GetEngagementCamera()
+{
+    if (EngagementCamera.IsValid() && EngagementCamera->bAllowSimulatedEngagement) return EngagementCamera.Get();
+    EngagementCamera.Reset();
+    for (TActorIterator<ASimPTZ> It(GetWorld()); It; ++It)
+        if (It->bAllowSimulatedEngagement) { EngagementCamera = *It; break; }
+    return EngagementCamera.Get();
+}
+
+FText ULivingWorldSubsystem::EngagementText() const
+{
+    const ASimPTZ* Camera = EngagementCamera.Get();
+    if (!Camera) return FText::GetEmpty();
+    FString Text = FString::Printf(TEXT("%s [%s view, F6] · %s%s"), *Camera->CameraId, *Camera->GetViewName(),
+        Camera->EngagementStatus.IsEmpty() ? TEXT("F7 designate · F8 launch") : *Camera->EngagementStatus,
+        Camera->bTrackTarget ? TEXT(" · tracking") : TEXT(""));
+    if (Camera->GetInterceptorsInFlight()) Text += FString::Printf(TEXT(" · %d in flight"), Camera->GetInterceptorsInFlight());
+    return FText::FromString(Text);
+}
+
 void ULivingWorldSubsystem::UpdateStreamingCamera()
 {
     if (!Options.bEnabled)
@@ -215,16 +319,26 @@ void ULivingWorldSubsystem::UpdateStreamingCamera()
     int32 GroundViews = 0;
     for (const ALivingRoute* Route : Routes)
     {
-        if (GroundViews >= 8) break;
         if (!IsValid(Route) || !Route->bValidated || (Route->bVehicles ? Options.TrafficDensity == 0 : Options.CrowdDensity == 0) ||
             FVector::DistSquared(Route->Path->FindLocationClosestToWorldLocation(Center, ESplineCoordinateSpace::World), Center) > FMath::Square(Options.ActivityRadiusMeters*100.f)) continue;
-        const FBoxSphereBounds Bounds = Route->Path->CalcBounds(Route->Path->GetComponentTransform());
-        const FQuat RouteFrame = LivingGeography::Frame(Georeference.Get(), Bounds.Origin);
-        const FCesiumCamera GroundCamera(FVector2D(1280,1280), Bounds.Origin + RouteFrame.GetAxisZ()*FMath::Max(3000., Bounds.SphereRadius*1.6),
-            (RouteFrame*FRotator(-90,0,0).Quaternion()).Rotator(),90.f);
-        if (GroundViews == GroundStreamingCameraIds.Num()) GroundStreamingCameraIds.Add(CameraManager->AddCamera(GroundCamera));
-        else CameraManager->UpdateCamera(GroundStreamingCameraIds[GroundViews],GroundCamera);
-        ++GroundViews;
+        // Long corridors get one close view per ~120 m segment, so wheel and foot contacts keep
+        // refined tiles along the whole route. Stationary views settle to the idle cadence.
+        const float Length = Route->Path->GetSplineLength();
+        const int32 Segments = FMath::Clamp(FMath::CeilToInt(Length / 12000.f), 1, 4);
+        for (int32 Segment = 0; Segment < Segments && GroundViews < 8; ++Segment)
+        {
+            const float From = Length * Segment / Segments, To = Length * (Segment + 1) / Segments;
+            const FVector A = Route->Path->GetLocationAtDistanceAlongSpline(From, ESplineCoordinateSpace::World);
+            const FVector B = Route->Path->GetLocationAtDistanceAlongSpline(To, ESplineCoordinateSpace::World);
+            const FVector Middle = Route->Path->GetLocationAtDistanceAlongSpline((From + To) * .5f, ESplineCoordinateSpace::World);
+            const float SegmentRadius = FMath::Max3(float(FVector::Dist(A, Middle)), float(FVector::Dist(B, Middle)), 500.f);
+            const FQuat RouteFrame = LivingGeography::Frame(Georeference.Get(), Middle);
+            const FCesiumCamera GroundCamera(FVector2D(1024,1024), Middle + RouteFrame.GetAxisZ()*FMath::Max(3000.f, SegmentRadius*1.6f),
+                (RouteFrame*FRotator(-90,0,0).Quaternion()).Rotator(),90.f);
+            if (GroundViews == GroundStreamingCameraIds.Num()) GroundStreamingCameraIds.Add(CameraManager->AddCamera(GroundCamera));
+            else CameraManager->UpdateCamera(GroundStreamingCameraIds[GroundViews],GroundCamera);
+            ++GroundViews;
+        }
     }
     while (GroundStreamingCameraIds.Num() > GroundViews) CameraManager->RemoveCamera(GroundStreamingCameraIds.Pop());
 }
@@ -234,10 +348,34 @@ void ULivingWorldSubsystem::Tick(float DeltaTime)
     APlayerController* PC = GetWorld()->GetFirstPlayerController();
     if (PC)
     {
-        if (!MenuRoot.IsValid()) InstallMenu();
+        if (!MenuRoot.IsValid())
+        {
+            InstallMenu();
+            // -LivingWorldMenu[=tab] opens the panel at start (0 Population, 1 Behavior, 2 Simulation), for screenshots and kiosks.
+            int32 Tab = 0;
+            if (MenuRoot.IsValid() && (FParse::Param(FCommandLine::Get(), TEXT("LivingWorldMenu")) || FParse::Value(FCommandLine::Get(), TEXT("LivingWorldMenu="), Tab)))
+            { MenuTab = FMath::Clamp(Tab, 0, 2); ToggleMenu(); }
+        }
         // AirSim's weather MenuActor already owns F10 in MainLevel.
         if (PC->WasInputKeyJustPressed(EKeys::F9)) ToggleMenu();
         if (bMenuOpen && PC->WasInputKeyJustPressed(EKeys::Escape)) CloseMenu();
+        if (bMenuOpen && (PC->WasInputKeyJustPressed(EKeys::F) || PC->WasInputKeyJustPressed(EKeys::Enter))) ApplyMenuDraft();
+        // Simulated engagement from the first opted-in tripod.
+        const bool bShift = PC->IsInputKeyDown(EKeys::LeftShift) || PC->IsInputKeyDown(EKeys::RightShift);
+        const bool bControl = PC->IsInputKeyDown(EKeys::LeftControl) || PC->IsInputKeyDown(EKeys::RightControl);
+        if (PC->WasInputKeyJustPressed(EKeys::F6))
+            if (ASimPTZ* Camera = GetEngagementCamera()) Camera->CycleView();
+        if (PC->WasInputKeyJustPressed(EKeys::F7) || PC->WasInputKeyJustPressed(EKeys::F8))
+            if (ASimPTZ* Camera = GetEngagementCamera())
+            {
+                if (PC->WasInputKeyJustPressed(EKeys::F7))
+                {
+                    if (bControl) Camera->SetTracking(!Camera->bTrackTarget);
+                    else Camera->DesignateTarget(Camera->DesignatedTarget.IsValid() || bShift);
+                }
+                else if (bShift) Camera->AbortInterceptors();
+                else Camera->LaunchInterceptor();
+            }
     }
     MaintenanceTimer += DeltaTime;
     if (MaintenanceTimer >= 1.f)
@@ -261,15 +399,23 @@ void ULivingWorldSubsystem::Tick(float DeltaTime)
             }
         UpdateStreamingCamera();
         Reconcile();
+        UpdateSensorCameras();
+        GetEngagementCamera();
     }
     if (!Options.bEnabled) return;
+    {
+        FVector Listener, Front, Right;
+        const bool bListener = PC && (PC->GetAudioListenerPosition(Listener, Front, Right), true);
+        LivingWorld::SetListener(bListener ? Listener : FVector::ZeroVector, bListener);
+    }
     Accumulator = FMath::Min(Accumulator + DeltaTime, 0.15f);
     TArray<ALivingAgent*> Active;
     for (ALivingAgent* Agent : Pool) if (IsValid(Agent) && Agent->bActive) Active.Add(Agent);
     TArray<FVector> Threats;
+    TArray<FVector> ThreatVelocities;
     if (Options.bReactive)
         for (TActorIterator<APawn> It(GetWorld()); It; ++It)
-            if (It->GetVelocity().SizeSquared() > FMath::Square(30.f)) Threats.Add(It->GetActorLocation());
+            if (It->GetVelocity().SizeSquared() > FMath::Square(30.f)) { Threats.Add(It->GetActorLocation()); ThreatVelocities.Add(It->GetVelocity()); }
     while (Accumulator >= 1.f / 30.f)
     {
         Accumulator -= 1.f / 30.f;
@@ -288,6 +434,7 @@ void ULivingWorldSubsystem::Tick(float DeltaTime)
                     if (!Hit || FVector::DistSquared(SightHit.ImpactPoint,Threat) < FMath::Square(200.f)) { Best = D; Closest = &Threat; }
                 }
             }
+            Agent->ThreatVelocity = Closest ? ThreatVelocities[static_cast<int32>(Closest - Threats.GetData())] : FVector::ZeroVector;
             Agent->Step(1.f / 30.f, Options, Active, Closest);
         }
     }
@@ -296,104 +443,6 @@ void ULivingWorldSubsystem::Tick(float DeltaTime)
 TStatId ULivingWorldSubsystem::GetStatId() const
 {
     RETURN_QUICK_DECLARE_CYCLE_STAT(ULivingWorldSubsystem, STATGROUP_Tickables);
-}
-
-void ULivingWorldSubsystem::InstallMenu()
-{
-    if (!GetWorld()->GetGameViewport()) return;
-    MenuRoot = SNew(SOverlay)
-        + SOverlay::Slot().HAlign(HAlign_Right).VAlign(VAlign_Top).Padding(24.f, 60.f)
-        [SNew(SButton).Text(FText::FromString(TEXT("Environment · Living World [F9]")))
-            .OnClicked_Lambda([this]() { ToggleMenu(); return FReply::Handled(); })]
-        + SOverlay::Slot().HAlign(HAlign_Center).VAlign(VAlign_Center).Padding(24.f)
-        [SAssignNew(MenuPanel, SBorder).Padding(24.f).BorderImage(FCoreStyle::Get().GetBrush("WhiteBrush"))
-            .ForegroundColor(FLinearColor::White).BorderBackgroundColor(FLinearColor(0.015f, 0.025f, 0.04f, 1.f))];
-    MenuPanel->SetVisibility(EVisibility::Collapsed);
-    GetWorld()->GetGameViewport()->AddViewportWidgetContent(MenuRoot.ToSharedRef(), 30);
-}
-
-void ULivingWorldSubsystem::ToggleMenu()
-{
-    if (bMenuOpen) { CloseMenu(); return; }
-    if (!MenuPanel.IsValid()) InstallMenu();
-    if (!MenuPanel.IsValid()) return;
-    TSharedRef<FLivingWorldOptions> Draft = MakeShared<FLivingWorldOptions>(Options);
-    TSharedRef<SVerticalBox> Rows = SNew(SVerticalBox);
-    Rows->AddSlot().AutoHeight().Padding(0, 0, 0, 12)[SNew(STextBlock).Text(FText::FromString(TEXT("Settings / Environment / Living World"))).Font(FCoreStyle::GetDefaultFontStyle("Bold", 21))];
-    Rows->AddSlot().AutoHeight().Padding(0, 4)[SNew(SCheckBox)
-        .IsChecked_Lambda([Draft]() { return Draft->bEnabled ? ECheckBoxState::Checked : ECheckBoxState::Unchecked; })
-        .OnCheckStateChanged_Lambda([Draft](ECheckBoxState S) { Draft->bEnabled = S == ECheckBoxState::Checked; })
-        [SNew(STextBlock).Text(FText::FromString(TEXT("Enable Living World")))]];
-    TSharedRef<SHorizontalBox> Presets = SNew(SHorizontalBox);
-    const TCHAR* PresetNames[] = {TEXT("Quiet"), TEXT("Balanced"), TEXT("Busy")};
-    for (int32 I = 0; I < 3; ++I)
-        Presets->AddSlot().FillWidth(1).Padding(2)[SNew(SButton).Text(FText::FromString(PresetNames[I]))
-            .OnClicked_Lambda([Draft, I]() { Draft->ApplyPreset(static_cast<ELivingPreset>(I)); return FReply::Handled(); })];
-    Rows->AddSlot().AutoHeight().Padding(0, 8)[Presets];
-    Rows->AddSlot().AutoHeight().Padding(0, 5)[SNew(SButton)
-        .Text_Lambda([Draft]() { const TCHAR* Names[] = {TEXT("Civilians"), TEXT("Military"), TEXT("Mixed")}; return FText::FromString(FString(TEXT("Population: ")) + Names[static_cast<int32>(Draft->Population)]); })
-        .OnClicked_Lambda([Draft]() { Draft->Population = static_cast<ELivingPopulation>((static_cast<int32>(Draft->Population) + 1) % 3); return FReply::Handled(); })];
-    auto Integer = [Rows, Draft](const TCHAR* Label, int32 FLivingWorldOptions::*Field, int32 Min, int32 Max)
-    {
-        Rows->AddSlot().AutoHeight().Padding(0, 4)[SNew(SHorizontalBox)
-            + SHorizontalBox::Slot().FillWidth(1)[SNew(STextBlock).Text(FText::FromString(Label))]
-            + SHorizontalBox::Slot().AutoWidth()[SNew(SBox).WidthOverride(130)[SNew(SSpinBox<int32>).MinValue(Min).MaxValue(Max)
-                .Value_Lambda([Draft, Field]() { return Draft.Get().*Field; })
-                .OnValueChanged_Lambda([Draft, Field](int32 Value) { Draft.Get().*Field = Value; Draft->Preset = ELivingPreset::Custom; })]]];
-    };
-    Integer(TEXT("Crowds (0 off · 1 sparse · 2 normal · 3 dense)"), &FLivingWorldOptions::CrowdDensity, 0, 3);
-    Integer(TEXT("Ground traffic (0 off · 1 light · 2 normal · 3 heavy)"), &FLivingWorldOptions::TrafficDensity, 0, 3);
-    Integer(TEXT("Planes"), &FLivingWorldOptions::Planes, 0, 12);
-    Integer(TEXT("Helicopters"), &FLivingWorldOptions::Helicopters, 0, 12);
-    Integer(TEXT("Drones"), &FLivingWorldOptions::Drones, 0, 24);
-    Integer(TEXT("Bird flocks"), &FLivingWorldOptions::BirdFlocks, 0, 8);
-    Integer(TEXT("Birds per flock"), &FLivingWorldOptions::FlockSize, 1, 24);
-    Integer(TEXT("Maximum ambient actors"), &FLivingWorldOptions::MaxActors, 1, 300);
-    Integer(TEXT("Scenario seed"), &FLivingWorldOptions::Seed, 0, MAX_int32);
-    auto Decimal = [Rows, Draft](const TCHAR* Label, float FLivingWorldOptions::*Field, float Min, float Max)
-    {
-        Rows->AddSlot().AutoHeight().Padding(0, 4)[SNew(SHorizontalBox)
-            + SHorizontalBox::Slot().FillWidth(1)[SNew(STextBlock).Text(FText::FromString(Label))]
-            + SHorizontalBox::Slot().AutoWidth()[SNew(SBox).WidthOverride(130)[SNew(SSpinBox<float>).MinValue(Min).MaxValue(Max)
-                .Value_Lambda([Draft, Field]() { return Draft.Get().*Field; })
-                .OnValueChanged_Lambda([Draft, Field](float Value) { Draft.Get().*Field = Value; })]]];
-    };
-    Decimal(TEXT("Activity radius (m)"), &FLivingWorldOptions::ActivityRadiusMeters, 100.f, 3000.f);
-    Decimal(TEXT("Ambient volume (dB)"), &FLivingWorldOptions::AmbientVolumeDb, -60.f, 0.f);
-    Rows->AddSlot().AutoHeight().Padding(0, 8)[SNew(SCheckBox)
-        .IsChecked_Lambda([Draft]() { return Draft->bReactive ? ECheckBoxState::Checked : ECheckBoxState::Unchecked; })
-        .OnCheckStateChanged_Lambda([Draft](ECheckBoxState S) { Draft->bReactive = S == ECheckBoxState::Checked; })
-        [SNew(STextBlock).Text(FText::FromString(TEXT("Reactive avoidance and fleeing")))]];
-    Rows->AddSlot().AutoHeight().Padding(0, 8)[SNew(STextBlock).AutoWrapText(true).Text(FText::FromString(Status))];
-    Rows->AddSlot().AutoHeight().Padding(0, 8)[SNew(SHorizontalBox)
-        + SHorizontalBox::Slot().FillWidth(1).Padding(2)[SNew(SButton)
-            .Text_Lambda([this]() { return FText::FromString(IsValid(Recorder) ? TEXT("Stop and save recording") : TEXT("Record population")); })
-            .OnClicked_Lambda([this]() { ToggleRecording(); return FReply::Handled(); })]
-        + SHorizontalBox::Slot().FillWidth(1).Padding(2)[SNew(SButton).Text(FText::FromString(TEXT("Overlay last recording")))
-            .OnClicked_Lambda([this]() { PlayLastRecording(); return FReply::Handled(); })]
-        + SHorizontalBox::Slot().AutoWidth().Padding(2)[SNew(SButton).Text(FText::FromString(TEXT("Clear replay")))
-            .OnClicked_Lambda([this]() { ClearReplay(); return FReply::Handled(); })]];
-    Rows->AddSlot().AutoHeight()[SNew(STextBlock).AutoWrapText(true)
-        .Text_Lambda([this]() { return FText::FromString(RecordingStatus); })];
-    TSharedRef<SButton> Apply = SNew(SButton).Text(FText::FromString(TEXT("Apply and save")))
-        .OnClicked_Lambda([this, Draft]() { ApplyOptions(Draft.Get()); CloseMenu(); return FReply::Handled(); });
-    Rows->AddSlot().AutoHeight().Padding(0, 8)[SNew(SHorizontalBox)
-        + SHorizontalBox::Slot().FillWidth(1).Padding(2)[Apply]
-        + SHorizontalBox::Slot().FillWidth(1).Padding(2)[SNew(SButton).Text(FText::FromString(TEXT("Cancel")))
-            .OnClicked_Lambda([this]() { CloseMenu(); return FReply::Handled(); })]];
-    MenuPanel->SetContent(SNew(SBox).WidthOverride(650.f).MaxDesiredHeight(720.f)[SNew(SScrollBox) + SScrollBox::Slot()[Rows]]);
-    MenuPanel->SetVisibility(EVisibility::Visible);
-    bMenuOpen = true;
-    MenuController = GetWorld()->GetFirstPlayerController();
-    if (MenuController.IsValid())
-    {
-        bPreviousCursor = MenuController->bShowMouseCursor;
-        MenuController->bShowMouseCursor = true;
-        MenuController->SetIgnoreMoveInput(true); MenuController->SetIgnoreLookInput(true);
-        FInputModeGameAndUI Mode; Mode.SetWidgetToFocus(Apply); Mode.SetHideCursorDuringCapture(false);
-        MenuController->SetInputMode(Mode);
-    }
-    FSlateApplication::Get().SetKeyboardFocus(Apply);
 }
 
 void ULivingWorldSubsystem::ToggleRecording()
@@ -424,28 +473,20 @@ void ULivingWorldSubsystem::ClearReplay()
     RecordingStatus = TEXT("Replay cleared.");
 }
 
-void ULivingWorldSubsystem::CloseMenu()
-{
-    if (!bMenuOpen) return;
-    bMenuOpen = false;
-    if (MenuPanel.IsValid()) MenuPanel->SetVisibility(EVisibility::Collapsed);
-    if (MenuController.IsValid())
-    {
-        MenuController->bShowMouseCursor = bPreviousCursor;
-        MenuController->SetIgnoreMoveInput(false); MenuController->SetIgnoreLookInput(false);
-        MenuController->SetInputMode(FInputModeGameOnly());
-    }
-}
-
 void ULivingWorldSubsystem::Deinitialize()
 {
     CloseMenu();
     if (MenuRoot.IsValid() && GetWorld()->GetGameViewport()) GetWorld()->GetGameViewport()->RemoveViewportWidgetContent(MenuRoot.ToSharedRef());
-    MenuRoot.Reset(); MenuPanel.Reset();
+    MenuRoot.Reset(); MenuPanel.Reset(); MenuFocus.Reset(); MenuDraft.Reset();
     if (CameraManager.IsValid() && StreamingCameraId >= 0) CameraManager->RemoveCamera(StreamingCameraId);
     if (CameraManager.IsValid()) for (int32 Id : GroundStreamingCameraIds) CameraManager->RemoveCamera(Id);
     GroundStreamingCameraIds.Reset();
     for (ALivingAgent* Agent : Pool) if (IsValid(Agent)) Agent->Destroy();
     Pool.Reset();
+    for (ASimFollowCamera* Camera : SensorCameras) if (IsValid(Camera)) Camera->Destroy();
+    SensorCameras.Reset();
+    for (ALivingPerch* Perch : RuntimePerches) if (IsValid(Perch)) Perch->Destroy();
+    RuntimePerches.Reset();
+    ConflictZones.Reset();
     Super::Deinitialize();
 }

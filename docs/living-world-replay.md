@@ -1,6 +1,6 @@
 # Population recording and visual replay
 
-Open **Environment > Living World** (F9). **Record population** starts sampling the currently active population. **Stop and save recording** writes a timestamped JSONL file under `Saved/LivingWorld/Recordings`. **Overlay last recording** creates animated, collision-free copies; **Clear replay** removes those copies. Disable ambient activity for an isolated replay view.
+Open the Living World panel (F9) and its **Simulation** tab. **Record population** starts sampling the currently active population. **Stop and save** writes a timestamped JSONL file under `Saved/LivingWorld/Recordings`. **Overlay last recording** creates animated, collision-free copies; **Clear replay** removes those copies. Disable ambient activity for an isolated replay view.
 
 The latest recording name is retained for the current session. Recordings persist on disk. A Blueprint or C++ caller can load an earlier name with `SimReplay.LoadRecording`, then call `Play`, `Pause`, `Seek`, or `Clear`. Playback rate is bounded between 0.05 and 8; looping is optional. Positions, orientations, scales, visibility, visual mesh transforms and sampled skeletal clip positions are interpolated or applied to inert components. The original actors are never repositioned or commanded.
 

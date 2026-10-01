@@ -10,7 +10,7 @@ RuneSim targets Unreal Engine **5.8**; the current Windows build was verified wi
 | [Cesium for Unreal](https://www.fab.com/listings/76c295fe-0dc6-4fd6-8319-e9833be427cd) | 2.29.1 for UE 5.8 | Required. Install from Fab into the matching engine, or place the official plugin in `Plugins/CesiumForUnreal`. Configure your own Cesium access in the editor. |
 | [Tripo DCC Bridge](https://studio.tripo3d.ai) | Unreal bridge 1.0.5, UE 5.8 Win64 | Optional, editor only. Download through Studio's DCC Bridge installer and extract to `Plugins/Tripo3DUEBridge`. Its absence does not block normal simulation. See [bridge setup](tripo-bridge-setup.md). |
 | Pixel Streaming 2 / Pixel Capture | Bundled with UE 5.8 | Enabled engine plugins. Do not copy their engine source or content into the repository. |
-| Niagara, JSON utilities, OpenXR, Modeling Tools | Bundled with UE 5.8 | Use the engine-provided versions selected by `RuneSim.uproject`. |
+| Niagara, NiagaraFluids, JSON utilities, OpenXR, Modeling Tools | Bundled with UE 5.8 | Use the engine-provided versions selected by `RuneSim.uproject`. NiagaraFluids drives the close-range fire simulation (see [battlefield effects](living-world-war-effects.md)). |
 | [XScene-UE](https://github.com/xverse-engine/XScene-UEPlugin) / XV3dGS | Not validated by Living World | Optional Gaussian-splatting workflow; disabled by default. Install separately only when needed. |
 | ObjectDeliverer | Not required | Disabled in the project. Do not vendor a store download. |
 

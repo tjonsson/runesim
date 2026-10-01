@@ -109,7 +109,7 @@ items = [
     ('plane/F15SMT_AceCombat3.glb','F15SMT',0.05,-90),
     ('plane/McDonnell_Douglas_F4_Phantom.glb','F4',1.0,0),
     ('helicopter/supercopra/AH-1W Supercobra Helicopter.usd','AH1W',1.0,-90),
-    ('drone/Geranium-2/scene.usdc','Geranium2',1.0,-90),
+    # Geranium-2 removed 2026-10-01: replaced by the supplied Shahed-136 (Scripts/prepare_shahed.py).
 ]
 report = []
 for rel,name,scale,rotation in items:

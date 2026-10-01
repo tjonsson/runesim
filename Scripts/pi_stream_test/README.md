@@ -83,3 +83,41 @@ recurs. It reloads only those Wi-Fi modules and reconnects the existing profile;
 SSH and video briefly disconnect. It never forces module removal or reboots the Pi.
 This is not an automatic or periodic repair. It requires the existing passwordless
 sudo permission for these operations. See the test guide before using it.
+
+## PS5 DualSense teleoperation
+
+`ps5_ptz_teleop` drives the simulated PTZ from a DualSense paired over Bluetooth or plugged in by USB. It reads the kernel's `hid-playstation` input device directly (no extra packages) and waits and reconnects when the controller sleeps. If a Bluetooth connection fails in the kernel (`dmesg` shows `Failed to retrieve DualSense firmware info` or `calibration info`), press the PS button again or plug in a USB cable. The pose follows `/runesim/ptz/ptz_1/state`.
+
+```bash
+./start_teleop.sh              # background; ./start_teleop.sh --restart after rebuilding
+tail -f logs/teleop.log
+ros2 topic echo /runesim_test/gamepad
+```
+
+| Control | Action |
+|---|---|
+| Left stick | Pan / tilt (slower when zoomed in) |
+| Right stick up/down | Zoom in / out |
+| L2 (hold) | Precision aim (quarter speed) |
+| D-pad | 1° nudge |
+| Cross | Designate target |
+| R1 | Next target |
+| Square | Toggle tracking |
+| R2 (full press) | Launch interceptor (virtual) |
+| Triangle | Abort interceptors |
+| Circle | Clear designation |
+| L1 | Cycle view: tripod / missile seeker / chase |
+| Options | Return to the view at start |
+| Create | Simulated artillery strike at the crosshair (blast, fire, smoke) |
+| PS | Smoke screen at the crosshair |
+
+While the simulator is tracking a target, it steers the camera and the sticks are ignored; press Square to take control back. `python3 test_gamepad_logic.py` checks the mapping offline.
+
+## Camera images on ROS2
+
+The simulator publishes JPEG frames of the `ptz-1` view on `/runesim/ptz/ptz_1/image/compressed` only while they are wanted. `ptz_image_bridge` watches for subscribers and requests up to 10 Hz, easing off if frames queue. It also serves decoded `bgr8` frames on `/runesim/ptz/ptz_1/image_raw`.
+
+```bash
+./start_image_bridge.sh        # background; --restart after rebuilding
+ros2 topic hz /runesim/ptz/ptz_1/image/compressed
+```

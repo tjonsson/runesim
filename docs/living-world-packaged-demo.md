@@ -64,3 +64,16 @@ The preceding crowd-flow build retained the corrected image, Cesium cadence opti
 `package-main-final.log` completed successfully with MainLevel and LivingWorldDemo cooked. The deployed executable's SHA-256 matched the final local game build during promotion. The former flat archive is preserved in `PackagedBeforeMain`, and the first MainLevel candidate in `PackagedMainBeforeStreamBudget`.
 
 MainLevel's final three-minute Pi check passed at 28.53 presented fps median / 14.17 minimum, with zero freezes, stalls, browser restarts or simulator interruptions and 30 dropped presentation frames. ROS2 control/restoration passed with 54 monotonic state messages, including the real 5° zoom clamp. F9 and F10 were verified as separate Living World/weather shortcuts. The simulator and Pi viewer are running. See [MainLevel acceptance and limitations](living-world-cesium.md); this short pass does not replace the outstanding endurance work.
+
+## Combat deployment — September 30
+
+`Scripts/promote_living_package.ps1 -Candidate <folder> -Backup <name>` promotes a candidate archive. It keeps the previous archive, copies saved preferences forward, and enables the new Living World options (`bCombatTargets`, `SensorStreams`, `bRuntimePerches`). The current archive is SHA-256 `5FBB6A174FB974AFBF4D6DF35EFA9193C20681447FD7926F7F4372BB8DAEE9C7`.
+
+Rollbacks are retained:
+
+- `PackagedBeforeCombat`: the stance-locking build.
+- `PackagedCombatV1`–`V3`: the intermediate combat builds described in [the streaming evidence](pi-stream-test.md).
+
+The launcher now also passes `PixelStreaming2.UseMediaCapture 0` and `PixelStreaming2.CaptureUseFence 0`. Viewers can open `http://<host>/?StreamerId=ptz-1-seeker` or `air-1`/`air-2` next to the Pi's `ptz-1`. `Scripts/log_frame_rate.py` reports the engine frame rate from the packaged log.
+
+`start_signalling.ps1` can report "did not become ready" when the first player page takes longer than its probe. Signalling keeps running; re-running the launcher reuses it.

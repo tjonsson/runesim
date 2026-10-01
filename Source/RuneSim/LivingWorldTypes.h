@@ -26,9 +26,12 @@ enum class ELivingPreset : uint8 { Quiet, Balanced, Busy, Custom };
 UENUM(BlueprintType)
 enum class ELivingPopulation : uint8 { Civilians, Military, Mixed };
 UENUM(BlueprintType)
-enum class ELivingBehavior : uint8 { Cruising, Startled, Fleeing, Recovering, Blocked };
+enum class ELivingBehavior : uint8 { Cruising, Startled, Fleeing, Recovering, Blocked, Yielding, Halted, Downed };
 UENUM(BlueprintType)
 enum class ELivingFlightState : uint8 { Flapping, Gliding, Approaching, Landing, Perched, TakingOff };
+/** Walking surface of a reviewed corridor; selects footstep sounds. */
+UENUM(BlueprintType)
+enum class ELivingSurface : uint8 { Paved, Dirt, Gravel, Grass };
 
 USTRUCT(BlueprintType)
 struct RUNESIM_API FLivingWorldOptions
@@ -49,6 +52,12 @@ struct RUNESIM_API FLivingWorldOptions
     UPROPERTY(EditAnywhere, BlueprintReadWrite) int32 MaxActors = 120;
     UPROPERTY(EditAnywhere, BlueprintReadWrite) int32 Seed = 4242;
     UPROPERTY(EditAnywhere, BlueprintReadWrite) float AmbientVolumeDb = -12.f;
+    /** Aircraft, drones and vehicles opt into virtual damage so a simulated PTZ can engage them. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite) bool bCombatTargets = true;
+    /** Stable gimbal feeds air-1..air-N carried by active drones/aircraft (0 disables). */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite) int32 SensorStreams = 1;
+    /** Generate bird landing sites on reviewed pedestrian corridors at runtime. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite) bool bRuntimePerches = true;
 
     void Sanitize();
     void ApplyPreset(ELivingPreset Value);
@@ -86,8 +95,16 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite) TSoftObjectPtr<UAnimationAsset> LandingAnimation;
     UPROPERTY(EditAnywhere, BlueprintReadWrite) TSoftObjectPtr<UAnimationAsset> TakeoffAnimation;
     UPROPERTY(EditAnywhere, BlueprintReadWrite) bool bAllowPerching = false;
+    /** Actor origin above the surface in the perched pose; zero uses the collision radius. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(ClampMin="0", ClampMax="100")) float PerchHeightCm = 0.f;
     UPROPERTY(EditAnywhere, BlueprintReadWrite) TSoftObjectPtr<USoundBase> LoopSound;
     UPROPERTY(EditAnywhere, BlueprintReadWrite) TArray<TSoftObjectPtr<USoundBase>> FootstepSounds;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite) TArray<TSoftObjectPtr<USoundBase>> DirtFootstepSounds;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite) TArray<TSoftObjectPtr<USoundBase>> GravelFootstepSounds;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite) TArray<TSoftObjectPtr<USoundBase>> GrassFootstepSounds;
+    /** Species vocalizations: occasional calls, plus an alarm call when startled. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite) TArray<TSoftObjectPtr<USoundBase>> CallSounds;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(ClampMin="2")) float CallIntervalSeconds = 16.f;
     UPROPERTY(EditAnywhere, BlueprintReadWrite) FVector VisualScale = FVector::OneVector;
     UPROPERTY(EditAnywhere, BlueprintReadWrite) FVector VisualOffset = FVector::ZeroVector;
     UPROPERTY(EditAnywhere, BlueprintReadWrite) FRotator VisualRotation = FRotator::ZeroRotator;
@@ -107,6 +124,10 @@ public:
     /** Orbit fraction of the activity radius, with a minimum based on turn rate. */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(ClampMin="0.1", ClampMax="1.0")) float FlightRadiusFraction = 0.65f;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(ClampMin="0", ClampMax="60")) float MaxBankDegrees = 25.f;
+    /** Virtual structural health when engaged; zero uses the category default. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(ClampMin="0")) float TargetHealth = 0.f;
+    /** Vehicles only: military vehicles appear with Military/Mixed populations, civilian ones with Civilians/Mixed. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite) bool bMilitary = false;
 };
 
 namespace LivingWorld
@@ -117,4 +138,15 @@ namespace LivingWorld
     RUNESIM_API float FlightRadius(const ULivingAssetProfile& Profile, float ActivityRadiusMeters);
     /** Speed cap that retains a stopping distance plus one integration step of reaction time. Units cm/s. */
     RUNESIM_API float StoppingSpeed(float FreeDistance, float Braking, float ReactionTime);
+    /** Default virtual health: small drones fail from proximity blast, crewed aircraft need a close burst. */
+    RUNESIM_API float DefaultTargetHealth(ELivingKind Kind);
+    RUNESIM_API bool IsEngageable(ELivingKind Kind);
+    /** Vehicles follow the population's affiliation (Mixed takes both); other kinds always match. */
+    RUNESIM_API bool MatchesPopulation(const ULivingAssetProfile& Profile, ELivingPopulation Population);
+    /** Lateral corridor offset (cm) on the side away from a threat, within the reviewed limit. */
+    RUNESIM_API float YieldOffset(float ThreatLateral, float Limit);
+    /** A threat is urgent when close or closing quickly; otherwise people step aside and watch. */
+    RUNESIM_API bool IsUrgentThreat(float DistanceCm, float ClosingSpeedCmPerSecond);
+    /** Doppler pitch factor for a source moving with Velocity; ToListener points from source to listener (cm, cm/s). */
+    RUNESIM_API float DopplerFactor(const FVector& ToListener, const FVector& Velocity);
 }

@@ -1,14 +1,32 @@
 # Living World implementation status
 
-2026-09-29. This is a working simulation foundation and technical demo, **not completion of the full realism/art plan**.
+2026-09-30. Every stage of the [plan](living-world-plan.md) now has a working, tested implementation in the main Cesium scene. This remains a game-grade simulation: see [remaining limits](#production-gaps-and-external-dependencies) for what is modeled approximately and what still depends on you or external access.
 
-Latest addition: [bounded human leg IK on Cesium terrain](living-world-feet.md), deployed in the MainLevel package. Both human rigs, dense crowd movement and recorded foot-support replay passed their checks. Bounded stance stabilization has since been added; see the same document for its release limits and validation.
+Latest additions (September 30):
+
+- [Simulated engagement, shoot-down and camera feeds](living-world-combat.md): PTZ designation, tracking and auto-zoom; guided interceptors with seeker view; falling and crashing wrecks; `air-N` gimbal feeds; a ROS `engage` topic; and event log and replay.
+- [Graded crowd reactions, soldier patrols and crossings](living-world-movement.md#reactions-patrols-and-crossings--september-30).
+- [Bird landing, perching and calls](living-world-air-assets.md#landing-perching-and-calls--september-30).
+- [Slope-aligned feet](living-world-feet.md#slope-aligned-feet--september-30).
+- [Extended MainLevel corridors](living-world-cesium.md#extended-reviewed-corridors--september-30) (312 m road, 239 m shoulder).
 
 ## Run
 
-Build `RuneSimEditor Win64 Development` with Unreal 5.8.2. Open `/Game/LivingWorld/Maps/LivingWorldDemo` and Play/Simulate. Open **Environment > Living World** in the viewport or press **F9**. Enable it and choose a preset, then **Apply and save**. The menu is installed by the world subsystem in existing game worlds, including MainLevel.
+Build `RuneSimEditor Win64 Development` with Unreal 5.8.2. Open `/Game/LivingWorld/Maps/LivingWorldDemo` and Play/Simulate. Open the Living World panel with the **LIVING WORLD** button at the top right or press **F9**. Enable it and choose a preset, then **Apply & Save**. The panel is installed by the world subsystem in existing game worlds, including MainLevel.
 
-The population uses rigged humans, articulated jeep traffic, Mavic and Orqa drones, F-4 aircraft, Huey and Super Cobra helicopters, and pigeon/gull/crow flocks. Detailed profiles are approved for ambient use. Demo-only legacy profiles remain confined to `LivingWorldDemo`. MainLevel now has two short authored dirt-road/shoulder corridors and a streaming PTZ; see [MainLevel integration and its validation scope](living-world-cesium.md).
+### Settings panel
+
+The panel (`LivingWorldMenu.cpp`, Slate) follows the RuneSim settings design: dark navy, amber accents, icons from `Content/Slate/LivingWorld/*.svg` (staged as loose files).
+
+| Tab | Contents |
+|---|---|
+| Population | Enable switch, Quiet/Balanced/Busy cards, population mix, crowds and ground traffic (Off to Dense/Heavy), planes, helicopters and drones, bird flocks and birds per flock. **Advanced settings** holds activity radius, population limit and scenario seed. |
+| Behavior | Reactive behavior, bird landing sites, combat targets, ambient volume. |
+| Simulation | Airborne sensor feeds, simulated engagement (when a tripod opts in), strike/fire/smoke screen, recording and replay, and status. |
+
+Edits stay in a draft. The footer shows **Unsaved changes** until **Apply & Save** (button, **F** or **Enter**), which keeps the panel open. **Discard changes** reverts the draft; **Esc** or **F9** closes the panel and drops unsaved edits. Changing a count switches the preset to Custom. `-LivingWorldMenu[=tab]` on the command line opens the panel at start (0 Population, 1 Behavior, 2 Simulation), which is useful for screenshots.
+
+The population uses rigged humans, articulated jeep traffic, Mavic and Orqa drones, F-4 aircraft, Huey and Super Cobra helicopters, and pigeon/gull/crow flocks. Detailed profiles are approved for ambient use. Demo-only legacy profiles remain confined to `LivingWorldDemo`. MainLevel has a 312 m reviewed dirt road, a 239 m pedestrian shoulder, and a streaming PTZ opted into simulated engagement; see [MainLevel integration and its validation scope](living-world-cesium.md).
 
 ## Delivered
 
@@ -69,14 +87,70 @@ Start the stream through `Stream.StartStream()` or opt into auto-start. The defa
 
 ## Production gaps and external dependencies
 
-The functional demo does not establish the entire original “highly realistic war simulator” scope. Remaining acceptance work is explicit:
+Status on September 30, 23:45, after the asset pass.
 
-1. The public park fixture passed building/water/barrier prefiltering, 55 terrain-height samples and collision retention with the main camera turned away. MainLevel's two authored corridors have local collision/width review; its mismatched OSM candidates were rejected. Wider networks, crossings, bridges, public access and changing imagery still require scenario-specific review. Ground spawning remains limited to validated corridors.
-2. Authored human contact phases and heel/toe roll, detailed bird landing clips, vehicle chassis/tire dynamics, junction traffic logic and aircraft material/draw-call consolidation need further production work. The jeep now has bounded visual steering and wheel-contact suspension; see [vehicle articulation](living-world-vehicles.md). The current mechanical and bird rigs are functional visual rigs, not engineering-grade models or flight dynamics.
-3. The CC-BY TB2 candidate is verified but download is blocked by Sketchfab sign-in. Epic's optional Niagara Examples Pack is blocked by Epic/Fab sign-in. No paid addon was purchased. Supplied aircraft redistribution licenses remain unverified.
-4. Effects are bounded CPU game VFX. Photoreal fluid smoke/fire, branching electrical arcs, calibrated aircraft acoustics and species-specific calls are not claimed.
-5. MainLevel passes local population acceptance, a ten-minute cadence-build Pi test and a separate five-minute crowd-build Pi/ROS2 test with the corrected sensor image. Multi-camera endurance, overnight encoder stability and full-city performance remain unverified. Keep the successful Pi Wi-Fi and bitrate settings. See [latest streaming evidence](pi-stream-test.md).
-6. Virtual combat remains game-only. The replay is a visual pose/animation overlay, not deterministic physics/event resimulation; effects and external FC commands are not replayed.
+**Done for this site**
+
+- **Cesium navigation**:
+  - A 312 m validated road and a 311 m shoulder at an exact 3 m offset.
+  - Three terrain-planned trails (113, 75 and 144 m; the last crosses the road twice) over 4.8 ha of scanned walkable ground.
+  - Route links make it one network; the live check passed with 61 transfers.
+  - OSM has only two elements here; wider areas need the same scan tools (`extend_main_corridors.py`, `plan_main_trails.py`) run over them.
+  - Legal access and water semantics are not inferred.
+- **People and traffic**:
+  - Civilians step aside or flee; soldiers halt, watch and patrol.
+  - Cars and people yield at crossings with gap acceptance; cars don't block the box and take turns at junctions.
+  - Patience turns people back from mutual blocks.
+  - Movement is corridor- and network-based rather than navmesh or StateTree.
+- **Birds**: landing, perching and takeoff clips; landing sites along walkways; flushing; species calls.
+- **Combat workflow**:
+  - PTZ designation, tracking and auto-zoom; guided interceptors with blast.
+  - Falling and crashing wrecks, and tripod, missile and chase views.
+  - The PS5 controller on the Pi, the ROS `engage` topic, and ROS images on demand (10 Hz, compressed and raw).
+- **Multiple camera streams**: `ptz-1`, `ptz-1-seeker` and `air-1…4`. Two hours with four feeds ran with no interruption.
+- **Replay**: events and effects replay at their recorded times.
+- **Asset batch (September 30 evening)**, all placed in MainLevel and checked live (`main-new-assets.json`); see [new vehicles and people](#new-vehicles-aircraft-and-people--september-30):
+  - Bayraktar TB2-style drone
+  - HMMWV
+  - Civilian sedan
+  - C1 Ariete tank
+  - Second civilian (a man)
+  - Traffic now follows the population setting (military vehicles for Military, the sedan for Civilians, both for Mixed).
+- **October 1**:
+  - The Sketchfab TB2 replaces the generated one.
+  - The Shahed-136 replaces the Geranium-2, and an FPV strike drone joins the Drones population. See [air assets](living-world-air-assets.md#shahed-136--october-1).
+  - Battlefield effects with NiagaraFluids: strike, fire and smoke screen from the tripod, PS5 or ROS, and burning wrecks.
+
+**Measured limits**
+
+- **Population scale** (packaged MainLevel, crowd and traffic at maximum): 23.7 fps at 120 agents, 21.1 at 200, 13.3 at 300 (`population-scale.json`).
+  - The actor-based system is kept up to about 200 agents.
+  - Adopting Mass is the path beyond that. It is still experimental in UE 5.8 and was not adopted, per the plan's rule to adopt only after a performance test.
+
+**Tripod slowdown fixed October 1**
+
+- A tripod aimed just below the horizon slowed the simulator to 4–17 fps depending on zoom. The tripod's Cesium tile-selection view was the cause; it now registers at a quarter of the feed size (`sim.camera.CesiumDetail`, default 0.25), and every tested pose runs at 24–25 fps. See [battlefield effects, performance](living-world-war-effects.md#performance).
+
+**Approximations that remain**
+
+- Aircraft are kinematic, with no aerodynamic model.
+- Vehicle suspension is visual.
+- There are no stairs and no sidestep clips.
+- The perched bird pose is a rotation-only fold.
+- Effects: battlefield strikes, fires, smoke columns and screens now come from the Rook & Bolt set. The closest-looking fires use a NiagaraFluids gas simulation, at most two at a time; everything else is sprites. See [battlefield effects](living-world-war-effects.md).
+- Engine sound uses loops with per-vehicle pitch, speed and Doppler, not MetaSounds.
+- Replay is a visual reproduction, not a deterministic re-simulation.
+
+**Remaining on your side**
+
+- **Asset sourcing is closed** (your decision, 1 October):
+  - No Mixamo clips (so no sidestep or reaction animations) and no Fab Niagara examples.
+  - The Sketchfab TB2, HMMWV and soldier were dropped; Tripo-generated TB2 and HMMWV models replace them.
+- **Tripo**: 610 credits spent, 295 of them in this pass under your 30 September go-ahead. The account balance is 1,740. See `Art/LivingWorld/tripo-credit-ledger.json`.
+- **Licences**:
+  - You confirmed on 30 September that you hold the rights to the supplied aircraft models.
+  - The C1 Ariete you downloaded is under the Sketchfab Standard licence (use in the project, but no redistribution of the raw files). Its source folder is git-ignored.
+- **Overnight encoder stability**: see [streaming evidence](pi-stream-test.md) for the latest long run.
 
 ## Reproduce development checks
 
@@ -145,3 +219,34 @@ The current deployment retains the corrected camera encoding/exposure and reduce
 ## Dense pedestrian flow — September 29
 
 Blocked lane merges now try independently validated forward/sideways moves, and terrain fallbacks retain supported offsets instead of repeatedly jumping sideways. All eleven automation suites and seven dense MainLevel checks passed. A separate route-progress check confirmed all 74 eligible trips advanced at least 3 m. The deployed build's five-minute crowd check observed 57–61 pedestrians, with at least 95% moving in every sample. Concurrent Pi playback passed at 27.94 fps median with zero freezes/stalls/restarts and 12 dropped presentation frames; ROS2 control/restoration also passed. The prior build is retained in `PackagedBeforeCrowd`. See [movement behavior, evidence and remaining limits](living-world-movement.md).
+
+## New vehicles, aircraft and people — September 30
+
+| Asset | Source | Kind / population | Notes |
+|---|---|---|---|
+| `DA_TB2` | Tripo H3.1 image-to-3D from a generated TB2 reference (`References/tb2.png`) | Plane | Spinning pusher propeller bone. Scaled to the published 12 m span; generated proportions make it 10.2 m long (real: 6.5 m). Flies at 36 m/s, 450 m. |
+| `DA_Humvee` | Tripo H3.1 text-to-3D | Car, military | Four articulated wheels. Length 4.93 m, wheelbase 3.35 m. Two-tone paint. |
+| `DA_Sedan` | Tripo H3.1 text-to-3D | Car, civilian | Four articulated wheels. Length 4.7 m. The generated grille badge resembles a real maker's badge. |
+| `DA_Ariete` | Sketchfab "C1 Ariete Italian MBT" by DustyMojito (Standard licence), downloaded by you | Car, military | Rigid mesh; tracks and turret are not articulated. Hull 7.59 m. 400 target health (three close interceptor bursts). |
+| `DA_CivilianMan` | Tripo H3.1 text-to-3D, Mixamo auto rig, walk/run/idle presets | Civilian | Own skeleton and `BS_CivilianMan`. Standing height 1.78 m. |
+
+Pipeline:
+
+- **Wheels and propeller**: `rig_tripo_vehicle.py` (HMMWV, sedan) and `prepare_tb2.py`. Positions were measured on orthographic renders.
+- **Tank conversion**: `prepare_ariete.py`. Blender 5.2 has no Collada importer, so the DAE is first converted with trimesh + pycollada.
+- **Second civilian**: `prepare_tripo_humans.py -- CivilianMan`.
+- **Unreal import**: `import_new_assets.py` builds the LODs and profiles, copying the closest reviewed profile's sounds and tuning. Run it with PIE stopped.
+- **Live checks**: `test_main_new_assets.py` confirms every profile spawns, moves, is engageable, and is photographed in the live Cesium scene (`NewAssets-*.png`). `test_main_vehicle_spacing.py` checked 110 samples of military traffic with no overlapping pairs.
+
+Route fit:
+
+- The scanned dirt road is reviewed at 2.5 m wide, and the footprint radius must fit inside it.
+- The HMMWV therefore uses a 115 cm footprint and the tank 120 cm; the 3.6 m tank hull overhangs the verges, clear of the 3 m-offset shoulder.
+- Clearance (125 / 130 cm) must exceed the footprint radius, because the spawn test places a sphere of that radius at clearance height.
+- A rigid vehicle's queue spacing and chassis sweep now use its mesh length (`InitializeWheels`).
+
+Code changes:
+
+- `ULivingAssetProfile::bMilitary` and `LivingWorld::MatchesPopulation`, with unit tests in CrowdReactions. The existing jeep is marked military.
+- `BuildLocomotion` accepts any `BS_<name>`.
+- Automation: 20 suites, 0 failures.

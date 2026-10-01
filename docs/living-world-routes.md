@@ -31,3 +31,5 @@ Conditional or directional restrictions, bridges, tunnels, fords, indoor ways, a
 Before setting a route's `Validated` flag, review the entire corridor in loaded Cesium terrain: replace estimated heights with the intended road/footpath surface; check buildings, water, crossings, width, slopes, barriers and access. Runtime ground traces and collision sweeps still stop movement when geometry is absent or obstructed. They cannot infer water/building semantics from photogrammetry alone. Keep multi-level crossings and lane turns as authored geometry until they have been explicitly tested.
 
 OSM-derived data retains “© OpenStreetMap contributors” and its [ODbL attribution link](https://www.openstreetmap.org/copyright). No OSM-derived network has been approved for MainLevel yet.
+
+MainLevel's corridors were later extended from terrain scans rather than OSM; see [extended reviewed corridors](living-world-cesium.md#extended-reviewed-corridors--september-30).
